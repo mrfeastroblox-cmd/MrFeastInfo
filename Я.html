@@ -138,7 +138,7 @@
             margin: 1.2rem 0 1.5rem 0;
         }
 
-        /* Блок ОБО МНЕ — премиальная иконка (звезда) */
+        /* Блок ОБО МНЕ — премиальная иконка (звезда как у Gemini) */
         .about-title {
             font-size: 1.2rem;
             font-weight: 600;
@@ -161,11 +161,11 @@
         }
 
         .premium-icon svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
+            fill: none;
             stroke: white;
             stroke-width: 1.8;
-            fill: none;
         }
 
         .about-text {
@@ -234,15 +234,16 @@
             transform: translateY(-2px);
         }
 
-        /* Премиальная кнопка с телеграм-иконкой */
+        /* Премиальная кнопка с телеграм-иконкой, выровнена по центру */
         .btn-wrapper {
             margin-top: 0.5rem;
-            text-align: left;
+            text-align: center;
         }
 
         .contact-btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
             background: linear-gradient(95deg, #a855f7, #7c3aed);
             border: none;
@@ -325,12 +326,11 @@
 
         <div class="divider"></div>
 
-        <!-- ОБО МНЕ (премиальная иконка звезда) -->
+        <!-- ОБО МНЕ (премиальная иконка звезда как у Gemini) -->
         <div class="about-title">
             <div class="premium-icon">
                 <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 2L15 8.5L22 9.5L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9.5L9 8.5L12 2Z" />
                 </svg>
             </div>
             <span>Обо мне</span>
@@ -357,7 +357,7 @@
             <span class="skill-tag">Design (HTML)</span>
         </div>
 
-        <!-- Кнопка → Telegram @MrFeast_Official с премиальной иконкой -->
+        <!-- Кнопка → Telegram @MrFeast_Official с премиальной иконкой, выровнена по центру -->
         <div class="btn-wrapper">
             <a href="https://t.me/MrFeast_Official" target="_blank" rel="noopener noreferrer" class="contact-btn">
                 <svg viewBox="0 0 24 24" fill="currentColor">
