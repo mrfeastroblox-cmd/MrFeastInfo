@@ -23,7 +23,7 @@
             overflow-x: hidden;
         }
 
-        /* 3D линии с градиентом (динамические анимированные линии) */
+        /* 3D линии с градиентом на фоне */
         .line-3d {
             position: fixed;
             top: 0;
@@ -36,7 +36,7 @@
 
         .line {
             position: absolute;
-            background: linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,0.5), rgba(236,72,153,0.5), rgba(168,85,247,0));
+            background: linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,0.6), rgba(236,72,153,0.6), rgba(168,85,247,0));
             height: 2px;
             width: 100%;
             filter: blur(2px);
@@ -68,175 +68,273 @@
             position: fixed;
             width: 50vw;
             height: 50vw;
-            background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
+            background: radial-gradient(circle, rgba(124,58,237,0.3), transparent 70%);
             border-radius: 50%;
             top: -20%;
             right: -10%;
             filter: blur(80px);
             pointer-events: none;
             z-index: 0;
+            animation: pulseGlow 8s ease-in-out infinite;
         }
         .glow-orb2 {
             bottom: -20%;
             left: -10%;
             top: auto;
-            background: radial-gradient(circle, rgba(236,72,153,0.2), transparent 70%);
+            background: radial-gradient(circle, rgba(236,72,153,0.3), transparent 70%);
             width: 60vw;
             height: 60vw;
             position: fixed;
             filter: blur(100px);
             pointer-events: none;
+            animation: pulseGlow 10s ease-in-out infinite reverse;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
-        /* Главный контейнер — стеклянная карта */
+        /* Главный контейнер — стеклянная карта с 3D линиями на ней */
         .glass-card {
             position: relative;
             z-index: 10;
-            max-width: 620px;
+            max-width: 680px;
             width: 100%;
-            background: rgba(20, 20, 35, 0.55);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-radius: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), 0 0 0 0.5px rgba(255, 255, 255, 0.1) inset;
-            padding: 2rem 1.8rem;
-            transition: transform 0.2s ease;
+            background: rgba(15, 15, 25, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 2.5rem;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(168, 85, 247, 0.2) inset, 0 0 30px rgba(168, 85, 247, 0.1);
+            padding: 2.5rem 2.2rem;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            overflow: hidden;
         }
 
         .glass-card:hover {
-            transform: scale(1.01);
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(168, 85, 247, 0.6);
+            box-shadow: 0 40px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(168, 85, 247, 0.5) inset, 0 0 40px rgba(168, 85, 247, 0.2);
         }
 
-        /* Заголовок */
+        /* 3D линии на контейнере */
+        .card-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            border-radius: 2.5rem;
+            overflow: hidden;
+        }
+
+        .card-line {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,0.8), rgba(236,72,153,0.8), rgba(168,85,247,0));
+            height: 2px;
+            width: 200%;
+            animation: cardLineMove 12s linear infinite;
+            opacity: 0.5;
+            filter: blur(1px);
+        }
+
+        .card-line:nth-child(1) { top: 20%; animation-duration: 14s; animation-delay: -2s; transform: rotate(2deg); left: -50%;}
+        .card-line:nth-child(2) { top: 45%; animation-duration: 18s; animation-delay: -5s; transform: rotate(-1deg); left: -50%;}
+        .card-line:nth-child(3) { top: 70%; animation-duration: 16s; animation-delay: -8s; transform: rotate(3deg); left: -50%;}
+        .card-line:nth-child(4) { top: 85%; animation-duration: 20s; animation-delay: -11s; transform: rotate(-2deg); left: -50%;}
+        .card-line:nth-child(5) { top: 10%; animation-duration: 22s; animation-delay: -14s; transform: rotate(1deg); left: -50%;}
+        .card-line:nth-child(6) { top: 60%; animation-duration: 15s; animation-delay: -17s; transform: rotate(-3deg); left: -50%;}
+
+        @keyframes cardLineMove {
+            0% { transform: translateX(-30%) rotate(var(--rot, 0deg)); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateX(30%) rotate(var(--rot, 0deg)); opacity: 0; }
+        }
+        .card-line {
+            --rot: 0deg;
+        }
+        .card-line:nth-child(1) { --rot: 2deg; }
+        .card-line:nth-child(2) { --rot: -1deg; }
+        .card-line:nth-child(3) { --rot: 3deg; }
+        .card-line:nth-child(4) { --rot: -2deg; }
+        .card-line:nth-child(5) { --rot: 1deg; }
+        .card-line:nth-child(6) { --rot: -3deg; }
+
+        /* Заголовок с анимацией */
         .title {
-            font-size: 2rem;
-            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            font-size: 2.2rem;
+            font-weight: 800;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #FFFFFF 0%, #C0C0FF 100%);
+            background: linear-gradient(135deg, #FFFFFF, #e0b0ff, #c084fc);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(192,132,252,0.3);
         }
 
         .sub {
+            position: relative;
+            z-index: 2;
             font-size: 1rem;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
-            border-left: 3px solid #a855f7;
-            padding-left: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 4px solid #c084fc;
+            padding-left: 0.9rem;
             margin-bottom: 2rem;
             letter-spacing: 0.3px;
+            background: linear-gradient(90deg, rgba(192,132,252,0.15), transparent);
+            border-radius: 0 12px 12px 0;
         }
 
-        /* Разделитель */
+        /* Разделитель — яркая линия с анимацией */
         .divider {
-            height: 1px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(168,85,247,0.6), rgba(255,255,255,0.05));
-            margin: 1.2rem 0 1.5rem 0;
+            position: relative;
+            z-index: 2;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(168,85,247,0.2), #c084fc, #ec489a, #c084fc, rgba(168,85,247,0.2));
+            margin: 1.5rem 0 1.8rem 0;
+            border-radius: 2px;
+            box-shadow: 0 0 12px rgba(192,132,252,0.6), 0 0 4px rgba(236,72,153,0.5);
+            animation: dividerPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes dividerPulse {
+            0%, 100% { opacity: 0.7; box-shadow: 0 0 8px rgba(192,132,252,0.4); }
+            50% { opacity: 1; box-shadow: 0 0 20px rgba(192,132,252,0.9), 0 0 8px rgba(236,72,153,0.6); }
         }
 
-        /* Блок ОБО МНЕ — премиальная иконка (звезда как у Gemini) */
+        /* Блок ОБО МНЕ */
         .about-title {
-            font-size: 1.2rem;
-            font-weight: 600;
+            position: relative;
+            z-index: 2;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 0.8rem;
+            gap: 14px;
+            margin-bottom: 1rem;
         }
 
         .premium-icon {
             background: linear-gradient(145deg, #a855f7, #7c3aed);
-            width: 32px;
-            height: 32px;
-            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            border-radius: 14px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 12px rgba(124,58,237,0.4);
+            box-shadow: 0 8px 20px rgba(124,58,237,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .premium-icon:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 12px 28px rgba(124,58,237,0.7);
         }
 
         .premium-icon svg {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             fill: none;
             stroke: white;
             stroke-width: 1.8;
         }
 
         .about-text {
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.55;
+            position: relative;
+            z-index: 2;
+            color: rgba(255, 255, 255, 0.92);
+            line-height: 1.6;
             font-weight: 450;
-            font-size: 0.95rem;
-            margin-bottom: 1.8rem;
-            background: rgba(255,255,255,0.02);
-            padding: 0.5rem 0;
-            border-radius: 12px;
+            font-size: 0.98rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(168,85,247,0.05));
+            padding: 0.8rem 1rem;
+            border-radius: 20px;
+            border: 0.5px solid rgba(168,85,247,0.2);
         }
 
-        /* Блок НАВЫКИ — премиальная иконка молнии */
+        /* Блок НАВЫКИ */
         .skills-title {
-            font-size: 1.2rem;
-            font-weight: 600;
+            position: relative;
+            z-index: 2;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 1rem;
+            gap: 14px;
+            margin-bottom: 1.2rem;
         }
 
         .bolt-icon {
             background: linear-gradient(145deg, #f59e0b, #dc2626);
-            width: 32px;
-            height: 32px;
-            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            border-radius: 14px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 12px rgba(220,38,38,0.3);
+            box-shadow: 0 8px 20px rgba(220,38,38,0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .bolt-icon:hover {
+            transform: scale(1.05) rotate(-5deg);
+            box-shadow: 0 12px 28px rgba(220,38,38,0.6);
         }
 
         .bolt-icon svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             fill: white;
             stroke: none;
         }
 
         .skills-grid {
+            position: relative;
+            z-index: 2;
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 2rem;
+            gap: 14px;
+            margin-bottom: 2.2rem;
         }
 
         .skill-tag {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(4px);
-            border: 0.5px solid rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(168,85,247,0.15));
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(168,85,247,0.4);
+            padding: 0.6rem 1.4rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 600;
             color: #f0eefc;
             letter-spacing: 0.2px;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .skill-tag:hover {
-            background: rgba(168, 85, 247, 0.3);
-            border-color: #c084fc;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(168,85,247,0.5), rgba(236,72,153,0.5));
+            border-color: #f0a3ff;
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(168,85,247,0.4);
         }
 
-        /* Премиальная кнопка с телеграм-иконкой, выровнена по центру */
+        /* Премиальная кнопка */
         .btn-wrapper {
-            margin-top: 0.5rem;
+            position: relative;
+            z-index: 2;
+            margin-top: 0.8rem;
             text-align: center;
         }
 
@@ -244,32 +342,39 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            background: linear-gradient(95deg, #a855f7, #7c3aed);
+            gap: 14px;
+            background: linear-gradient(105deg, #a855f7, #7c3aed, #ec489a);
+            background-size: 200% auto;
             border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 60px;
-            font-size: 1rem;
-            font-weight: 600;
+            padding: 1rem 2.5rem;
+            border-radius: 80px;
+            font-size: 1.05rem;
+            font-weight: 700;
             color: white;
             cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
-            letter-spacing: 0.3px;
-            backdrop-filter: blur(2px);
+            transition: all 0.4s ease;
+            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.5);
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
             text-decoration: none;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .contact-btn svg {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             fill: white;
         }
 
         .contact-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(124, 58, 237, 0.5);
-            background: linear-gradient(95deg, #c084fc, #8b5cf6);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.7);
+            gap: 18px;
         }
 
         .contact-btn:active {
@@ -277,27 +382,31 @@
         }
 
         /* адаптив */
-        @media (max-width: 480px) {
+        @media (max-width: 540px) {
             body {
                 padding: 1rem;
             }
             .glass-card {
-                padding: 1.5rem;
+                padding: 1.6rem;
             }
             .title {
                 font-size: 1.7rem;
             }
             .skill-tag {
                 font-size: 0.75rem;
-                padding: 0.4rem 1rem;
+                padding: 0.45rem 1rem;
             }
             .contact-btn {
-                padding: 0.65rem 1.6rem;
+                padding: 0.75rem 1.8rem;
                 font-size: 0.9rem;
             }
             .premium-icon, .bolt-icon {
-                width: 28px;
-                height: 28px;
+                width: 32px;
+                height: 32px;
+            }
+            .about-text {
+                font-size: 0.9rem;
+                padding: 0.6rem;
             }
         }
 
@@ -308,7 +417,7 @@
     </style>
 </head>
 <body>
-    <!-- 3D линии с градиентом -->
+    <!-- 3D линии с градиентом на фоне -->
     <div class="line-3d">
         <div class="line"></div>
         <div class="line"></div>
@@ -320,13 +429,24 @@
     <div class="glow-orb2"></div>
 
     <div class="glass-card">
+        <!-- 3D линии на контейнере -->
+        <div class="card-lines">
+            <div class="card-line"></div>
+            <div class="card-line"></div>
+            <div class="card-line"></div>
+            <div class="card-line"></div>
+            <div class="card-line"></div>
+            <div class="card-line"></div>
+        </div>
+
         <!-- MrFeast Project -->
         <div class="title">MrFeast Project</div>
-        <div class="sub">HTML и Python программист</div>
+        <div class="sub">HTML и Python программист | AI Cyber Architect</div>
 
+        <!-- Яркая анимированная линия-разделитель -->
         <div class="divider"></div>
 
-        <!-- ОБО МНЕ (премиальная иконка звезда как у Gemini) -->
+        <!-- ОБО МНЕ -->
         <div class="about-title">
             <div class="premium-icon">
                 <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -341,7 +461,7 @@
             Дизайн не очень на Python, зато стабильный и понятный. На HTML там же везде всё хорошо в плане производительности и качества.
         </div>
 
-        <!-- НАВЫКИ (премиальная иконка молния) -->
+        <!-- НАВЫКИ -->
         <div class="skills-title">
             <div class="bolt-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -357,7 +477,7 @@
             <span class="skill-tag">Design (HTML)</span>
         </div>
 
-        <!-- Кнопка → Telegram @MrFeast_Official с премиальной иконкой, выровнена по центру -->
+        <!-- Кнопка Telegram -->
         <div class="btn-wrapper">
             <a href="https://t.me/MrFeast_Official" target="_blank" rel="noopener noreferrer" class="contact-btn">
                 <svg viewBox="0 0 24 24" fill="currentColor">
