@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>MrFeast Project | HTML & Python программист</title>
+    <title>MrFeast Project | Game Dev Cyber</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: radial-gradient(circle at 20% 30%, #0a0a1a, #020208);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             align-items: center;
@@ -23,7 +23,7 @@
             overflow-x: hidden;
         }
 
-        /* 3D линии с градиентом на фоне */
+        /* 3D анимированные линии на фоне */
         .line-3d {
             position: fixed;
             top: 0;
@@ -36,7 +36,7 @@
 
         .line {
             position: absolute;
-            background: linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,0.6), rgba(236,72,153,0.6), rgba(168,85,247,0));
+            background: linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,0.5), rgba(236,72,153,0.5), rgba(168,85,247,0));
             height: 2px;
             width: 100%;
             filter: blur(2px);
@@ -63,62 +63,87 @@
         .line:nth-child(4) { --rot: -4deg; }
         .line:nth-child(5) { --rot: 1deg; }
 
+        /* Партиклы/звезды */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.8; transform: scale(1); }
+        }
+
         /* Дополнительный градиентный шум/сияние */
         .glow-orb {
             position: fixed;
             width: 50vw;
             height: 50vw;
-            background: radial-gradient(circle, rgba(124,58,237,0.3), transparent 70%);
+            background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
             border-radius: 50%;
             top: -20%;
             right: -10%;
             filter: blur(80px);
             pointer-events: none;
             z-index: 0;
-            animation: pulseGlow 8s ease-in-out infinite;
+            animation: floatGlow 10s ease-in-out infinite;
         }
         .glow-orb2 {
             bottom: -20%;
             left: -10%;
             top: auto;
-            background: radial-gradient(circle, rgba(236,72,153,0.3), transparent 70%);
+            background: radial-gradient(circle, rgba(236,72,153,0.2), transparent 70%);
             width: 60vw;
             height: 60vw;
             position: fixed;
             filter: blur(100px);
             pointer-events: none;
-            animation: pulseGlow 10s ease-in-out infinite reverse;
+            animation: floatGlow 12s ease-in-out infinite reverse;
         }
-        
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
+        @keyframes floatGlow {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            50% { transform: translate(3%, 2%) scale(1.05); opacity: 0.7; }
         }
 
-        /* Главный контейнер — стеклянная карта с 3D линиями на ней */
+        /* Главный контейнер — игровая стеклянная карта */
         .glass-card {
             position: relative;
             z-index: 10;
             max-width: 680px;
             width: 100%;
-            background: rgba(15, 15, 25, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(8, 8, 18, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 2.5rem;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(168, 85, 247, 0.2) inset, 0 0 30px rgba(168, 85, 247, 0.1);
-            padding: 2.5rem 2.2rem;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(168, 85, 247, 0.2) inset, 0 0 40px rgba(168, 85, 247, 0.15);
+            padding: 2.2rem 2rem;
             transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             overflow: hidden;
+            animation: cardGlow 3s infinite alternate;
+        }
+        @keyframes cardGlow {
+            0% { box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(168, 85, 247, 0.2) inset, 0 0 20px rgba(168, 85, 247, 0.1); }
+            100% { box-shadow: 0 35px 60px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(168, 85, 247, 0.4) inset, 0 0 50px rgba(168, 85, 247, 0.3); }
         }
 
         .glass-card:hover {
-            transform: translateY(-8px) scale(1.01);
-            border-color: rgba(168, 85, 247, 0.6);
-            box-shadow: 0 40px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(168, 85, 247, 0.5) inset, 0 0 40px rgba(168, 85, 247, 0.2);
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(168, 85, 247, 0.7);
         }
 
-        /* 3D линии на контейнере */
+        /* 3D линии на контейнере (игровые) */
         .card-lines {
             position: absolute;
             top: 0;
@@ -133,20 +158,20 @@
 
         .card-line {
             position: absolute;
-            background: linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,0.8), rgba(236,72,153,0.8), rgba(168,85,247,0));
+            background: linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,0.7), rgba(236,72,153,0.7), rgba(168,85,247,0));
             height: 2px;
             width: 200%;
-            animation: cardLineMove 12s linear infinite;
+            animation: cardLineMove 10s linear infinite;
             opacity: 0.5;
             filter: blur(1px);
         }
 
-        .card-line:nth-child(1) { top: 20%; animation-duration: 14s; animation-delay: -2s; transform: rotate(2deg); left: -50%;}
-        .card-line:nth-child(2) { top: 45%; animation-duration: 18s; animation-delay: -5s; transform: rotate(-1deg); left: -50%;}
-        .card-line:nth-child(3) { top: 70%; animation-duration: 16s; animation-delay: -8s; transform: rotate(3deg); left: -50%;}
-        .card-line:nth-child(4) { top: 85%; animation-duration: 20s; animation-delay: -11s; transform: rotate(-2deg); left: -50%;}
-        .card-line:nth-child(5) { top: 10%; animation-duration: 22s; animation-delay: -14s; transform: rotate(1deg); left: -50%;}
-        .card-line:nth-child(6) { top: 60%; animation-duration: 15s; animation-delay: -17s; transform: rotate(-3deg); left: -50%;}
+        .card-line:nth-child(1) { top: 20%; animation-duration: 12s; animation-delay: -2s; transform: rotate(2deg); left: -50%;}
+        .card-line:nth-child(2) { top: 45%; animation-duration: 16s; animation-delay: -5s; transform: rotate(-1deg); left: -50%;}
+        .card-line:nth-child(3) { top: 70%; animation-duration: 14s; animation-delay: -8s; transform: rotate(3deg); left: -50%;}
+        .card-line:nth-child(4) { top: 85%; animation-duration: 18s; animation-delay: -11s; transform: rotate(-2deg); left: -50%;}
+        .card-line:nth-child(5) { top: 10%; animation-duration: 20s; animation-delay: -14s; transform: rotate(1deg); left: -50%;}
+        .card-line:nth-child(6) { top: 60%; animation-duration: 13s; animation-delay: -17s; transform: rotate(-3deg); left: -50%;}
 
         @keyframes cardLineMove {
             0% { transform: translateX(-30%) rotate(var(--rot, 0deg)); opacity: 0; }
@@ -164,7 +189,7 @@
         .card-line:nth-child(5) { --rot: 1deg; }
         .card-line:nth-child(6) { --rot: -3deg; }
 
-        /* Заголовок с анимацией */
+        /* Заголовок с неоновым эффектом */
         .title {
             position: relative;
             z-index: 2;
@@ -177,7 +202,12 @@
             color: transparent;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(192,132,252,0.3);
+            text-shadow: 0 0 20px rgba(192,132,252,0.5);
+            animation: titlePulse 2s ease-in-out infinite;
+        }
+        @keyframes titlePulse {
+            0%, 100% { opacity: 1; text-shadow: 0 0 15px rgba(192,132,252,0.4); }
+            50% { opacity: 0.95; text-shadow: 0 0 30px rgba(192,132,252,0.8); }
         }
 
         .sub {
@@ -185,16 +215,21 @@
             z-index: 2;
             font-size: 1rem;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.85);
             border-left: 4px solid #c084fc;
             padding-left: 0.9rem;
             margin-bottom: 2rem;
             letter-spacing: 0.3px;
-            background: linear-gradient(90deg, rgba(192,132,252,0.15), transparent);
+            background: linear-gradient(90deg, rgba(192,132,252,0.2), transparent);
             border-radius: 0 12px 12px 0;
+            animation: subGlow 3s infinite;
+        }
+        @keyframes subGlow {
+            0%, 100% { border-left-color: #c084fc; }
+            50% { border-left-color: #ec489a; }
         }
 
-        /* Разделитель — яркая линия с анимацией */
+        /* Разделитель — яркая анимированная линия */
         .divider {
             position: relative;
             z-index: 2;
@@ -202,13 +237,13 @@
             background: linear-gradient(90deg, rgba(168,85,247,0.2), #c084fc, #ec489a, #c084fc, rgba(168,85,247,0.2));
             margin: 1.5rem 0 1.8rem 0;
             border-radius: 2px;
-            box-shadow: 0 0 12px rgba(192,132,252,0.6), 0 0 4px rgba(236,72,153,0.5);
-            animation: dividerPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(192,132,252,0.7);
+            animation: dividerPulse 1.5s ease-in-out infinite;
+            width: 100%;
         }
-        
         @keyframes dividerPulse {
-            0%, 100% { opacity: 0.7; box-shadow: 0 0 8px rgba(192,132,252,0.4); }
-            50% { opacity: 1; box-shadow: 0 0 20px rgba(192,132,252,0.9), 0 0 8px rgba(236,72,153,0.6); }
+            0%, 100% { opacity: 0.8; box-shadow: 0 0 8px rgba(192,132,252,0.5); background-size: 100% 100%; }
+            50% { opacity: 1; box-shadow: 0 0 25px rgba(192,132,252,1), 0 0 12px rgba(236,72,153,0.8); background-size: 150% 100%; }
         }
 
         /* Блок ОБО МНЕ */
@@ -234,11 +269,15 @@
             justify-content: center;
             box-shadow: 0 8px 20px rgba(124,58,237,0.5);
             transition: all 0.3s ease;
+            animation: iconGlow 2s infinite alternate;
+        }
+        @keyframes iconGlow {
+            0% { box-shadow: 0 5px 15px rgba(124,58,237,0.4); }
+            100% { box-shadow: 0 10px 30px rgba(124,58,237,0.8); }
         }
         
         .premium-icon:hover {
             transform: scale(1.05) rotate(5deg);
-            box-shadow: 0 12px 28px rgba(124,58,237,0.7);
         }
 
         .premium-icon svg {
@@ -257,10 +296,16 @@
             font-weight: 450;
             font-size: 0.98rem;
             margin-bottom: 2rem;
-            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(168,85,247,0.05));
-            padding: 0.8rem 1rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(168,85,247,0.08));
+            padding: 0.9rem 1.2rem;
             border-radius: 20px;
-            border: 0.5px solid rgba(168,85,247,0.2);
+            border: 1px solid rgba(168,85,247,0.25);
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
+        }
+        .about-text:hover {
+            border-color: rgba(168,85,247,0.5);
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(168,85,247,0.12));
         }
 
         /* Блок НАВЫКИ */
@@ -286,11 +331,15 @@
             justify-content: center;
             box-shadow: 0 8px 20px rgba(220,38,38,0.4);
             transition: all 0.3s ease;
+            animation: boltGlow 1.8s infinite alternate;
+        }
+        @keyframes boltGlow {
+            0% { box-shadow: 0 5px 15px rgba(220,38,38,0.3); }
+            100% { box-shadow: 0 10px 28px rgba(220,38,38,0.7); }
         }
         
         .bolt-icon:hover {
             transform: scale(1.05) rotate(-5deg);
-            box-shadow: 0 12px 28px rgba(220,38,38,0.6);
         }
 
         .bolt-icon svg {
@@ -310,9 +359,9 @@
         }
 
         .skill-tag {
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(168,85,247,0.15));
+            background: linear-gradient(135deg, rgba(20, 20, 45, 0.8), rgba(168,85,247,0.2));
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(168,85,247,0.4);
+            border: 1px solid rgba(168,85,247,0.5);
             padding: 0.6rem 1.4rem;
             border-radius: 60px;
             font-size: 0.9rem;
@@ -320,17 +369,18 @@
             color: #f0eefc;
             letter-spacing: 0.2px;
             transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
         }
 
         .skill-tag:hover {
-            background: linear-gradient(135deg, rgba(168,85,247,0.5), rgba(236,72,153,0.5));
+            background: linear-gradient(135deg, rgba(168,85,247,0.7), rgba(236,72,153,0.6));
             border-color: #f0a3ff;
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(168,85,247,0.4);
+            box-shadow: 0 12px 24px rgba(168,85,247,0.5);
         }
 
-        /* Премиальная кнопка */
+        /* Премиальная кнопка с игровым эффектом */
         .btn-wrapper {
             position: relative;
             z-index: 2;
@@ -357,12 +407,36 @@
             letter-spacing: 0.5px;
             backdrop-filter: blur(4px);
             text-decoration: none;
-            animation: gradientShift 3s ease infinite;
+            animation: gradientShift 2.5s ease infinite, buttonPulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(30deg);
+            animation: btnShine 3s infinite;
+        }
+        
+        @keyframes btnShine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
         }
         
         @keyframes gradientShift {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes buttonPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 12px 30px rgba(124, 58, 237, 0.5); }
+            50% { transform: scale(1.02); box-shadow: 0 15px 40px rgba(124, 58, 237, 0.8); }
         }
 
         .contact-btn svg {
@@ -373,12 +447,32 @@
 
         .contact-btn:hover {
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.7);
+            box-shadow: 0 20px 45px rgba(124, 58, 237, 0.8);
             gap: 18px;
+            animation: none;
+        }
+        
+        .contact-btn:hover::before {
+            animation: btnShine 1.5s infinite;
         }
 
         .contact-btn:active {
             transform: translateY(1px);
+        }
+
+        /* Игровой 3D эффект для всего контейнера */
+        @keyframes gameFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .glass-card {
+            animation: gameFloat 4s ease-in-out infinite, cardGlow 3s infinite alternate;
+        }
+        
+        .glass-card:hover {
+            animation: none;
+            transform: translateY(-8px) scale(1.01);
         }
 
         /* адаптив */
@@ -387,10 +481,11 @@
                 padding: 1rem;
             }
             .glass-card {
-                padding: 1.6rem;
+                padding: 1.5rem;
+                animation: none;
             }
             .title {
-                font-size: 1.7rem;
+                font-size: 1.6rem;
             }
             .skill-tag {
                 font-size: 0.75rem;
@@ -406,13 +501,25 @@
             }
             .about-text {
                 font-size: 0.9rem;
-                padding: 0.6rem;
+                padding: 0.7rem;
             }
         }
 
         ::selection {
             background: #a855f7;
             color: white;
+        }
+        
+        /* скролл */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a855f7;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -425,6 +532,10 @@
         <div class="line"></div>
         <div class="line"></div>
     </div>
+    
+    <!-- Звезды (партиклы) -->
+    <div class="stars" id="stars"></div>
+    
     <div class="glow-orb"></div>
     <div class="glow-orb2"></div>
 
@@ -441,7 +552,7 @@
 
         <!-- MrFeast Project -->
         <div class="title">MrFeast Project</div>
-        <div class="sub">HTML и Python программист</div>
+        <div class="sub">HTML и Python программист | AI Cyber Architect</div>
 
         <!-- Яркая анимированная линия-разделитель -->
         <div class="divider"></div>
@@ -487,5 +598,24 @@
             </a>
         </div>
     </div>
+
+    <script>
+        // Генерация звезд (оптимизировано)
+        const starsContainer = document.getElementById('stars');
+        const starCount = window.innerWidth < 768 ? 60 : 120;
+        
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            const size = Math.random() * 3 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            star.style.animationDuration = Math.random() * 3 + 2 + 's';
+            starsContainer.appendChild(star);
+        }
+    </script>
 </body>
 </html>
