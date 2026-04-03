@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>FeastVPN — Стабильный пинг | Все сервера</title>
+    <title>FeastVPN — Быстрые сервера | Низкий пинг</title>
     <style>
         * {
             margin: 0;
@@ -189,7 +189,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 52vh;
+            max-height: 45vh;
             overflow-y: auto;
         }
         .servers-list::-webkit-scrollbar {
@@ -281,6 +281,85 @@
             margin-left: 12px;
             text-align: center;
         }
+
+        /* Модальное окно подписки */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .subscribe-modal {
+            background: #1e1f28;
+            border-radius: 32px;
+            max-width: 320px;
+            width: 85%;
+            padding: 28px 24px 32px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.2s;
+        }
+        .modal-overlay.active .subscribe-modal {
+            transform: scale(1);
+        }
+        .subscribe-modal h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffdd88;
+            margin-bottom: 12px;
+        }
+        .subscribe-modal p {
+            color: #b0b0c0;
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        .subscribe-btn {
+            background: linear-gradient(135deg, #2b6e4e, #1e4a2f);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 12px;
+        }
+        .subscribe-btn:active {
+            transform: scale(0.96);
+        }
+        .cancel-subscribe {
+            background: transparent;
+            border: none;
+            color: #8e8e9e;
+            font-size: 13px;
+            padding: 8px;
+            cursor: pointer;
+        }
+        .channel-link {
+            color: #7d8eff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
         .toast-message {
             position: fixed;
             bottom: 30px;
@@ -336,7 +415,7 @@
         <div class="sub">
             <span>🔐 MTProto Proxy</span>
             <span>📱 Нажми → Telegram подключит</span>
-            <span class="ping-badge">📡 Стабильный пинг (TCP)</span>
+            <span class="ping-badge">📡 Стабильный пинг</span>
         </div>
     </div>
 
@@ -350,12 +429,26 @@
 
     <div class="servers-list" id="serversList"></div>
     <div class="footer-note">
-        🔥 Исправлено: теперь пинг определяется для всех серверов стабильно
+        🔥 Подпишись на канал, чтобы пользоваться прокси бесплатно
     </div>
 </div>
+
 <div id="toastMsg" class="toast-message">✨ Готово</div>
 
+<!-- Модальное окно подписки -->
+<div id="subscribeModal" class="modal-overlay">
+    <div class="subscribe-modal">
+        <h3>📢 Требуется подписка</h3>
+        <p>Для использования FeastVPN необходимо подписаться на канал <strong>@MrFeastChannel</strong></p>
+        <button id="subscribeConfirmBtn" class="subscribe-btn">🔔 ПОДПИСАТЬСЯ</button>
+        <button id="subscribeCancelBtn" class="cancel-subscribe">Напомнить позже</button>
+    </div>
+</div>
+
 <script>
+    const CHANNEL_USERNAME = "MrFeastChannel";
+    const CHANNEL_LINK = `https://t.me/${CHANNEL_USERNAME}`;
+
     const FEAST_SERVERS = [
         {"name": "FeastVPN 1", "server": "quackton.life", "port": 443, "secret": "ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275"},
         {"name": "FeastVPN 2", "server": "tg.pepewtf.top", "port": 443, "secret": "eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70"},
@@ -369,10 +462,90 @@
         {"name": "FeastVPN 10", "server": "rio.alotaxi.info", "port": 4516, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d"}
     ];
 
+    // Хранилище статуса подписки (localStorage)
+    let subscriptionChecked = false;
+    let isSubscribed = false;
+
+    function checkSubscriptionStatus() {
+        const saved = localStorage.getItem('feastvpn_subscribed');
+        if (saved === 'true') {
+            isSubscribed = true;
+            subscriptionChecked = true;
+            return true;
+        }
+        return false;
+    }
+
+    function markAsSubscribed() {
+        localStorage.setItem('feastvpn_subscribed', 'true');
+        isSubscribed = true;
+        subscriptionChecked = true;
+    }
+
+    function resetSubscriptionCheck() {
+        localStorage.removeItem('feastvpn_subscribed');
+        isSubscribed = false;
+        subscriptionChecked = false;
+    }
+
+    // Показать модальное окно подписки
+    let pendingConnection = null; // сохраняем сервер для подключения после подписки
+    let pendingAutoCallback = null;
+
+    function showSubscribeModal(onSubscribeComplete) {
+        const modal = document.getElementById('subscribeModal');
+        if (!modal) return;
+        
+        modal.classList.add('active');
+        
+        const confirmBtn = document.getElementById('subscribeConfirmBtn');
+        const cancelBtn = document.getElementById('subscribeCancelBtn');
+        
+        const handleSubscribe = () => {
+            // Открываем Telegram канал для подписки
+            window.location.href = CHANNEL_LINK;
+            // Помечаем как подписанного (доверительный механизм)
+            markAsSubscribed();
+            modal.classList.remove('active');
+            showToastMessage("✅ Спасибо за подписку! Теперь можно подключиться.");
+            if (onSubscribeComplete) {
+                setTimeout(() => {
+                    onSubscribeComplete();
+                }, 500);
+            }
+            cleanup();
+        };
+        
+        const handleCancel = () => {
+            modal.classList.remove('active');
+            showToastMessage("⚠️ Подпишитесь на канал, чтобы использовать VPN", true);
+            cleanup();
+        };
+        
+        const cleanup = () => {
+            confirmBtn.removeEventListener('click', handleSubscribe);
+            cancelBtn.removeEventListener('click', handleCancel);
+        };
+        
+        confirmBtn.addEventListener('click', handleSubscribe);
+        cancelBtn.addEventListener('click', handleCancel);
+    }
+
+    // Проверка подписки перед подключением
+    function requireSubscription(callback) {
+        if (checkSubscriptionStatus()) {
+            // Уже подписан
+            callback();
+        } else {
+            // Показать модалку и выполнить callback после подписки
+            showSubscribeModal(callback);
+        }
+    }
+
+    // Остальная логика (пинг, подключение)
     let pingMap = new Map();
     let pingInProgress = false;
 
-    // НОВЫЙ МЕТОД ПРОВЕРКИ ПИНГА — через Image + таймаут (надежнее fetch с no-cors)
     function measurePing(server, port, timeoutMs = 2500) {
         return new Promise((resolve) => {
             const startTime = performance.now();
@@ -385,8 +558,6 @@
                 }
             }, timeoutMs);
             
-            // Пробуем через Image (работает на любых портах, где есть TCP-ответ)
-            // Используем уникальный URL, чтобы избежать кэша
             const img = new Image();
             const url = `https://${server}:${port}/favicon.ico?nocache=${Date.now()}-${Math.random()}`;
             
@@ -400,13 +571,10 @@
             };
             
             img.onerror = () => {
-                // Даже при ошибке соединения мы получили ответ TCP (reset или refused)
-                // Это значит, что сервер доступен, но нет HTTPS
                 if (!resolved) {
                     resolved = true;
                     clearTimeout(timeoutId);
                     const elapsed = performance.now() - startTime;
-                    // Если ответ пришел очень быстро — значит соединение установлено
                     if (elapsed < timeoutMs && elapsed > 0) {
                         resolve(Math.min(Math.floor(elapsed), timeoutMs));
                     } else {
@@ -417,14 +585,10 @@
             
             img.src = url;
             
-            // Дополнительный fallback: пробуем fetch с маленьким таймаутом
-            // но только если image не сработал слишком долго
             setTimeout(() => {
                 if (!resolved) {
-                    // Второй шанс через fetch с abort
                     const controller = new AbortController();
                     const fetchTimeout = setTimeout(() => controller.abort(), 1500);
-                    
                     fetch(url, {
                         method: 'HEAD',
                         mode: 'no-cors',
@@ -459,12 +623,10 @@
         pingInProgress = true;
         if (showToastMsg) showToastMessage("📡 Обновление пингов...");
         
-        // Запускаем все пинги параллельно с очередью
         const promises = FEAST_SERVERS.map(async (srv) => {
             const key = `${srv.server}:${srv.port}`;
             const pingMs = await measurePing(srv.server, srv.port, 2500);
             pingMap.set(key, pingMs);
-            return { key, pingMs };
         });
         
         await Promise.all(promises);
@@ -499,7 +661,7 @@
         });
     }
 
-    function connectToServer(srv) {
+    function connectToServerDirect(srv) {
         const { name, server, port, secret } = srv;
         const proxyLink = `tg://proxy?server=${encodeURIComponent(server)}&port=${port}&secret=${encodeURIComponent(secret.trim().toLowerCase())}`;
         showToastMessage(`🔌 ${name}: подключение...`);
@@ -511,6 +673,12 @@
         } catch(e) {
             showToastMessage(`❌ Ошибка`, true);
         }
+    }
+
+    function connectToServerWithCheck(srv) {
+        requireSubscription(() => {
+            connectToServerDirect(srv);
+        });
     }
 
     function getFastestServer() {
@@ -546,34 +714,35 @@
             showToastMessage("⏳ Уже подключаемся...");
             return;
         }
-        const neonBtn = document.getElementById('neonAutoBtn');
-        if (!neonBtn) return;
         
-        neonBtn.classList.add('active');
-        autoConnectInProgress = true;
-        showToastMessage("🔍 Определяем самый быстрый прокси...");
-        
-        await updateAllPings(true);
-        
-        const fastest = getFastestServer();
-        if (fastest) {
-            const pingValue = pingMap.get(`${fastest.server}:${fastest.port}`);
-            const pingText = (pingValue && pingValue < 2500) ? `${pingValue} мс` : "Неизвестно";
-            showToastMessage(`✨ Найден лучший: ${fastest.name} (пинг ${pingText}) → подключение...`);
-            setTimeout(() => {
-                connectToServer(fastest);
+        requireSubscription(async () => {
+            autoConnectInProgress = true;
+            const neonBtn = document.getElementById('neonAutoBtn');
+            if (neonBtn) neonBtn.classList.add('active');
+            showToastMessage("🔍 Определяем самый быстрый прокси...");
+            
+            await updateAllPings(true);
+            
+            const fastest = getFastestServer();
+            if (fastest) {
+                const pingValue = pingMap.get(`${fastest.server}:${fastest.port}`);
+                const pingText = (pingValue && pingValue < 2500) ? `${pingValue} мс` : "Неизвестно";
+                showToastMessage(`✨ Найден лучший: ${fastest.name} (пинг ${pingText}) → подключение...`);
+                setTimeout(() => {
+                    connectToServerDirect(fastest);
+                    setTimeout(() => {
+                        if (neonBtn) neonBtn.classList.remove('active');
+                    }, 1800);
+                    autoConnectInProgress = false;
+                }, 400);
+            } else {
+                showToastMessage("⚠️ Не удалось определить сервер", true);
                 setTimeout(() => {
                     if (neonBtn) neonBtn.classList.remove('active');
-                }, 1800);
+                }, 1000);
                 autoConnectInProgress = false;
-            }, 400);
-        } else {
-            showToastMessage("⚠️ Не удалось определить сервер", true);
-            setTimeout(() => {
-                if (neonBtn) neonBtn.classList.remove('active');
-            }, 1000);
-            autoConnectInProgress = false;
-        }
+            }
+        });
     }
 
     function renderServersList() {
@@ -630,7 +799,7 @@
             card.addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (window.navigator?.vibrate) window.navigator.vibrate(20);
-                connectToServer(srv);
+                connectToServerWithCheck(srv);
             });
             container.appendChild(card);
         });
