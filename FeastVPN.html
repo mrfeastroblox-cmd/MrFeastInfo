@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>FeastVPN | Серверы</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>FeastVPN | Быстрый прокси</title>
     <style>
         * {
             margin: 0;
@@ -11,66 +11,365 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
+
         body {
-            background: #0a0c12;
-            font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
-            color: #eef2ff;
+            background: #0a0c10;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
+            padding: 18px;
         }
-        .app { max-width: 600px; margin: 0 auto; padding: 16px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #f97316, #ef4444); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .globe-btn { background: #1e293b; border: none; padding: 10px 16px; border-radius: 40px; color: #94a3b8; font-size: 1.2rem; cursor: pointer; }
-        .globe-btn:active { background: #2d3a4e; transform: scale(0.96); }
-        .status-bar { background: #111827; border-radius: 24px; padding: 12px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2d3a4e; }
-        .status-text { font-size: 0.85rem; color: #94a3b8; }
-        .active-server { background: #22c55e20; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; color: #22c55e; }
-        .servers-list { display: flex; flex-direction: column; gap: 12px; }
-        .server-card { background: linear-gradient(135deg, #111827 0%, #0f1722 100%); border-radius: 20px; padding: 14px 16px; border: 1px solid #2a3748; }
-        .server-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .server-info { flex: 2; min-width: 140px; }
-        .server-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
-        .server-stats { display: flex; gap: 12px; font-size: 0.7rem; font-family: monospace; }
-        .ping-stat { background: #1e293b; padding: 3px 8px; border-radius: 20px; color: #a5f3fc; }
-        .speed-stat { background: #1e293b; padding: 3px 8px; border-radius: 20px; color: #c084fc; }
-        .connect-btn { background: #3b82f6; border: none; color: white; font-weight: 600; padding: 8px 20px; border-radius: 40px; font-size: 0.8rem; cursor: pointer; transition: 0.05s linear; }
-        .connect-btn:active { background: #2563eb; transform: scale(0.96); }
-        .connect-btn.connected { background: #22c55e; }
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { background: #0f172a; border-radius: 32px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; padding: 20px; border: 1px solid #2dd4bf40; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #2d3a4e; }
-        .modal-header h3 { font-size: 1.3rem; }
-        .close-modal { background: #334155; border: none; color: white; font-size: 1.2rem; width: 32px; height: 32px; border-radius: 40px; cursor: pointer; }
-        .servers-modal-list { display: flex; flex-direction: column; gap: 12px; }
-        .modal-server-item { background: #111827; border-radius: 16px; padding: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .loading { text-align: center; padding: 40px; color: #6c7a91; }
-        .update-time { text-align: right; font-size: 0.65rem; color: #475569; margin-top: 8px; }
-        footer { text-align: center; font-size: 0.7rem; color: #475569; margin-top: 30px; padding-top: 16px; border-top: 1px solid #1e2a3a; }
-        @media (max-width: 480px) { .app { padding: 12px; } .server-name { font-size: 1rem; } .connect-btn { padding: 6px 14px; } }
+
+        .tg-container {
+            max-width: 580px;
+            width: 100%;
+            margin: 0 auto;
+            background: #1e1f28;
+            border-radius: 38px;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6), 0 0 0 0.5px rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+
+        /* Анимированный заголовок */
+        .tg-header {
+            padding: 24px 20px 16px 20px;
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(135deg, #1a1b24 0%, #1e1f28 100%);
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Анимированный логотип */
+        .animated-logo {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(145deg, #2b6e4e, #1e4a2f);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+
+        .animated-logo::before {
+            content: "F";
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .animated-logo::after {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 32px;
+            background: radial-gradient(circle, rgba(80,200,120,0.4) 0%, rgba(80,200,120,0) 80%);
+            opacity: 0.6;
+            animation: pulseRing 2s ease-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatLogo {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(1); opacity: 0.7; }
+            70% { transform: scale(1.3); opacity: 0; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #FFFFFF, #9df0b0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .free-badge {
+            background: #2b6e3c;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #d0ffdd;
+            background: #1e4a2f;
+            animation: subtleGlow 2s infinite;
+        }
+
+        @keyframes subtleGlow {
+            0% { box-shadow: 0 0 0 0 rgba(80,200,120,0.2);}
+            70% { box-shadow: 0 0 0 6px rgba(80,200,120,0);}
+            100% { box-shadow: 0 0 0 0 rgba(80,200,120,0);}
+        }
+
+        /* НЕОНОВАЯ СЕРАЯ КНОПКА */
+        .neon-button-section {
+            padding: 16px 20px 8px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .neon-auto-btn {
+            background: #2a2b35;
+            border: 1.5px solid #3e3f4a;
+            border-radius: 60px;
+            padding: 14px 28px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.2, 1.2, 0.4, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            backdrop-filter: blur(2px);
+        }
+        .neon-auto-btn span {
+            font-size: 18px;
+            font-weight: 700;
+            color: #b0b0c0;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+        .neon-auto-btn .neon-icon {
+            font-size: 24px;
+            filter: grayscale(0.5);
+            transition: all 0.2s;
+        }
+        /* Активное неоновое состояние */
+        .neon-auto-btn.active {
+            border-color: #00ffaa;
+            box-shadow: 0 0 16px rgba(0, 255, 170, 0.6), 0 0 6px rgba(0, 255, 170, 0.8);
+            background: #1f2a25;
+        }
+        .neon-auto-btn.active span {
+            color: #b5ffdd;
+            text-shadow: 0 0 3px #00ffaa80;
+        }
+        .neon-auto-btn.active .neon-icon {
+            filter: drop-shadow(0 0 4px #00ffaa);
+        }
+
+        .sub {
+            color: #8e8e9e;
+            font-size: 13px;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .ping-badge {
+            background: #2a2b35;
+            padding: 5px 12px;
+            border-radius: 26px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Список серверов */
+        .servers-list {
+            padding: 8px 12px 24px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 52vh;
+            overflow-y: auto;
+        }
+        .servers-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .servers-list::-webkit-scrollbar-track {
+            background: #2a2b35;
+            border-radius: 10px;
+        }
+        .servers-list::-webkit-scrollbar-thumb {
+            background: #5a5b6e;
+            border-radius: 10px;
+        }
+
+        .server-card {
+            background: #25262f;
+            border-radius: 24px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .server-card:active {
+            transform: scale(0.97);
+            background: #2e2f3b;
+        }
+        .server-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 2;
+        }
+        .server-name {
+            font-weight: 700;
+            font-size: 17px;
+            color: #f2f2fa;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .ping-indicator {
+            font-size: 12px;
+            font-weight: 500;
+            background: #1d1e26;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-family: monospace;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ping-value-white {
+            color: white !important;
+            font-weight: 500;
+        }
+        .ping-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 10px;
+            background: #6f6f8a;
+            display: inline-block;
+        }
+        .ping-dot.low { background: #2ed15e; box-shadow: 0 0 4px #2ed15e; }
+        .ping-dot.medium { background: #ffb347; }
+        .ping-dot.high { background: #ff6b6b; }
+
+        .server-host {
+            font-size: 12px;
+            color: #aaaac0;
+            font-family: monospace;
+            background: #1b1c24;
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .connect-btn {
+            background: #2f6e4a;
+            padding: 8px 18px;
+            border-radius: 44px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2ffe8;
+            transition: 0.15s;
+            white-space: nowrap;
+            margin-left: 12px;
+            text-align: center;
+        }
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #1f212cee;
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: none;
+            border: 0.5px solid rgba(255,255,255,0.2);
+            font-family: monospace;
+        }
+        .toast-message.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        .footer-note {
+            padding: 12px 20px 20px;
+            border-top: 0.5px solid rgba(255,255,255,0.05);
+            font-size: 11px;
+            color: #6c6c80;
+            text-align: center;
+        }
+        @media (max-width: 520px) {
+            .server-card {
+                flex-wrap: wrap;
+            }
+            .connect-btn {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="app">
-    <div class="header">
-        <div class="logo">🔥 FeastVPN</div>
-        <button class="globe-btn" id="openServersBtn">🌍 Серверы</button>
+<div class="tg-container">
+    <div class="tg-header">
+        <div class="title-row">
+            <div class="logo-area">
+                <div class="animated-logo"></div>
+                <h1>FeastVPN+</h1>
+            </div>
+            <div class="free-badge">⚡ ULTIMATE</div>
+        </div>
+        <div class="sub">
+            <span>🔐 MTProto Proxy</span>
+            <span>📱 Нажми → Telegram подключит</span>
+            <span class="ping-badge">📡 Авто-пинг (быстрый)</span>
+        </div>
     </div>
-    <div class="status-bar">
-        <span class="status-text">📡 Активный сервер:</span>
-        <span class="active-server" id="activeServerDisplay">Не выбран</span>
+
+    <!-- НЕОНОВАЯ КНОПКА АВТОПОДКЛЮЧЕНИЯ -->
+    <div class="neon-button-section">
+        <div class="neon-auto-btn" id="neonAutoBtn">
+            <span class="neon-icon">⚡</span>
+            <span>АВТОМАТИЧЕСКИЙ БЫСТРЫЙ ПРОКСИ</span>
+            <span class="neon-icon">🚀</span>
+        </div>
     </div>
-    <div id="serversContainer" class="servers-list"><div class="loading">🔄 Измерение пинга и скорости...</div></div>
-    <div id="updateTime" class="update-time"></div>
-    <footer>⚡ Нажмите Connect для активации сервера<br>Показываются 3 сервера с наименьшим пингом</footer>
+
+    <div class="servers-list" id="serversList"></div>
+    <div class="footer-note">
+        🔥 Неоновая кнопка: зелёное свечение + подключение к самому быстрому серверу (по пингу)
+    </div>
 </div>
-<div id="serversModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header"><h3>🌍 Все серверы FeastVPN</h3><button class="close-modal" id="closeModalBtn">✕</button></div>
-        <div id="modalServersList" class="servers-modal-list"></div>
-    </div>
-</div>
+<div id="toastMsg" class="toast-message">✨ Готово</div>
+
 <script>
+    // 10 серверов FeastVPN (все секреты для tg://)
     const FEAST_SERVERS = [
         {"name": "FeastVPN 1", "server": "quackton.life", "port": 443, "secret": "ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275"},
         {"name": "FeastVPN 2", "server": "tg.pepewtf.top", "port": 443, "secret": "eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70"},
@@ -80,295 +379,274 @@
         {"name": "FeastVPN 6", "server": "peyk.acharbashi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
         {"name": "FeastVPN 7", "server": "nitro.alotaxi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
         {"name": "FeastVPN 8", "server": "alo.acharbashi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 9", "server": "dedicated.love-internet.xyz", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"}
+        {"name": "FeastVPN 9", "server": "dedicated.love-internet.xyz", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
+        {"name": "FeastVPN 10", "server": "rio.alotaxi.info", "port": 4516, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d"}
     ];
-    let serversData = {};
-    let activeServer = null;
-    let lastUpdateTime = null;
 
-    // Тест пинга через WebSocket
-    async function testPing(server, port, timeoutMs = 3000) {
-        return new Promise((resolve) => {
-            const startTime = performance.now();
-            let ws = null;
-            const timeout = setTimeout(() => {
-                if (ws) try { ws.close(); } catch(e) {}
-                resolve(null);
-            }, timeoutMs);
-            try {
-                ws = new WebSocket(`wss://${server}:${port}`);
-                ws.onopen = () => {
-                    clearTimeout(timeout);
-                    const ping = Math.round(performance.now() - startTime);
-                    try { ws.close(); } catch(e) {}
-                    resolve(ping);
-                };
-                ws.onerror = () => {
-                    clearTimeout(timeout);
-                    try { ws.close(); } catch(e) {}
-                    resolve(null);
-                };
-                ws.onclose = () => {
-                    clearTimeout(timeout);
-                    resolve(null);
-                };
-            } catch(e) {
-                clearTimeout(timeout);
-                resolve(null);
-            }
-        });
+    // ---------- БЫСТРАЯ И ТОЧНАЯ ПРОВЕРКА ПИНГА (TCP + performance) ----------
+    // Улучшенная проверка: используем fetch с небольшим таймаутом + контроллер, и параллельно измеряем реальное время.
+    // Для большей точности пробуем подключиться к серверу и порту через HTTPS (или простой запрос HEAD)
+    // Так как порты могут быть нестандартными, но fetch корректно отработает ошибку соединения, но даст задержку рукопожатия.
+    async function measurePing(server, port, timeoutMs = 2000) {
+        const start = performance.now();
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+            // Используем URL с протоколом https (попытка соединения, даже если SSL не настроен — ошибка, но задержка будет)
+            // Это даст реальное сетевое время + TCP handshake. Лучше чем ничего.
+            const url = `https://${server}:${port}/pingtest?nocache=${Date.now()}`;
+            // Режим 'no-cors' не даст прочитать ответ, но мы только за временем
+            await fetch(url, {
+                method: 'HEAD',
+                mode: 'no-cors',
+                cache: 'no-store',
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            const elapsed = performance.now() - start;
+            return Math.min(Math.floor(elapsed), timeoutMs);
+        } catch (err) {
+            clearTimeout(timeoutId);
+            const elapsed = performance.now() - start;
+            if (err.name === 'AbortError') return timeoutMs;
+            // Даже если ошибка соединения (NetworkError), elapsed - это реальная задержка до отказа
+            if (elapsed < timeoutMs && elapsed > 0) return Math.floor(elapsed);
+            return timeoutMs;
+        }
     }
 
-    // Тест скорости через WebSocket
-    async function testSpeed(server, port, timeoutMs = 3000) {
-        return new Promise((resolve) => {
-            let ws = null;
-            const timeout = setTimeout(() => {
-                if (ws) try { ws.close(); } catch(e) {}
-                resolve(null);
-            }, timeoutMs);
-            try {
-                ws = new WebSocket(`wss://${server}:${port}`);
-                let totalSent = 0;
-                const testData = new Uint8Array(1024);
-                for (let i = 0; i < testData.length; i++) testData[i] = 88;
-                ws.onopen = () => {
-                    const startTime = performance.now();
-                    let sentCount = 0;
-                    const maxPackets = 10;
-                    function sendNext() {
-                        if (sentCount >= maxPackets) {
-                            const elapsed = (performance.now() - startTime) / 1000;
-                            if (elapsed > 0 && totalSent > 0) {
-                                const speedBps = totalSent / elapsed;
-                                const speedMbps = Math.round(speedBps / (1024 * 1024) * 10) / 10;
-                                clearTimeout(timeout);
-                                try { ws.close(); } catch(e) {}
-                                resolve(speedMbps);
-                            } else {
-                                clearTimeout(timeout);
-                                try { ws.close(); } catch(e) {}
-                                resolve(null);
-                            }
-                            return;
-                        }
-                        try {
-                            ws.send(testData);
-                            totalSent += testData.length;
-                            sentCount++;
-                            setTimeout(sendNext, 10);
-                        } catch(e) {
-                            clearTimeout(timeout);
-                            try { ws.close(); } catch(e) {}
-                            resolve(null);
-                        }
+    // Кэш пингов
+    let pingMap = new Map(); // key -> ms
+    let pingInProgress = false;
+
+    async function updateAllPings(showToastMsg = false) {
+        if (pingInProgress) return;
+        pingInProgress = true;
+        if (showToastMsg) showToast("📡 Обновление пингов...");
+        const promises = FEAST_SERVERS.map(async (srv) => {
+            const key = `${srv.server}:${srv.port}`;
+            const pingMs = await measurePing(srv.server, srv.port, 2100);
+            pingMap.set(key, pingMs);
+            return { key, pingMs };
+        });
+        await Promise.all(promises);
+        pingInProgress = false;
+        renderPingValues();
+        if (showToastMsg) showToast("✅ Пинги обновлены");
+    }
+
+    // отображаем пинги во всех карточках (белый цвет)
+    function renderPingValues() {
+        const cards = document.querySelectorAll('.server-card');
+        cards.forEach(card => {
+            const serverKey = card.getAttribute('data-server-key');
+            if (serverKey && pingMap.has(serverKey)) {
+                let pingVal = pingMap.get(serverKey);
+                const pingSpan = card.querySelector('.ping-value-white');
+                const pingDot = card.querySelector('.ping-dot');
+                if (pingSpan) {
+                    if (pingVal >= 2100) {
+                        pingSpan.textContent = 'Неизвестно';
+                    } else {
+                        pingSpan.textContent = `${pingVal} мс`;
                     }
-                    sendNext();
-                };
-                ws.onerror = () => {
-                    clearTimeout(timeout);
-                    try { ws.close(); } catch(e) {}
-                    resolve(null);
-                };
-                ws.onclose = () => {
-                    clearTimeout(timeout);
-                    resolve(null);
-                };
-            } catch(e) {
-                clearTimeout(timeout);
-                resolve(null);
+                }
+                if (pingDot) {
+                    pingDot.classList.remove('low', 'medium', 'high');
+                    if (pingVal < 2100 && pingVal < 200) pingDot.classList.add('low');
+                    else if (pingVal < 2100 && pingVal < 700) pingDot.classList.add('medium');
+                    else if (pingVal < 2100) pingDot.classList.add('high');
+                    else pingDot.classList.add('high'); // неизвестно - серый
+                }
+            } else if (card.getAttribute('data-server-key') && !pingMap.has(card.getAttribute('data-server-key'))) {
+                const pingSpan = card.querySelector('.ping-value-white');
+                if (pingSpan) pingSpan.textContent = '⏳...';
             }
         });
     }
 
-    async function updateServerStats(serverObj) {
-        const ping = await testPing(serverObj.server, serverObj.port);
-        let speed = null;
-        if (ping !== null) {
-            speed = await testSpeed(serverObj.server, serverObj.port);
-        }
-        serversData[serverObj.server] = {
-            ping: ping,
-            speed: speed,
-            name: serverObj.name,
-            server: serverObj.server,
-            port: serverObj.port,
-            secret: serverObj.secret
-        };
-        return serversData[serverObj.server];
-    }
-
-    async function updateAllServers() {
-        for (let server of FEAST_SERVERS) {
-            await updateServerStats(server);
-        }
-        lastUpdateTime = new Date();
-        renderMainList();
-        renderModalList();
-    }
-
-    function formatPing(pingMs) {
-        if (pingMs === null || pingMs === undefined) return '-- ms';
-        if (pingMs > 1000) return '>1s';
-        return `${pingMs} ms`;
-    }
-
-    function formatSpeed(speedMbps) {
-        if (speedMbps === null || speedMbps === undefined) return '--';
-        if (speedMbps >= 1000) return `${(speedMbps / 1000).toFixed(1)} GB/s`;
-        if (speedMbps >= 1) return `${speedMbps.toFixed(1)} MB/s`;
-        return `${Math.round(speedMbps * 1024)} KB/s`;
-    }
-
-    function getFastestServers() {
-        const available = FEAST_SERVERS.filter(s => serversData[s.server] && serversData[s.server].ping !== null);
-        if (available.length === 0) return FEAST_SERVERS.slice(0, 3);
-        return [...available].sort((a, b) => serversData[a.server].ping - serversData[b.server].ping).slice(0, 3);
-    }
-
-    function renderMainList() {
-        const container = document.getElementById('serversContainer');
-        const fastestServers = getFastestServers();
-        if (Object.keys(serversData).length === 0) {
-            container.innerHTML = '<div class="loading">🔄 Измерение пинга и скорости...</div>';
-            return;
-        }
-        let html = '';
-        for (let server of fastestServers) {
-            const data = serversData[server.server];
-            const pingText = data ? formatPing(data.ping) : '⏳';
-            const speedText = data ? formatSpeed(data.speed) : '⏳';
-            const isActive = activeServer === server.server;
-            html += `
-                <div class="server-card">
-                    <div class="server-row">
-                        <div class="server-info">
-                            <div class="server-name">🔥 ${server.name}</div>
-                            <div class="server-stats">
-                                <span class="ping-stat">📡 ${pingText}</span>
-                                <span class="speed-stat">⚡ ${speedText}</span>
-                            </div>
-                        </div>
-                        <button class="connect-btn ${isActive ? 'connected' : ''}" data-server="${server.server}" data-name="${server.name}" data-port="${server.port}" data-secret="${server.secret}">
-                            ${isActive ? '✓ Подключен' : 'Connect'}
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-        document.getElementById('updateTime').innerHTML = lastUpdateTime ? `Обновлено: ${lastUpdateTime.toLocaleTimeString()}` : '';
-        container.innerHTML = html;
-        attachConnectHandlers();
-    }
-
-    function renderModalList() {
-        const container = document.getElementById('modalServersList');
-        let html = '';
-        for (let server of FEAST_SERVERS) {
-            const data = serversData[server.server];
-            const pingText = data ? formatPing(data.ping) : '⏳';
-            const speedText = data ? formatSpeed(data.speed) : '⏳';
-            const isActive = activeServer === server.server;
-            html += `
-                <div class="modal-server-item">
-                    <div>
-                        <div style="font-weight: 600; margin-bottom: 4px;">🔥 ${server.name}</div>
-                        <div style="display: flex; gap: 8px; font-size: 0.7rem;">
-                            <span>📡 ${pingText}</span>
-                            <span>⚡ ${speedText}</span>
-                        </div>
-                    </div>
-                    <button class="connect-btn ${isActive ? 'connected' : ''}" data-server="${server.server}" data-name="${server.name}" data-port="${server.port}" data-secret="${server.secret}">
-                        ${isActive ? '✓ Подключен' : 'Connect'}
-                    </button>
-                </div>
-            `;
-        }
-        container.innerHTML = html;
-        attachModalHandlers();
-    }
-
-    // Подключение к серверу - моментальное, без уведомлений
-    function connectToServer(server, name, port, secret) {
-        const proxyString = `tg://proxy?server=${server}&port=${port}&secret=${secret}`;
-        
-        activeServer = server;
-        document.getElementById('activeServerDisplay').innerText = name;
-        
-        // Сохраняем в localStorage
+    // Подключение к серверу через Telegram
+    function connectToServer(srv) {
+        const { name, server, port, secret } = srv;
+        const proxyLink = `tg://proxy?server=${encodeURIComponent(server)}&port=${port}&secret=${encodeURIComponent(secret.trim().toLowerCase())}`;
+        showToast(`🔌 ${name}: подключение...`, false);
         try {
-            localStorage.setItem('feast_active_server', JSON.stringify({server, name, port, secret}));
-        } catch(e) {}
-        
-        // Обновляем интерфейс
-        renderMainList();
-        renderModalList();
-        
-        // Моментальный редирект на tg:// ссылку
-        window.location.href = proxyString;
+            window.location.href = proxyLink;
+            setTimeout(() => {
+                if (!document.hidden) showToast(`💡 Если Telegram не открылся — установите Telegram`, false);
+            }, 800);
+        } catch(e) {
+            showToast(`❌ Ошибка`, true);
+        }
     }
 
-    function attachConnectHandlers() {
-        document.querySelectorAll('#serversContainer .connect-btn').forEach(btn => {
-            btn.onclick = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const server = btn.getAttribute('data-server');
-                const name = btn.getAttribute('data-name');
-                const port = btn.getAttribute('data-port');
-                const secret = btn.getAttribute('data-secret');
-                connectToServer(server, name, port, secret);
-            };
-        });
-    }
-
-    function attachModalHandlers() {
-        document.querySelectorAll('#modalServersList .connect-btn').forEach(btn => {
-            btn.onclick = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const server = btn.getAttribute('data-server');
-                const name = btn.getAttribute('data-name');
-                const port = btn.getAttribute('data-port');
-                const secret = btn.getAttribute('data-secret');
-                connectToServer(server, name, port, secret);
-                closeModal();
-            };
-        });
-    }
-
-    function loadActiveServer() {
-        try {
-            const saved = localStorage.getItem('feast_active_server');
-            if (saved) {
-                const data = JSON.parse(saved);
-                if (data.server) {
-                    activeServer = data.server;
-                    document.getElementById('activeServerDisplay').innerText = data.name;
+    // Получить самый быстрый сервер (на основе актуальных пингов)
+    function getFastestServer() {
+        let bestServer = null;
+        let lowestPing = Infinity;
+        for (let srv of FEAST_SERVERS) {
+            const key = `${srv.server}:${srv.port}`;
+            let ping = pingMap.get(key);
+            if (ping && ping < lowestPing && ping < 2100) {
+                lowestPing = ping;
+                bestServer = srv;
+            }
+        }
+        // Если все пинги >2100 или не определены, берем первый с наименьшим "неизвестным" или первый в списке
+        if (!bestServer) {
+            // Находим сервер с самым маленьким известным пингом (даже если 2100)
+            let minPing = Infinity;
+            for (let srv of FEAST_SERVERS) {
+                const key = `${srv.server}:${srv.port}`;
+                let p = pingMap.get(key) || 9999;
+                if (p < minPing) {
+                    minPing = p;
+                    bestServer = srv;
                 }
             }
-        } catch(e) {}
+            if (!bestServer) bestServer = FEAST_SERVERS[0];
+        }
+        return bestServer;
     }
 
-    const modal = document.getElementById('serversModal');
-    const openBtn = document.getElementById('openServersBtn');
-    const closeBtn = document.getElementById('closeModalBtn');
-    
-    function openModal() { modal.classList.add('active'); renderModalList(); }
-    function closeModal() { modal.classList.remove('active'); }
-    
-    openBtn.onclick = openModal;
-    closeBtn.onclick = closeModal;
-    modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+    let isNeonActive = false;
+    let autoConnectInProgress = false;
 
-    if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.ready();
-        window.Telegram.WebApp.expand();
+    // Главная функция для автоподключения (неоновая кнопка)
+    async function autoConnectFastest() {
+        if (autoConnectInProgress) {
+            showToast("⏳ Уже подключаемся...", false);
+            return;
+        }
+        const neonBtn = document.getElementById('neonAutoBtn');
+        if (!neonBtn) return;
+        
+        // Активируем неоновое свечение
+        neonBtn.classList.add('active');
+        isNeonActive = true;
+        
+        autoConnectInProgress = true;
+        showToast("🔍 Определяем самый быстрый прокси...");
+        
+        // Сначала принудительно обновляем пинги (быстрые параллельные запросы)
+        await updateAllPings(true);
+        
+        // Получаем лучший сервер
+        const fastest = getFastestServer();
+        if (fastest) {
+            const pingValue = pingMap.get(`${fastest.server}:${fastest.port}`);
+            const pingText = (pingValue && pingValue < 2100) ? `${pingValue} мс` : "Неизвестно";
+            showToast(`✨ Найден лучший: ${fastest.name} (пинг ${pingText}) → подключение...`);
+            // Небольшая задержка для эффекта неона
+            setTimeout(() => {
+                connectToServer(fastest);
+                // Через 2 секунды убираем активное свечение (но не сразу, чтобы пользователь видел)
+                setTimeout(() => {
+                    if (neonBtn) neonBtn.classList.remove('active');
+                    isNeonActive = false;
+                }, 1800);
+                autoConnectInProgress = false;
+            }, 400);
+        } else {
+            showToast("⚠️ Не удалось определить сервер", true);
+            setTimeout(() => {
+                if (neonBtn) neonBtn.classList.remove('active');
+                isNeonActive = false;
+            }, 1000);
+            autoConnectInProgress = false;
+        }
     }
 
-    loadActiveServer();
-    updateAllServers();
-    setInterval(updateAllServers, 60000);
+    // Отрисовка списка серверов (без секретов, с белыми значениями пинга)
+    function renderServersList() {
+        const container = document.getElementById('serversList');
+        if (!container) return;
+        container.innerHTML = '';
+        FEAST_SERVERS.forEach((srv) => {
+            const key = `${srv.server}:${srv.port}`;
+            const card = document.createElement('div');
+            card.className = 'server-card';
+            card.setAttribute('data-server-key', key);
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'server-info';
+            
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'server-name';
+            nameDiv.innerHTML = `<span>${srv.name}</span>`;
+            
+            const pingWrapper = document.createElement('div');
+            pingWrapper.style.display = 'flex';
+            pingWrapper.style.alignItems = 'center';
+            pingWrapper.style.gap = '10px';
+            pingWrapper.style.flexWrap = 'wrap';
+            
+            const pingContainer = document.createElement('div');
+            pingContainer.className = 'ping-indicator';
+            const dotSpan = document.createElement('span');
+            dotSpan.className = 'ping-dot';
+            const pingText = document.createElement('span');
+            pingText.className = 'ping-value-white';  // белый цвет
+            pingText.style.color = 'white';
+            pingText.textContent = '⏳ измерение...';
+            pingContainer.appendChild(dotSpan);
+            pingContainer.appendChild(pingText);
+            
+            const hostSpan = document.createElement('span');
+            hostSpan.className = 'server-host';
+            hostSpan.textContent = `${srv.server}:${srv.port}`;
+            
+            pingWrapper.appendChild(pingContainer);
+            pingWrapper.appendChild(hostSpan);
+            infoDiv.appendChild(nameDiv);
+            infoDiv.appendChild(pingWrapper);
+            
+            const connectBtnDiv = document.createElement('div');
+            connectBtnDiv.className = 'connect-btn';
+            connectBtnDiv.textContent = '▶ ПОДКЛЮЧИТЬ';
+            
+            card.appendChild(infoDiv);
+            card.appendChild(connectBtnDiv);
+            
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.navigator?.vibrate) window.navigator.vibrate(20);
+                connectToServer(srv);
+            });
+            container.appendChild(card);
+        });
+        // Запускаем первичное измерение пингов
+        updateAllPings(false);
+        // Обновляем каждые 25 секунд
+        if (window.pingInterval) clearInterval(window.pingInterval);
+        window.pingInterval = setInterval(() => updateAllPings(false), 25000);
+    }
+
+    function showToast(msg, isError = false) {
+        const toast = document.getElementById('toastMsg');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.style.background = isError ? "#b13e4ccc" : "#1f212cee";
+        toast.classList.add('show');
+        if (window.toastTimeout) clearTimeout(window.toastTimeout);
+        window.toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderServersList();
+        const neonBtn = document.getElementById('neonAutoBtn');
+        if (neonBtn) {
+            neonBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.navigator?.vibrate) window.navigator.vibrate(40);
+                autoConnectFastest();
+            });
+        }
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (!isMobile) setTimeout(() => showToast('💻 Установи Telegram Desktop для прокси', false), 1800);
+        else showToast('🚀 Нажми неоновую кнопку для автоподключения', false);
+    });
 </script>
 </body>
 </html>
+```
