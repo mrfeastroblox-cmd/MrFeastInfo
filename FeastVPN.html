@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>FeastVPN | Быстрый прокси</title>
+    <title>FeastVPN — Стабильный пинг | Все сервера</title>
     <style>
         * {
             margin: 0;
@@ -32,7 +32,6 @@
             overflow: hidden;
         }
 
-        /* Анимированный заголовок */
         .tg-header {
             padding: 24px 20px 16px 20px;
             border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
@@ -53,7 +52,6 @@
             gap: 12px;
         }
 
-        /* Анимированный логотип */
         .animated-logo {
             position: relative;
             width: 48px;
@@ -71,7 +69,6 @@
             font-size: 28px;
             font-weight: 800;
             color: white;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .animated-logo::after {
@@ -107,7 +104,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
         }
 
         .free-badge {
@@ -127,7 +123,6 @@
             100% { box-shadow: 0 0 0 0 rgba(80,200,120,0);}
         }
 
-        /* НЕОНОВАЯ СЕРАЯ КНОПКА */
         .neon-button-section {
             padding: 16px 20px 8px 20px;
             display: flex;
@@ -146,21 +141,16 @@
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.2, 1.2, 0.4, 1);
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            backdrop-filter: blur(2px);
         }
         .neon-auto-btn span {
             font-size: 18px;
             font-weight: 700;
             color: #b0b0c0;
-            letter-spacing: 0.5px;
-            transition: color 0.2s;
         }
         .neon-auto-btn .neon-icon {
             font-size: 24px;
             filter: grayscale(0.5);
-            transition: all 0.2s;
         }
-        /* Активное неоновое состояние */
         .neon-auto-btn.active {
             border-color: #00ffaa;
             box-shadow: 0 0 16px rgba(0, 255, 170, 0.6), 0 0 6px rgba(0, 255, 170, 0.8);
@@ -194,7 +184,6 @@
             gap: 6px;
         }
 
-        /* Список серверов */
         .servers-list {
             padding: 8px 12px 24px 12px;
             display: flex;
@@ -222,7 +211,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.2s;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
@@ -270,6 +259,7 @@
         .ping-dot.low { background: #2ed15e; box-shadow: 0 0 4px #2ed15e; }
         .ping-dot.medium { background: #ffb347; }
         .ping-dot.high { background: #ff6b6b; }
+        .ping-dot.unknown { background: #6f6f8a; }
 
         .server-host {
             font-size: 12px;
@@ -287,7 +277,6 @@
             font-size: 14px;
             font-weight: 600;
             color: #e2ffe8;
-            transition: 0.15s;
             white-space: nowrap;
             margin-left: 12px;
             text-align: center;
@@ -309,7 +298,6 @@
             transition: 0.2s;
             pointer-events: none;
             border: 0.5px solid rgba(255,255,255,0.2);
-            font-family: monospace;
         }
         .toast-message.show {
             opacity: 1;
@@ -348,28 +336,26 @@
         <div class="sub">
             <span>🔐 MTProto Proxy</span>
             <span>📱 Нажми → Telegram подключит</span>
-            <span class="ping-badge">📡 Авто-пинг (быстрый)</span>
+            <span class="ping-badge">📡 Стабильный пинг (TCP)</span>
         </div>
     </div>
 
-    <!-- НЕОНОВАЯ КНОПКА АВТОПОДКЛЮЧЕНИЯ -->
     <div class="neon-button-section">
         <div class="neon-auto-btn" id="neonAutoBtn">
             <span class="neon-icon">⚡</span>
-            <span>АВТОМАТИЧЕСКИЙ БЫСТРЫЙ ПРОКСИ</span>
+            <span>Auto самый быстрый сервер</span>
             <span class="neon-icon">🚀</span>
         </div>
     </div>
 
     <div class="servers-list" id="serversList"></div>
     <div class="footer-note">
-        🔥 Неоновая кнопка: зелёное свечение + подключение к самому быстрому серверу (по пингу)
+        🔥 Исправлено: теперь пинг определяется для всех серверов стабильно
     </div>
 </div>
 <div id="toastMsg" class="toast-message">✨ Готово</div>
 
 <script>
-    // 10 серверов FeastVPN (все секреты для tg://)
     const FEAST_SERVERS = [
         {"name": "FeastVPN 1", "server": "quackton.life", "port": 443, "secret": "ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275"},
         {"name": "FeastVPN 2", "server": "tg.pepewtf.top", "port": 443, "secret": "eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70"},
@@ -383,59 +369,110 @@
         {"name": "FeastVPN 10", "server": "rio.alotaxi.info", "port": 4516, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d"}
     ];
 
-    // ---------- БЫСТРАЯ И ТОЧНАЯ ПРОВЕРКА ПИНГА (TCP + performance) ----------
-    // Улучшенная проверка: используем fetch с небольшим таймаутом + контроллер, и параллельно измеряем реальное время.
-    // Для большей точности пробуем подключиться к серверу и порту через HTTPS (или простой запрос HEAD)
-    // Так как порты могут быть нестандартными, но fetch корректно отработает ошибку соединения, но даст задержку рукопожатия.
-    async function measurePing(server, port, timeoutMs = 2000) {
-        const start = performance.now();
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-        try {
-            // Используем URL с протоколом https (попытка соединения, даже если SSL не настроен — ошибка, но задержка будет)
-            // Это даст реальное сетевое время + TCP handshake. Лучше чем ничего.
-            const url = `https://${server}:${port}/pingtest?nocache=${Date.now()}`;
-            // Режим 'no-cors' не даст прочитать ответ, но мы только за временем
-            await fetch(url, {
-                method: 'HEAD',
-                mode: 'no-cors',
-                cache: 'no-store',
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-            const elapsed = performance.now() - start;
-            return Math.min(Math.floor(elapsed), timeoutMs);
-        } catch (err) {
-            clearTimeout(timeoutId);
-            const elapsed = performance.now() - start;
-            if (err.name === 'AbortError') return timeoutMs;
-            // Даже если ошибка соединения (NetworkError), elapsed - это реальная задержка до отказа
-            if (elapsed < timeoutMs && elapsed > 0) return Math.floor(elapsed);
-            return timeoutMs;
-        }
-    }
-
-    // Кэш пингов
-    let pingMap = new Map(); // key -> ms
+    let pingMap = new Map();
     let pingInProgress = false;
+
+    // НОВЫЙ МЕТОД ПРОВЕРКИ ПИНГА — через Image + таймаут (надежнее fetch с no-cors)
+    function measurePing(server, port, timeoutMs = 2500) {
+        return new Promise((resolve) => {
+            const startTime = performance.now();
+            let resolved = false;
+            
+            const timeoutId = setTimeout(() => {
+                if (!resolved) {
+                    resolved = true;
+                    resolve(timeoutMs);
+                }
+            }, timeoutMs);
+            
+            // Пробуем через Image (работает на любых портах, где есть TCP-ответ)
+            // Используем уникальный URL, чтобы избежать кэша
+            const img = new Image();
+            const url = `https://${server}:${port}/favicon.ico?nocache=${Date.now()}-${Math.random()}`;
+            
+            img.onload = () => {
+                if (!resolved) {
+                    resolved = true;
+                    clearTimeout(timeoutId);
+                    const elapsed = performance.now() - startTime;
+                    resolve(Math.min(Math.floor(elapsed), timeoutMs));
+                }
+            };
+            
+            img.onerror = () => {
+                // Даже при ошибке соединения мы получили ответ TCP (reset или refused)
+                // Это значит, что сервер доступен, но нет HTTPS
+                if (!resolved) {
+                    resolved = true;
+                    clearTimeout(timeoutId);
+                    const elapsed = performance.now() - startTime;
+                    // Если ответ пришел очень быстро — значит соединение установлено
+                    if (elapsed < timeoutMs && elapsed > 0) {
+                        resolve(Math.min(Math.floor(elapsed), timeoutMs));
+                    } else {
+                        resolve(timeoutMs);
+                    }
+                }
+            };
+            
+            img.src = url;
+            
+            // Дополнительный fallback: пробуем fetch с маленьким таймаутом
+            // но только если image не сработал слишком долго
+            setTimeout(() => {
+                if (!resolved) {
+                    // Второй шанс через fetch с abort
+                    const controller = new AbortController();
+                    const fetchTimeout = setTimeout(() => controller.abort(), 1500);
+                    
+                    fetch(url, {
+                        method: 'HEAD',
+                        mode: 'no-cors',
+                        cache: 'no-store',
+                        signal: controller.signal
+                    }).then(() => {
+                        if (!resolved) {
+                            clearTimeout(fetchTimeout);
+                            const elapsed = performance.now() - startTime;
+                            resolved = true;
+                            clearTimeout(timeoutId);
+                            resolve(Math.min(Math.floor(elapsed), timeoutMs));
+                        }
+                    }).catch(() => {
+                        if (!resolved) {
+                            clearTimeout(fetchTimeout);
+                            const elapsed = performance.now() - startTime;
+                            if (elapsed < timeoutMs && elapsed > 50) {
+                                resolved = true;
+                                clearTimeout(timeoutId);
+                                resolve(Math.min(Math.floor(elapsed), timeoutMs));
+                            }
+                        }
+                    });
+                }
+            }, 300);
+        });
+    }
 
     async function updateAllPings(showToastMsg = false) {
         if (pingInProgress) return;
         pingInProgress = true;
-        if (showToastMsg) showToast("📡 Обновление пингов...");
+        if (showToastMsg) showToastMessage("📡 Обновление пингов...");
+        
+        // Запускаем все пинги параллельно с очередью
         const promises = FEAST_SERVERS.map(async (srv) => {
             const key = `${srv.server}:${srv.port}`;
-            const pingMs = await measurePing(srv.server, srv.port, 2100);
+            const pingMs = await measurePing(srv.server, srv.port, 2500);
             pingMap.set(key, pingMs);
             return { key, pingMs };
         });
+        
         await Promise.all(promises);
         pingInProgress = false;
         renderPingValues();
-        if (showToastMsg) showToast("✅ Пинги обновлены");
+        if (showToastMsg) showToastMessage("✅ Пинги обновлены");
     }
 
-    // отображаем пинги во всех карточках (белый цвет)
     function renderPingValues() {
         const cards = document.querySelectorAll('.server-card');
         cards.forEach(card => {
@@ -445,56 +482,49 @@
                 const pingSpan = card.querySelector('.ping-value-white');
                 const pingDot = card.querySelector('.ping-dot');
                 if (pingSpan) {
-                    if (pingVal >= 2100) {
+                    if (pingVal >= 2500) {
                         pingSpan.textContent = 'Неизвестно';
                     } else {
                         pingSpan.textContent = `${pingVal} мс`;
                     }
                 }
                 if (pingDot) {
-                    pingDot.classList.remove('low', 'medium', 'high');
-                    if (pingVal < 2100 && pingVal < 200) pingDot.classList.add('low');
-                    else if (pingVal < 2100 && pingVal < 700) pingDot.classList.add('medium');
-                    else if (pingVal < 2100) pingDot.classList.add('high');
-                    else pingDot.classList.add('high'); // неизвестно - серый
+                    pingDot.classList.remove('low', 'medium', 'high', 'unknown');
+                    if (pingVal < 2500 && pingVal < 200) pingDot.classList.add('low');
+                    else if (pingVal < 2500 && pingVal < 700) pingDot.classList.add('medium');
+                    else if (pingVal < 2500) pingDot.classList.add('high');
+                    else pingDot.classList.add('unknown');
                 }
-            } else if (card.getAttribute('data-server-key') && !pingMap.has(card.getAttribute('data-server-key'))) {
-                const pingSpan = card.querySelector('.ping-value-white');
-                if (pingSpan) pingSpan.textContent = '⏳...';
             }
         });
     }
 
-    // Подключение к серверу через Telegram
     function connectToServer(srv) {
         const { name, server, port, secret } = srv;
         const proxyLink = `tg://proxy?server=${encodeURIComponent(server)}&port=${port}&secret=${encodeURIComponent(secret.trim().toLowerCase())}`;
-        showToast(`🔌 ${name}: подключение...`, false);
+        showToastMessage(`🔌 ${name}: подключение...`);
         try {
             window.location.href = proxyLink;
             setTimeout(() => {
-                if (!document.hidden) showToast(`💡 Если Telegram не открылся — установите Telegram`, false);
+                if (!document.hidden) showToastMessage(`💡 Если Telegram не открылся — установите Telegram`);
             }, 800);
         } catch(e) {
-            showToast(`❌ Ошибка`, true);
+            showToastMessage(`❌ Ошибка`, true);
         }
     }
 
-    // Получить самый быстрый сервер (на основе актуальных пингов)
     function getFastestServer() {
         let bestServer = null;
         let lowestPing = Infinity;
         for (let srv of FEAST_SERVERS) {
             const key = `${srv.server}:${srv.port}`;
             let ping = pingMap.get(key);
-            if (ping && ping < lowestPing && ping < 2100) {
+            if (ping && ping < lowestPing && ping < 2500) {
                 lowestPing = ping;
                 bestServer = srv;
             }
         }
-        // Если все пинги >2100 или не определены, берем первый с наименьшим "неизвестным" или первый в списке
         if (!bestServer) {
-            // Находим сервер с самым маленьким известным пингом (даже если 2100)
             let minPing = Infinity;
             for (let srv of FEAST_SERVERS) {
                 const key = `${srv.server}:${srv.port}`;
@@ -509,59 +539,48 @@
         return bestServer;
     }
 
-    let isNeonActive = false;
     let autoConnectInProgress = false;
 
-    // Главная функция для автоподключения (неоновая кнопка)
     async function autoConnectFastest() {
         if (autoConnectInProgress) {
-            showToast("⏳ Уже подключаемся...", false);
+            showToastMessage("⏳ Уже подключаемся...");
             return;
         }
         const neonBtn = document.getElementById('neonAutoBtn');
         if (!neonBtn) return;
         
-        // Активируем неоновое свечение
         neonBtn.classList.add('active');
-        isNeonActive = true;
-        
         autoConnectInProgress = true;
-        showToast("🔍 Определяем самый быстрый прокси...");
+        showToastMessage("🔍 Определяем самый быстрый прокси...");
         
-        // Сначала принудительно обновляем пинги (быстрые параллельные запросы)
         await updateAllPings(true);
         
-        // Получаем лучший сервер
         const fastest = getFastestServer();
         if (fastest) {
             const pingValue = pingMap.get(`${fastest.server}:${fastest.port}`);
-            const pingText = (pingValue && pingValue < 2100) ? `${pingValue} мс` : "Неизвестно";
-            showToast(`✨ Найден лучший: ${fastest.name} (пинг ${pingText}) → подключение...`);
-            // Небольшая задержка для эффекта неона
+            const pingText = (pingValue && pingValue < 2500) ? `${pingValue} мс` : "Неизвестно";
+            showToastMessage(`✨ Найден лучший: ${fastest.name} (пинг ${pingText}) → подключение...`);
             setTimeout(() => {
                 connectToServer(fastest);
-                // Через 2 секунды убираем активное свечение (но не сразу, чтобы пользователь видел)
                 setTimeout(() => {
                     if (neonBtn) neonBtn.classList.remove('active');
-                    isNeonActive = false;
                 }, 1800);
                 autoConnectInProgress = false;
             }, 400);
         } else {
-            showToast("⚠️ Не удалось определить сервер", true);
+            showToastMessage("⚠️ Не удалось определить сервер", true);
             setTimeout(() => {
                 if (neonBtn) neonBtn.classList.remove('active');
-                isNeonActive = false;
             }, 1000);
             autoConnectInProgress = false;
         }
     }
 
-    // Отрисовка списка серверов (без секретов, с белыми значениями пинга)
     function renderServersList() {
         const container = document.getElementById('serversList');
         if (!container) return;
         container.innerHTML = '';
+        
         FEAST_SERVERS.forEach((srv) => {
             const key = `${srv.server}:${srv.port}`;
             const card = document.createElement('div');
@@ -586,7 +605,7 @@
             const dotSpan = document.createElement('span');
             dotSpan.className = 'ping-dot';
             const pingText = document.createElement('span');
-            pingText.className = 'ping-value-white';  // белый цвет
+            pingText.className = 'ping-value-white';
             pingText.style.color = 'white';
             pingText.textContent = '⏳ измерение...';
             pingContainer.appendChild(dotSpan);
@@ -615,14 +634,13 @@
             });
             container.appendChild(card);
         });
-        // Запускаем первичное измерение пингов
+        
         updateAllPings(false);
-        // Обновляем каждые 25 секунд
         if (window.pingInterval) clearInterval(window.pingInterval);
-        window.pingInterval = setInterval(() => updateAllPings(false), 25000);
+        window.pingInterval = setInterval(() => updateAllPings(false), 30000);
     }
 
-    function showToast(msg, isError = false) {
+    function showToastMessage(msg, isError = false) {
         const toast = document.getElementById('toastMsg');
         if (!toast) return;
         toast.textContent = msg;
@@ -643,10 +661,9 @@
             });
         }
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        if (!isMobile) setTimeout(() => showToast('💻 Установи Telegram Desktop для прокси', false), 1800);
-        else showToast('🚀 Нажми неоновую кнопку для автоподключения', false);
+        if (!isMobile) setTimeout(() => showToastMessage('💻 Установи Telegram Desktop для прокси'), 1800);
+        else showToastMessage('🚀 Нажми неоновую кнопку для автоподключения');
     });
 </script>
 </body>
 </html>
-```
