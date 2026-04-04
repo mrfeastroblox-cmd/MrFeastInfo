@@ -105,7 +105,6 @@
             border: 0.5px solid rgba(0,255,170,0.4);
         }
 
-        /* неоновая кнопка автоподключения */
         .neon-btn-area {
             margin: 20px 24px 12px 24px;
         }
@@ -132,7 +131,6 @@
             box-shadow: 0 0 18px #00ffaa55;
         }
 
-        /* кнопка "Сервера" (под неоновой кнопкой) */
         .servers-toggle-btn {
             margin: 8px 24px 16px 24px;
         }
@@ -160,7 +158,6 @@
             box-shadow: 0 0 12px #00ffaa55;
         }
 
-        /* контейнер серверов (единый список) */
         .servers-section {
             padding: 0 16px 16px 16px;
         }
@@ -184,7 +181,6 @@
             border-radius: 10px;
         }
 
-        /* информационные бейджи над разделами */
         .info-badge {
             margin: 8px 8px 4px 8px;
             padding: 8px 16px;
@@ -196,19 +192,6 @@
             border-left: 3px solid #00ffaa;
             border-right: 1px solid rgba(0,255,170,0.2);
             color: #c0ffdd;
-        }
-
-        .protocol-divider {
-            margin: 12px 8px 8px 8px;
-            padding: 6px 12px;
-            background: rgba(0, 255, 170, 0.08);
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #6effb0;
-            text-align: center;
-            letter-spacing: 1px;
-            border-left: 2px solid #00ffaa;
         }
 
         .card-server {
@@ -322,7 +305,6 @@
             transform: translateX(-50%) scale(1);
         }
 
-        /* модалка благодарности */
         .thanks-modal {
             position: fixed;
             top: 0;
@@ -422,16 +404,14 @@
         </div>
     </div>
 
-    <!-- НЕОНОВАЯ КНОПКА АВТОПОДКЛЮЧЕНИЯ -->
     <div class="neon-btn-area">
         <div class="neon-trigger" id="autoNeonBtn">
             <span>⚡</span>
-            <span>Auto самый быстрый сервер</span>
+            <span>АВТОМАТИЧЕСКИЙ МИНИМАЛЬНЫЙ ПИНГ</span>
             <span>🚀</span>
         </div>
     </div>
 
-    <!-- КНОПКА "СЕРВЕРА" (ПОД НЕОНОВОЙ) -->
     <div class="servers-toggle-btn">
         <div class="servers-toggle" id="serversToggleBtn">
             <span>📡</span>
@@ -440,7 +420,6 @@
         </div>
     </div>
 
-    <!-- ЕДИНЫЙ КОНТЕЙНЕР СЕРВЕРОВ (MTProto + SOCKS5 в одном окне) -->
     <div id="serversWrapper" class="servers-section">
         <div class="server-scroll" id="unifiedServerList"></div>
     </div>
@@ -452,7 +431,6 @@
 
 <div id="toastGlobal" class="toast-message">✨ Готово</div>
 
-<!-- МОДАЛКА БЛАГОДАРНОСТИ -->
 <div id="thanksModal" class="thanks-modal">
     <div class="modal-glow-card">
         <h2>✨ Спасибо!</h2>
@@ -463,7 +441,7 @@
 </div>
 
 <script>
-    // ---------- MTProto СЕРВЕРА (10 штук) ----------
+    // MTProto сервера
     const MT_PROTO_SERVERS = [
         {"name": "FeastVPN 1", "server": "quackton.life", "port": 443, "secret": "ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275", "type": "mtproto"},
         {"name": "FeastVPN 2", "server": "tg.pepewtf.top", "port": 443, "secret": "eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70", "type": "mtproto"},
@@ -477,7 +455,7 @@
         {"name": "FeastVPN 10", "server": "rio.alotaxi.info", "port": 4516, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d", "type": "mtproto"}
     ];
 
-    // ---------- SOCKS5 СЕРВЕРА ----------
+    // SOCKS5 сервера
     const SOCKS5_SERVERS = [
         {"name": "FeastVPN 11", "server": "192.111.137.35", "port": 4145, "type": "socks5"},
         {"name": "FeastVPN 12", "server": "192.252.209.155", "port": 14455, "type": "socks5"},
@@ -489,54 +467,71 @@
     let pingMap = new Map();
     let pingUpdating = false;
 
-    // Точное измерение пинга для MTProto
-    async function measurePing(server, port, timeoutMs = 2500) {
+    // НОВЫЙ МЕТОД ПРОВЕРКИ ПИНГА ДЛЯ MTProto (TCP handshake через Image + fallback fetch)
+    async function measureMTProtoPing(server, port, timeoutMs = 3000) {
         const start = performance.now();
         return new Promise((resolve) => {
             let finished = false;
             const timer = setTimeout(() => {
-                if (!finished) { finished = true; resolve(timeoutMs); }
+                if (!finished) {
+                    finished = true;
+                    resolve(timeoutMs);
+                }
             }, timeoutMs);
-            const url = `https://${server}:${port}/ping-${Date.now()}-${Math.random()}.gif`;
+            
+            // Пробуем через Image на порт (даже если нет HTTPS, получим ошибку, но замерим время TCP handshake)
+            const url = `https://${server}:${port}/?nocache=${Date.now()}&r=${Math.random()}`;
             const img = new Image();
+            
             img.onload = () => {
                 if (!finished) {
                     clearTimeout(timer);
+                    const elapsed = performance.now() - start;
                     finished = true;
-                    resolve(Math.min(Math.floor(performance.now() - start), timeoutMs));
+                    resolve(Math.min(Math.floor(elapsed), timeoutMs));
                 }
             };
+            
             img.onerror = () => {
                 if (!finished) {
                     clearTimeout(timer);
                     const elapsed = performance.now() - start;
-                    if (elapsed < timeoutMs && elapsed > 5) {
+                    // Даже при ошибке соединения мы получили TCP-ответ (RST или ICMP)
+                    if (elapsed < timeoutMs && elapsed > 10) {
                         finished = true;
                         resolve(Math.min(Math.floor(elapsed), timeoutMs));
                     } else {
+                        // Fallback: fetch с небольшим таймаутом
                         const controller = new AbortController();
-                        const ftimer = setTimeout(() => controller.abort(), 1500);
-                        fetch(url, { method: 'HEAD', mode: 'no-cors', cache: 'no-store', signal: controller.signal })
-                            .then(() => {
-                                if (!finished) {
-                                    clearTimeout(ftimer);
-                                    const elapsed2 = performance.now() - start;
-                                    finished = true;
+                        const fetchTimer = setTimeout(() => controller.abort(), 2000);
+                        fetch(url, {
+                            method: 'HEAD',
+                            mode: 'no-cors',
+                            cache: 'no-store',
+                            signal: controller.signal
+                        }).then(() => {
+                            if (!finished) {
+                                clearTimeout(fetchTimer);
+                                const elapsed2 = performance.now() - start;
+                                finished = true;
+                                resolve(Math.min(Math.floor(elapsed2), timeoutMs));
+                            }
+                        }).catch(() => {
+                            if (!finished) {
+                                clearTimeout(fetchTimer);
+                                const elapsed2 = performance.now() - start;
+                                finished = true;
+                                if (elapsed2 < timeoutMs && elapsed2 > 10) {
                                     resolve(Math.min(Math.floor(elapsed2), timeoutMs));
+                                } else {
+                                    resolve(timeoutMs);
                                 }
-                            })
-                            .catch(() => {
-                                if (!finished) {
-                                    clearTimeout(ftimer);
-                                    const elapsed2 = performance.now() - start;
-                                    finished = true;
-                                    if (elapsed2 < timeoutMs && elapsed2 > 10) resolve(Math.min(Math.floor(elapsed2), timeoutMs));
-                                    else resolve(timeoutMs);
-                                }
-                            });
+                            }
+                        });
                     }
                 }
             };
+            
             img.src = url;
         });
     }
@@ -544,17 +539,21 @@
     async function refreshPings() {
         if (pingUpdating) return;
         pingUpdating = true;
+        
         const allServers = [...MT_PROTO_SERVERS, ...SOCKS5_SERVERS];
         const tasks = allServers.map(async (srv) => {
             const key = `${srv.type}_${srv.server}:${srv.port}`;
             if (srv.type === 'mtproto') {
-                const p1 = await measurePing(srv.server, srv.port, 2500);
-                const p2 = await measurePing(srv.server, srv.port, 2500);
-                pingMap.set(key, Math.min(p1, p2));
+                // Делаем 2 замера и берем минимальный для точности
+                const p1 = await measureMTProtoPing(srv.server, srv.port, 3000);
+                const p2 = await measureMTProtoPing(srv.server, srv.port, 3000);
+                const bestPing = Math.min(p1, p2);
+                pingMap.set(key, bestPing);
             } else {
                 pingMap.set(key, null);
             }
         });
+        
         await Promise.all(tasks);
         pingUpdating = false;
         renderAllPings();
@@ -568,17 +567,19 @@
                 const spanVal = card.querySelector('.ping-value-white');
                 const dotSpan = card.querySelector('.ping-dot');
                 if (spanVal) {
-                    if (val === null) spanVal.textContent = 'SOCKS5';
-                    else if (val >= 2500) spanVal.textContent = 'Неизвестно';
-                    else spanVal.textContent = `${val} мс`;
+                    if (val === null) {
+                        spanVal.textContent = 'SOCKS5';
+                    } else if (val >= 3000) {
+                        spanVal.textContent = '...';
+                    } else {
+                        spanVal.textContent = `${val} мс`;
+                    }
                 }
-                if (dotSpan && val !== null && val < 2500) {
+                if (dotSpan && val !== null && val < 3000) {
                     dotSpan.classList.remove('low', 'medium', 'high');
-                    if (val < 180) dotSpan.classList.add('low');
-                    else if (val < 650) dotSpan.classList.add('medium');
+                    if (val < 200) dotSpan.classList.add('low');
+                    else if (val < 700) dotSpan.classList.add('medium');
                     else dotSpan.classList.add('high');
-                } else if (dotSpan && val === null) {
-                    dotSpan.classList.remove('low', 'medium', 'high');
                 }
             }
         });
@@ -627,7 +628,6 @@
         closeBtn.onclick = closeHandler;
     }
 
-    // Отрисовка единого списка: сначала бейдж MTProto, потом сервера, потом бейдж SOCKS5, потом сервера
     function renderUnifiedList() {
         const container = document.getElementById('unifiedServerList');
         if (!container) return;
@@ -639,21 +639,19 @@
         mtprotoBadge.textContent = '🔐 MTProto — Высокое шифрование, хорошая скорость';
         container.appendChild(mtprotoBadge);
 
-        // MTProto сервера
         MT_PROTO_SERVERS.forEach(srv => {
             const key = `mtproto_${srv.server}:${srv.port}`;
             const card = createCard(srv, key);
             container.appendChild(card);
         });
 
-        // Разделитель / бейдж SOCKS5
+        // Бейдж SOCKS5
         const socks5Badge = document.createElement('div');
         socks5Badge.className = 'info-badge';
         socks5Badge.style.marginTop = '12px';
         socks5Badge.textContent = '⚡ SOCKS5 — Хорошее шифрование, высокая скорость';
         container.appendChild(socks5Badge);
 
-        // SOCKS5 сервера
         SOCKS5_SERVERS.forEach(srv => {
             const key = `socks5_${srv.server}:${srv.port}`;
             const card = createCard(srv, key);
@@ -662,46 +660,58 @@
 
         refreshPings();
         if (window.pingInterval) clearInterval(window.pingInterval);
-        window.pingInterval = setInterval(() => refreshPings(), 6000);
+        window.pingInterval = setInterval(() => refreshPings(), 8000);
     }
 
     function createCard(srv, key) {
         const card = document.createElement('div');
         card.className = 'card-server';
         card.setAttribute('data-ping-key', key);
+        
         const leftDiv = document.createElement('div');
         leftDiv.className = 'server-info';
+        
         const nameSpan = document.createElement('div');
         nameSpan.className = 'server-name-grad';
         nameSpan.textContent = srv.name;
+        
         const pingWrap = document.createElement('div');
         pingWrap.className = 'ping-container';
+        
         const bubble = document.createElement('div');
         bubble.className = 'ping-bubble';
+        
         const dot = document.createElement('span');
         dot.className = 'ping-dot';
+        
         const pingValSpan = document.createElement('span');
         pingValSpan.className = 'ping-value-white';
-        pingValSpan.textContent = srv.type === 'mtproto' ? '— мс' : 'SOCKS5';
+        pingValSpan.textContent = srv.type === 'mtproto' ? '⏳' : 'SOCKS5';
+        
         bubble.appendChild(dot);
         bubble.appendChild(pingValSpan);
+        
         const addrSpan = document.createElement('span');
         addrSpan.className = 'server-address';
         addrSpan.textContent = `${srv.server}:${srv.port}`;
+        
         pingWrap.appendChild(bubble);
         pingWrap.appendChild(addrSpan);
+        
         leftDiv.appendChild(nameSpan);
         leftDiv.appendChild(pingWrap);
+        
         const connectBtn = document.createElement('div');
         connectBtn.className = 'connect-button';
         connectBtn.textContent = '▶ ПОДКЛЮЧИТЬ';
+        
         card.appendChild(leftDiv);
         card.appendChild(connectBtn);
+        
         card.addEventListener('click', () => connectToServer(srv));
         return card;
     }
 
-    // Авто-подключение по минимальному пингу (только MTProto)
     let autoRunning = false;
     async function autoConnectMinPing() {
         if (autoRunning) { showToast("⏳ Уже подключаем..."); return; }
@@ -710,19 +720,22 @@
         autoRunning = true;
         showToast("🔍 Поиск сервера с минимальным пингом...");
         await refreshPings();
+        
         let best = null;
         let bestPing = Infinity;
         for (let s of MT_PROTO_SERVERS) {
             const key = `mtproto_${s.server}:${s.port}`;
             let p = pingMap.get(key) || 9999;
-            if (p < bestPing && p < 2500) {
+            if (p < bestPing && p < 3000) {
                 bestPing = p;
                 best = s;
             }
         }
         if (!best && MT_PROTO_SERVERS.length) best = MT_PROTO_SERVERS[0];
+        
         if (best) {
-            showToast(`✨ Минимальный пинг: ${best.name} (${bestPing < 2500 ? bestPing + ' мс' : 'неизвестно'})`);
+            const pingText = (bestPing < 3000 && bestPing !== 9999) ? `${bestPing} мс` : 'измеряется';
+            showToast(`✨ Минимальный пинг: ${best.name} (${pingText})`);
             setTimeout(() => {
                 connectToServer(best);
                 setTimeout(() => btn?.classList.remove('active'), 1500);
@@ -766,7 +779,7 @@
         if (autoBtn) autoBtn.addEventListener('click', () => autoConnectMinPing());
         const serversToggle = document.getElementById('serversToggleBtn');
         if (serversToggle) serversToggle.addEventListener('click', toggleServers);
-        showToast("🔥 MTProto + SOCKS5 | Минимальный пинг автообновление");
+        showToast("🔥 MTProto + SOCKS5 | Определение пинга...");
     });
 </script>
 </body>
