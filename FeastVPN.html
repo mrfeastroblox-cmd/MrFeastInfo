@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>FeastVPN — Быстрые сервера | Низкий пинг</title>
+    <title>FeastVPN | MTProto + SOCKS5 | Минимальный пинг</title>
     <style>
         * {
             margin: 0;
@@ -13,32 +13,44 @@
         }
 
         body {
-            background: #0a0c10;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            padding: 18px;
+            background: radial-gradient(ellipse at 30% 40%, #0a0f1e, #010101);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
         }
 
-        .tg-container {
-            max-width: 580px;
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: repeating-radial-gradient(circle at 20% 30%, rgba(0,255,180,0.02) 0px, rgba(0,0,0,0.2) 2px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glass-master {
+            max-width: 680px;
             width: 100%;
-            margin: 0 auto;
-            background: #1e1f28;
-            border-radius: 38px;
-            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6), 0 0 0 0.5px rgba(255, 255, 255, 0.05);
+            background: rgba(12, 18, 28, 0.65);
+            backdrop-filter: blur(20px);
+            border-radius: 56px;
+            border: 1px solid rgba(0, 255, 170, 0.25);
+            box-shadow: 0 30px 50px -20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
             overflow: hidden;
+            z-index: 2;
         }
 
-        .tg-header {
-            padding: 24px 20px 16px 20px;
-            border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
-            background: linear-gradient(135deg, #1a1b24 0%, #1e1f28 100%);
+        .grad-header {
+            padding: 28px 24px 20px 24px;
+            background: linear-gradient(135deg, rgba(20, 28, 44, 0.9), rgba(8, 14, 24, 0.7));
+            border-bottom: 1px solid rgba(0, 255, 170, 0.3);
         }
 
-        .title-row {
+        .flex-title {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -46,207 +58,208 @@
             gap: 12px;
         }
 
-        .logo-area {
+        .logo-block {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .animated-logo {
-            position: relative;
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(145deg, #2b6e4e, #1e4a2f);
-            border-radius: 28px;
+        .logo-3d {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(145deg, #1c4d3a, #0a2a1c);
+            border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: floatLogo 3s ease-in-out infinite;
-        }
-
-        .animated-logo::before {
-            content: "F";
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 800;
             color: white;
+            text-shadow: 0 0 6px #00ffaa;
+            box-shadow: 0 0 14px rgba(0,255,170,0.4);
+            animation: auraPulse 2.8s infinite;
         }
 
-        .animated-logo::after {
-            content: "";
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border-radius: 32px;
-            background: radial-gradient(circle, rgba(80,200,120,0.4) 0%, rgba(80,200,120,0) 80%);
-            opacity: 0.6;
-            animation: pulseRing 2s ease-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes floatLogo {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-3px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-
-        @keyframes pulseRing {
-            0% { transform: scale(1); opacity: 0.7; }
-            70% { transform: scale(1.3); opacity: 0; }
-            100% { transform: scale(1.3); opacity: 0; }
+        @keyframes auraPulse {
+            0% { box-shadow: 0 0 0 0 rgba(0,255,170,0.2);}
+            70% { box-shadow: 0 0 0 10px rgba(0,255,170,0);}
+            100% { box-shadow: 0 0 0 0 rgba(0,255,170,0);}
         }
 
         h1 {
-            font-size: 30px;
+            font-size: 32px;
             font-weight: 800;
-            background: linear-gradient(125deg, #FFFFFF, #9df0b0);
+            background: linear-gradient(125deg, #E0FFEE, #70E0A0, #30D080);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .free-badge {
-            background: #2b6e3c;
-            padding: 6px 14px;
+        .badge-neon {
+            background: rgba(0, 255, 170, 0.12);
+            padding: 6px 16px;
             border-radius: 40px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #d0ffdd;
-            background: #1e4a2f;
-            animation: subtleGlow 2s infinite;
+            font-size: 12px;
+            font-weight: 600;
+            color: #8effcc;
+            border: 0.5px solid rgba(0,255,170,0.4);
         }
 
-        @keyframes subtleGlow {
-            0% { box-shadow: 0 0 0 0 rgba(80,200,120,0.2);}
-            70% { box-shadow: 0 0 0 6px rgba(80,200,120,0);}
-            100% { box-shadow: 0 0 0 0 rgba(80,200,120,0);}
+        /* неоновая кнопка автоподключения */
+        .neon-btn-area {
+            margin: 20px 24px 12px 24px;
         }
-
-        .neon-button-section {
-            padding: 16px 20px 8px 20px;
+        .neon-trigger {
+            background: rgba(20, 28, 44, 0.9);
+            border: 1.5px solid rgba(0,255,170,0.5);
+            border-radius: 70px;
+            padding: 14px 20px;
             display: flex;
+            align-items: center;
             justify-content: center;
+            gap: 18px;
+            cursor: pointer;
+            transition: all 0.25s;
         }
-        .neon-auto-btn {
-            background: #2a2b35;
-            border: 1.5px solid #3e3f4a;
+        .neon-trigger span {
+            font-weight: 700;
+            color: #d0ffe8;
+            font-size: 17px;
+        }
+        .neon-trigger.active {
+            border-color: #00ffaa;
+            background: #0f2f25cc;
+            box-shadow: 0 0 18px #00ffaa55;
+        }
+
+        /* кнопка "Сервера" (под неоновой кнопкой) */
+        .servers-toggle-btn {
+            margin: 8px 24px 16px 24px;
+        }
+        .servers-toggle {
+            background: rgba(20, 28, 44, 0.8);
+            border: 1px solid rgba(0, 255, 170, 0.4);
             border-radius: 60px;
-            padding: 14px 28px;
+            padding: 12px 20px;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 14px;
+            gap: 12px;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.2, 1.2, 0.4, 1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: 0.2s;
         }
-        .neon-auto-btn span {
-            font-size: 18px;
+        .servers-toggle span {
             font-weight: 700;
-            color: #b0b0c0;
+            color: #c0f0dc;
+            font-size: 16px;
         }
-        .neon-auto-btn .neon-icon {
-            font-size: 24px;
-            filter: grayscale(0.5);
-        }
-        .neon-auto-btn.active {
+        .servers-toggle.active {
             border-color: #00ffaa;
-            box-shadow: 0 0 16px rgba(0, 255, 170, 0.6), 0 0 6px rgba(0, 255, 170, 0.8);
-            background: #1f2a25;
-        }
-        .neon-auto-btn.active span {
-            color: #b5ffdd;
-            text-shadow: 0 0 3px #00ffaa80;
-        }
-        .neon-auto-btn.active .neon-icon {
-            filter: drop-shadow(0 0 4px #00ffaa);
+            background: #0f2f25cc;
+            box-shadow: 0 0 12px #00ffaa55;
         }
 
-        .sub {
-            color: #8e8e9e;
-            font-size: 13px;
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+        /* контейнер серверов (единый список) */
+        .servers-section {
+            padding: 0 16px 16px 16px;
         }
-        .ping-badge {
-            background: #2a2b35;
-            padding: 5px 12px;
-            border-radius: 26px;
-            font-size: 12px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .servers-list {
-            padding: 8px 12px 24px 12px;
+        .server-scroll {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 45vh;
+            max-height: 55vh;
             overflow-y: auto;
+            padding: 4px 4px 8px 4px;
         }
-        .servers-list::-webkit-scrollbar {
+        .server-scroll::-webkit-scrollbar {
             width: 4px;
         }
-        .servers-list::-webkit-scrollbar-track {
-            background: #2a2b35;
+        .server-scroll::-webkit-scrollbar-track {
+            background: #1e2632;
             border-radius: 10px;
         }
-        .servers-list::-webkit-scrollbar-thumb {
-            background: #5a5b6e;
+        .server-scroll::-webkit-scrollbar-thumb {
+            background: #3a9f6e;
             border-radius: 10px;
         }
 
-        .server-card {
-            background: #25262f;
-            border-radius: 24px;
-            padding: 14px 18px;
+        /* информационные бейджи над разделами */
+        .info-badge {
+            margin: 8px 8px 4px 8px;
+            padding: 8px 16px;
+            background: linear-gradient(95deg, #0f2a1f, #0a1a2a);
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            border-left: 3px solid #00ffaa;
+            border-right: 1px solid rgba(0,255,170,0.2);
+            color: #c0ffdd;
+        }
+
+        .protocol-divider {
+            margin: 12px 8px 8px 8px;
+            padding: 6px 12px;
+            background: rgba(0, 255, 170, 0.08);
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6effb0;
+            text-align: center;
+            letter-spacing: 1px;
+            border-left: 2px solid #00ffaa;
+        }
+
+        .card-server {
+            background: rgba(28, 34, 48, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 14px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: all 0.2s;
+            transition: 0.2s;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(80, 200, 140, 0.2);
         }
-        .server-card:active {
-            transform: scale(0.97);
-            background: #2e2f3b;
+        .card-server:active {
+            transform: scale(0.98);
+            background: rgba(40, 50, 68, 0.85);
+            border-color: rgba(0,255,170,0.5);
         }
         .server-info {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             flex: 2;
         }
-        .server-name {
+        .server-name-grad {
             font-weight: 700;
             font-size: 17px;
-            color: #f2f2fa;
+            background: linear-gradient(135deg, #f0f0ff, #b8f0d0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .ping-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
         }
-        .ping-indicator {
-            font-size: 12px;
-            font-weight: 500;
-            background: #1d1e26;
-            padding: 4px 12px;
+        .ping-bubble {
+            background: #0f121ecc;
+            padding: 5px 14px;
             border-radius: 40px;
+            font-size: 12px;
             font-family: monospace;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
         .ping-value-white {
-            color: white !important;
+            color: white;
             font-weight: 500;
         }
         .ping-dot {
@@ -259,105 +272,32 @@
         .ping-dot.low { background: #2ed15e; box-shadow: 0 0 4px #2ed15e; }
         .ping-dot.medium { background: #ffb347; }
         .ping-dot.high { background: #ff6b6b; }
-        .ping-dot.unknown { background: #6f6f8a; }
-
-        .server-host {
-            font-size: 12px;
-            color: #aaaac0;
-            font-family: monospace;
-            background: #1b1c24;
-            display: inline-block;
-            padding: 3px 10px;
+        .server-address {
+            font-size: 11px;
+            color: #9eb0c0;
+            background: #00000040;
+            padding: 3px 12px;
             border-radius: 20px;
+            font-family: monospace;
         }
-        .connect-btn {
-            background: #2f6e4a;
-            padding: 8px 18px;
+        .connect-button {
+            background: linear-gradient(95deg, #2f6e4a, #1f4e38);
+            padding: 8px 22px;
             border-radius: 44px;
             font-size: 14px;
             font-weight: 600;
-            color: #e2ffe8;
+            color: #f0fff0;
             white-space: nowrap;
             margin-left: 12px;
             text-align: center;
         }
 
-        /* Модальное окно подписки */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .subscribe-modal {
-            background: #1e1f28;
-            border-radius: 32px;
-            max-width: 320px;
-            width: 85%;
-            padding: 28px 24px 32px;
+        .footer-note {
+            padding: 12px 24px 20px;
             text-align: center;
-            border: 1px solid rgba(0, 255, 170, 0.3);
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
-            transform: scale(0.9);
-            transition: transform 0.2s;
-        }
-        .modal-overlay.active .subscribe-modal {
-            transform: scale(1);
-        }
-        .subscribe-modal h3 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #ffdd88;
-            margin-bottom: 12px;
-        }
-        .subscribe-modal p {
-            color: #b0b0c0;
-            font-size: 14px;
-            margin-bottom: 24px;
-            line-height: 1.4;
-        }
-        .subscribe-btn {
-            background: linear-gradient(135deg, #2b6e4e, #1e4a2f);
-            border: none;
-            padding: 14px 28px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 12px;
-        }
-        .subscribe-btn:active {
-            transform: scale(0.96);
-        }
-        .cancel-subscribe {
-            background: transparent;
-            border: none;
-            color: #8e8e9e;
-            font-size: 13px;
-            padding: 8px;
-            cursor: pointer;
-        }
-        .channel-link {
-            color: #7d8eff;
-            text-decoration: none;
-            font-weight: 500;
+            font-size: 10px;
+            color: #6a7c8c;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
         .toast-message {
@@ -365,473 +305,468 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) scale(0.9);
-            background: #1f212cee;
+            background: #121a24ee;
             backdrop-filter: blur(20px);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 1000;
+            padding: 10px 24px;
+            border-radius: 60px;
+            color: #e0ffe0;
+            font-size: 13px;
+            z-index: 2500;
             opacity: 0;
             transition: 0.2s;
             pointer-events: none;
-            border: 0.5px solid rgba(255,255,255,0.2);
+            border: 0.5px solid #00ffaa66;
         }
         .toast-message.show {
             opacity: 1;
             transform: translateX(-50%) scale(1);
         }
-        .footer-note {
-            padding: 12px 20px 20px;
-            border-top: 0.5px solid rgba(255,255,255,0.05);
-            font-size: 11px;
-            color: #6c6c80;
-            text-align: center;
+
+        /* модалка благодарности */
+        .thanks-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
-        @media (max-width: 520px) {
-            .server-card {
+        .thanks-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-glow-card {
+            background: #0c101cee;
+            border-radius: 48px;
+            max-width: 340px;
+            width: 85%;
+            padding: 32px 28px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 170, 0.5);
+            box-shadow: 0 0 40px rgba(0,255,170,0.2);
+            transform: scale(0.9);
+            transition: transform 0.2s;
+        }
+        .thanks-modal.active .modal-glow-card {
+            transform: scale(1);
+        }
+        .modal-glow-card h2 {
+            font-size: 26px;
+            background: linear-gradient(125deg, #B0FFD0, #40E090);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+        .modal-glow-card p {
+            color: #ccddcc;
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+        .subscribe-modal-btn {
+            background: #2f6e4a;
+            border: none;
+            padding: 14px 20px;
+            width: 100%;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+        .close-modal-hint {
+            background: transparent;
+            border: none;
+            color: #7a8a7a;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 550px) {
+            .card-server {
                 flex-wrap: wrap;
             }
-            .connect-btn {
+            .connect-button {
                 margin-left: 0;
                 margin-top: 10px;
                 width: 100%;
-                text-align: center;
+            }
+            .neon-trigger span {
+                font-size: 13px;
             }
         }
     </style>
 </head>
 <body>
-<div class="tg-container">
-    <div class="tg-header">
-        <div class="title-row">
-            <div class="logo-area">
-                <div class="animated-logo"></div>
-                <h1>FeastVPN+</h1>
+
+<div class="glass-master">
+    <div class="grad-header">
+        <div class="flex-title">
+            <div class="logo-block">
+                <div class="logo-3d">F+</div>
+                <h1>FeastVPN</h1>
             </div>
-            <div class="free-badge">⚡ ULTIMATE</div>
+            <div class="badge-neon">⚡ MAX SPEED</div>
         </div>
-        <div class="sub">
-            <span>🔐 MTProto Proxy</span>
-            <span>📱 Нажми → Telegram подключит</span>
-            <span class="ping-badge">📡 Стабильный пинг</span>
+        <div style="display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap;">
+            <div class="badge-neon" style="background: #00000040;">🚀 МИНИМАЛЬНЫЙ ПИНГ</div>
         </div>
     </div>
 
-    <div class="neon-button-section">
-        <div class="neon-auto-btn" id="neonAutoBtn">
-            <span class="neon-icon">⚡</span>
+    <!-- НЕОНОВАЯ КНОПКА АВТОПОДКЛЮЧЕНИЯ -->
+    <div class="neon-btn-area">
+        <div class="neon-trigger" id="autoNeonBtn">
+            <span>⚡</span>
             <span>Auto самый быстрый сервер</span>
-            <span class="neon-icon">🚀</span>
+            <span>🚀</span>
         </div>
     </div>
 
-    <div class="servers-list" id="serversList"></div>
+    <!-- КНОПКА "СЕРВЕРА" (ПОД НЕОНОВОЙ) -->
+    <div class="servers-toggle-btn">
+        <div class="servers-toggle" id="serversToggleBtn">
+            <span>📡</span>
+            <span>СЕРВЕРА</span>
+            <span>▼</span>
+        </div>
+    </div>
+
+    <!-- ЕДИНЫЙ КОНТЕЙНЕР СЕРВЕРОВ (MTProto + SOCKS5 в одном окне) -->
+    <div id="serversWrapper" class="servers-section">
+        <div class="server-scroll" id="unifiedServerList"></div>
+    </div>
+
     <div class="footer-note">
-        🔥 Подпишись на канал, чтобы пользоваться прокси бесплатно
+        ✨ Нажми на сервер → подключение → окно благодарности
     </div>
 </div>
 
-<div id="toastMsg" class="toast-message">✨ Готово</div>
+<div id="toastGlobal" class="toast-message">✨ Готово</div>
 
-<!-- Модальное окно подписки -->
-<div id="subscribeModal" class="modal-overlay">
-    <div class="subscribe-modal">
-        <h3>📢 Требуется подписка</h3>
-        <p>Для использования FeastVPN необходимо подписаться на канал <strong>@MrFeastChannel</strong></p>
-        <button id="subscribeConfirmBtn" class="subscribe-btn">🔔 ПОДПИСАТЬСЯ</button>
-        <button id="subscribeCancelBtn" class="cancel-subscribe">Напомнить позже</button>
+<!-- МОДАЛКА БЛАГОДАРНОСТИ -->
+<div id="thanksModal" class="thanks-modal">
+    <div class="modal-glow-card">
+        <h2>✨ Спасибо!</h2>
+        <p>Спасибо что используете наш VPN.<br>Если хотите быть в курсе новостей и нас поддержать — подпишитесь на канал по кнопке ниже.</p>
+        <button id="modalSubscribeBtn" class="subscribe-modal-btn">📢 ПОДПИСАТЬСЯ → @MrFeastChannel</button>
+        <button id="modalCloseBtn" class="close-modal-hint">Закрыть</button>
     </div>
 </div>
 
 <script>
-    const CHANNEL_USERNAME = "MrFeastChannel";
-    const CHANNEL_LINK = `https://t.me/${CHANNEL_USERNAME}`;
-
-    const FEAST_SERVERS = [
-        {"name": "FeastVPN 1", "server": "quackton.life", "port": 443, "secret": "ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275"},
-        {"name": "FeastVPN 2", "server": "tg.pepewtf.top", "port": 443, "secret": "eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70"},
-        {"name": "FeastVPN 3", "server": "tg.openworld.bot", "port": 443, "secret": "cb3c473c7bbea00855003ab715668c50"},
-        {"name": "FeastVPN 4", "server": "213.219.212.245", "port": 443, "secret": "9f3c7a8d2e4b1c6f5a7d8e9b0c2f4a1d"},
-        {"name": "FeastVPN 5", "server": "VIP.alotaxi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 6", "server": "peyk.acharbashi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 7", "server": "nitro.alotaxi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 8", "server": "alo.acharbashi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 9", "server": "dedicated.love-internet.xyz", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 10", "server": "rio.alotaxi.info", "port": 4516, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d"}
+    // ---------- MTProto СЕРВЕРА (10 штук) ----------
+    const MT_PROTO_SERVERS = [
+        {"name": "FeastVPN 1", "server": "quackton.life", "port": 443, "secret": "ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275", "type": "mtproto"},
+        {"name": "FeastVPN 2", "server": "tg.pepewtf.top", "port": 443, "secret": "eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70", "type": "mtproto"},
+        {"name": "FeastVPN 3", "server": "tg.openworld.bot", "port": 443, "secret": "cb3c473c7bbea00855003ab715668c50", "type": "mtproto"},
+        {"name": "FeastVPN 4", "server": "213.219.212.245", "port": 443, "secret": "9f3c7a8d2e4b1c6f5a7d8e9b0c2f4a1d", "type": "mtproto"},
+        {"name": "FeastVPN 5", "server": "VIP.alotaxi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d", "type": "mtproto"},
+        {"name": "FeastVPN 6", "server": "peyk.acharbashi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d", "type": "mtproto"},
+        {"name": "FeastVPN 7", "server": "nitro.alotaxi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d", "type": "mtproto"},
+        {"name": "FeastVPN 8", "server": "alo.acharbashi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d", "type": "mtproto"},
+        {"name": "FeastVPN 9", "server": "dedicated.love-internet.xyz", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d", "type": "mtproto"},
+        {"name": "FeastVPN 10", "server": "rio.alotaxi.info", "port": 4516, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d", "type": "mtproto"}
     ];
 
-    // Хранилище статуса подписки (localStorage)
-    let subscriptionChecked = false;
-    let isSubscribed = false;
+    // ---------- SOCKS5 СЕРВЕРА ----------
+    const SOCKS5_SERVERS = [
+        {"name": "FeastVPN 11", "server": "192.111.137.35", "port": 4145, "type": "socks5"},
+        {"name": "FeastVPN 12", "server": "192.252.209.155", "port": 14455, "type": "socks5"},
+        {"name": "FeastVPN 13", "server": "192.252.211.197", "port": 14921, "type": "socks5"},
+        {"name": "FeastVPN 14", "server": "192.252.214.20", "port": 15864, "type": "socks5"},
+        {"name": "FeastVPN 15", "server": "192.111.139.165", "port": 4145, "type": "socks5"}
+    ];
 
-    function checkSubscriptionStatus() {
-        const saved = localStorage.getItem('feastvpn_subscribed');
-        if (saved === 'true') {
-            isSubscribed = true;
-            subscriptionChecked = true;
-            return true;
-        }
-        return false;
-    }
-
-    function markAsSubscribed() {
-        localStorage.setItem('feastvpn_subscribed', 'true');
-        isSubscribed = true;
-        subscriptionChecked = true;
-    }
-
-    function resetSubscriptionCheck() {
-        localStorage.removeItem('feastvpn_subscribed');
-        isSubscribed = false;
-        subscriptionChecked = false;
-    }
-
-    // Показать модальное окно подписки
-    let pendingConnection = null; // сохраняем сервер для подключения после подписки
-    let pendingAutoCallback = null;
-
-    function showSubscribeModal(onSubscribeComplete) {
-        const modal = document.getElementById('subscribeModal');
-        if (!modal) return;
-        
-        modal.classList.add('active');
-        
-        const confirmBtn = document.getElementById('subscribeConfirmBtn');
-        const cancelBtn = document.getElementById('subscribeCancelBtn');
-        
-        const handleSubscribe = () => {
-            // Открываем Telegram канал для подписки
-            window.location.href = CHANNEL_LINK;
-            // Помечаем как подписанного (доверительный механизм)
-            markAsSubscribed();
-            modal.classList.remove('active');
-            showToastMessage("✅ Спасибо за подписку! Теперь можно подключиться.");
-            if (onSubscribeComplete) {
-                setTimeout(() => {
-                    onSubscribeComplete();
-                }, 500);
-            }
-            cleanup();
-        };
-        
-        const handleCancel = () => {
-            modal.classList.remove('active');
-            showToastMessage("⚠️ Подпишитесь на канал, чтобы использовать VPN", true);
-            cleanup();
-        };
-        
-        const cleanup = () => {
-            confirmBtn.removeEventListener('click', handleSubscribe);
-            cancelBtn.removeEventListener('click', handleCancel);
-        };
-        
-        confirmBtn.addEventListener('click', handleSubscribe);
-        cancelBtn.addEventListener('click', handleCancel);
-    }
-
-    // Проверка подписки перед подключением
-    function requireSubscription(callback) {
-        if (checkSubscriptionStatus()) {
-            // Уже подписан
-            callback();
-        } else {
-            // Показать модалку и выполнить callback после подписки
-            showSubscribeModal(callback);
-        }
-    }
-
-    // Остальная логика (пинг, подключение)
     let pingMap = new Map();
-    let pingInProgress = false;
+    let pingUpdating = false;
 
-    function measurePing(server, port, timeoutMs = 2500) {
+    // Точное измерение пинга для MTProto
+    async function measurePing(server, port, timeoutMs = 2500) {
+        const start = performance.now();
         return new Promise((resolve) => {
-            const startTime = performance.now();
-            let resolved = false;
-            
-            const timeoutId = setTimeout(() => {
-                if (!resolved) {
-                    resolved = true;
-                    resolve(timeoutMs);
-                }
+            let finished = false;
+            const timer = setTimeout(() => {
+                if (!finished) { finished = true; resolve(timeoutMs); }
             }, timeoutMs);
-            
+            const url = `https://${server}:${port}/ping-${Date.now()}-${Math.random()}.gif`;
             const img = new Image();
-            const url = `https://${server}:${port}/favicon.ico?nocache=${Date.now()}-${Math.random()}`;
-            
             img.onload = () => {
-                if (!resolved) {
-                    resolved = true;
-                    clearTimeout(timeoutId);
-                    const elapsed = performance.now() - startTime;
-                    resolve(Math.min(Math.floor(elapsed), timeoutMs));
+                if (!finished) {
+                    clearTimeout(timer);
+                    finished = true;
+                    resolve(Math.min(Math.floor(performance.now() - start), timeoutMs));
                 }
             };
-            
             img.onerror = () => {
-                if (!resolved) {
-                    resolved = true;
-                    clearTimeout(timeoutId);
-                    const elapsed = performance.now() - startTime;
-                    if (elapsed < timeoutMs && elapsed > 0) {
+                if (!finished) {
+                    clearTimeout(timer);
+                    const elapsed = performance.now() - start;
+                    if (elapsed < timeoutMs && elapsed > 5) {
+                        finished = true;
                         resolve(Math.min(Math.floor(elapsed), timeoutMs));
                     } else {
-                        resolve(timeoutMs);
+                        const controller = new AbortController();
+                        const ftimer = setTimeout(() => controller.abort(), 1500);
+                        fetch(url, { method: 'HEAD', mode: 'no-cors', cache: 'no-store', signal: controller.signal })
+                            .then(() => {
+                                if (!finished) {
+                                    clearTimeout(ftimer);
+                                    const elapsed2 = performance.now() - start;
+                                    finished = true;
+                                    resolve(Math.min(Math.floor(elapsed2), timeoutMs));
+                                }
+                            })
+                            .catch(() => {
+                                if (!finished) {
+                                    clearTimeout(ftimer);
+                                    const elapsed2 = performance.now() - start;
+                                    finished = true;
+                                    if (elapsed2 < timeoutMs && elapsed2 > 10) resolve(Math.min(Math.floor(elapsed2), timeoutMs));
+                                    else resolve(timeoutMs);
+                                }
+                            });
                     }
                 }
             };
-            
             img.src = url;
-            
-            setTimeout(() => {
-                if (!resolved) {
-                    const controller = new AbortController();
-                    const fetchTimeout = setTimeout(() => controller.abort(), 1500);
-                    fetch(url, {
-                        method: 'HEAD',
-                        mode: 'no-cors',
-                        cache: 'no-store',
-                        signal: controller.signal
-                    }).then(() => {
-                        if (!resolved) {
-                            clearTimeout(fetchTimeout);
-                            const elapsed = performance.now() - startTime;
-                            resolved = true;
-                            clearTimeout(timeoutId);
-                            resolve(Math.min(Math.floor(elapsed), timeoutMs));
-                        }
-                    }).catch(() => {
-                        if (!resolved) {
-                            clearTimeout(fetchTimeout);
-                            const elapsed = performance.now() - startTime;
-                            if (elapsed < timeoutMs && elapsed > 50) {
-                                resolved = true;
-                                clearTimeout(timeoutId);
-                                resolve(Math.min(Math.floor(elapsed), timeoutMs));
-                            }
-                        }
-                    });
-                }
-            }, 300);
         });
     }
 
-    async function updateAllPings(showToastMsg = false) {
-        if (pingInProgress) return;
-        pingInProgress = true;
-        if (showToastMsg) showToastMessage("📡 Обновление пингов...");
-        
-        const promises = FEAST_SERVERS.map(async (srv) => {
-            const key = `${srv.server}:${srv.port}`;
-            const pingMs = await measurePing(srv.server, srv.port, 2500);
-            pingMap.set(key, pingMs);
-        });
-        
-        await Promise.all(promises);
-        pingInProgress = false;
-        renderPingValues();
-        if (showToastMsg) showToastMessage("✅ Пинги обновлены");
-    }
-
-    function renderPingValues() {
-        const cards = document.querySelectorAll('.server-card');
-        cards.forEach(card => {
-            const serverKey = card.getAttribute('data-server-key');
-            if (serverKey && pingMap.has(serverKey)) {
-                let pingVal = pingMap.get(serverKey);
-                const pingSpan = card.querySelector('.ping-value-white');
-                const pingDot = card.querySelector('.ping-dot');
-                if (pingSpan) {
-                    if (pingVal >= 2500) {
-                        pingSpan.textContent = 'Неизвестно';
-                    } else {
-                        pingSpan.textContent = `${pingVal} мс`;
-                    }
-                }
-                if (pingDot) {
-                    pingDot.classList.remove('low', 'medium', 'high', 'unknown');
-                    if (pingVal < 2500 && pingVal < 200) pingDot.classList.add('low');
-                    else if (pingVal < 2500 && pingVal < 700) pingDot.classList.add('medium');
-                    else if (pingVal < 2500) pingDot.classList.add('high');
-                    else pingDot.classList.add('unknown');
-                }
-            }
-        });
-    }
-
-    function connectToServerDirect(srv) {
-        const { name, server, port, secret } = srv;
-        const proxyLink = `tg://proxy?server=${encodeURIComponent(server)}&port=${port}&secret=${encodeURIComponent(secret.trim().toLowerCase())}`;
-        showToastMessage(`🔌 ${name}: подключение...`);
-        try {
-            window.location.href = proxyLink;
-            setTimeout(() => {
-                if (!document.hidden) showToastMessage(`💡 Если Telegram не открылся — установите Telegram`);
-            }, 800);
-        } catch(e) {
-            showToastMessage(`❌ Ошибка`, true);
-        }
-    }
-
-    function connectToServerWithCheck(srv) {
-        requireSubscription(() => {
-            connectToServerDirect(srv);
-        });
-    }
-
-    function getFastestServer() {
-        let bestServer = null;
-        let lowestPing = Infinity;
-        for (let srv of FEAST_SERVERS) {
-            const key = `${srv.server}:${srv.port}`;
-            let ping = pingMap.get(key);
-            if (ping && ping < lowestPing && ping < 2500) {
-                lowestPing = ping;
-                bestServer = srv;
-            }
-        }
-        if (!bestServer) {
-            let minPing = Infinity;
-            for (let srv of FEAST_SERVERS) {
-                const key = `${srv.server}:${srv.port}`;
-                let p = pingMap.get(key) || 9999;
-                if (p < minPing) {
-                    minPing = p;
-                    bestServer = srv;
-                }
-            }
-            if (!bestServer) bestServer = FEAST_SERVERS[0];
-        }
-        return bestServer;
-    }
-
-    let autoConnectInProgress = false;
-
-    async function autoConnectFastest() {
-        if (autoConnectInProgress) {
-            showToastMessage("⏳ Уже подключаемся...");
-            return;
-        }
-        
-        requireSubscription(async () => {
-            autoConnectInProgress = true;
-            const neonBtn = document.getElementById('neonAutoBtn');
-            if (neonBtn) neonBtn.classList.add('active');
-            showToastMessage("🔍 Определяем самый быстрый прокси...");
-            
-            await updateAllPings(true);
-            
-            const fastest = getFastestServer();
-            if (fastest) {
-                const pingValue = pingMap.get(`${fastest.server}:${fastest.port}`);
-                const pingText = (pingValue && pingValue < 2500) ? `${pingValue} мс` : "Неизвестно";
-                showToastMessage(`✨ Найден лучший: ${fastest.name} (пинг ${pingText}) → подключение...`);
-                setTimeout(() => {
-                    connectToServerDirect(fastest);
-                    setTimeout(() => {
-                        if (neonBtn) neonBtn.classList.remove('active');
-                    }, 1800);
-                    autoConnectInProgress = false;
-                }, 400);
+    async function refreshPings() {
+        if (pingUpdating) return;
+        pingUpdating = true;
+        const allServers = [...MT_PROTO_SERVERS, ...SOCKS5_SERVERS];
+        const tasks = allServers.map(async (srv) => {
+            const key = `${srv.type}_${srv.server}:${srv.port}`;
+            if (srv.type === 'mtproto') {
+                const p1 = await measurePing(srv.server, srv.port, 2500);
+                const p2 = await measurePing(srv.server, srv.port, 2500);
+                pingMap.set(key, Math.min(p1, p2));
             } else {
-                showToastMessage("⚠️ Не удалось определить сервер", true);
-                setTimeout(() => {
-                    if (neonBtn) neonBtn.classList.remove('active');
-                }, 1000);
-                autoConnectInProgress = false;
+                pingMap.set(key, null);
+            }
+        });
+        await Promise.all(tasks);
+        pingUpdating = false;
+        renderAllPings();
+    }
+
+    function renderAllPings() {
+        document.querySelectorAll('.card-server').forEach(card => {
+            const key = card.getAttribute('data-ping-key');
+            if (key && pingMap.has(key)) {
+                const val = pingMap.get(key);
+                const spanVal = card.querySelector('.ping-value-white');
+                const dotSpan = card.querySelector('.ping-dot');
+                if (spanVal) {
+                    if (val === null) spanVal.textContent = 'SOCKS5';
+                    else if (val >= 2500) spanVal.textContent = 'Неизвестно';
+                    else spanVal.textContent = `${val} мс`;
+                }
+                if (dotSpan && val !== null && val < 2500) {
+                    dotSpan.classList.remove('low', 'medium', 'high');
+                    if (val < 180) dotSpan.classList.add('low');
+                    else if (val < 650) dotSpan.classList.add('medium');
+                    else dotSpan.classList.add('high');
+                } else if (dotSpan && val === null) {
+                    dotSpan.classList.remove('low', 'medium', 'high');
+                }
             }
         });
     }
 
-    function renderServersList() {
-        const container = document.getElementById('serversList');
+    function buildLink(srv) {
+        if (srv.type === 'mtproto') {
+            return `tg://proxy?server=${encodeURIComponent(srv.server)}&port=${srv.port}&secret=${encodeURIComponent(srv.secret.trim().toLowerCase())}`;
+        } else {
+            return `tg://socks?server=${encodeURIComponent(srv.server)}&port=${srv.port}`;
+        }
+    }
+
+    function connectToServer(srv) {
+        const link = buildLink(srv);
+        showToast(`🔌 ${srv.name}: подключение...`);
+        try {
+            window.location.href = link;
+            setTimeout(() => {
+                if (!document.hidden) showToast("💡 Если Telegram не открылся — установите Telegram");
+            }, 800);
+            setTimeout(() => showThanksModal(), 950);
+        } catch(e) {
+            showToast("❌ Ошибка", true);
+        }
+    }
+
+    function showThanksModal() {
+        const modal = document.getElementById('thanksModal');
+        if (!modal) return;
+        modal.classList.add('active');
+        modal.addEventListener('click', function bgClose(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                modal.removeEventListener('click', bgClose);
+            }
+        });
+        const subscribeBtn = document.getElementById('modalSubscribeBtn');
+        const closeBtn = document.getElementById('modalCloseBtn');
+        const newSubscribeHandler = () => {
+            window.open('https://t.me/MrFeastChannel', '_blank');
+            modal.classList.remove('active');
+        };
+        const closeHandler = () => { modal.classList.remove('active'); };
+        subscribeBtn.onclick = newSubscribeHandler;
+        closeBtn.onclick = closeHandler;
+    }
+
+    // Отрисовка единого списка: сначала бейдж MTProto, потом сервера, потом бейдж SOCKS5, потом сервера
+    function renderUnifiedList() {
+        const container = document.getElementById('unifiedServerList');
         if (!container) return;
         container.innerHTML = '';
-        
-        FEAST_SERVERS.forEach((srv) => {
-            const key = `${srv.server}:${srv.port}`;
-            const card = document.createElement('div');
-            card.className = 'server-card';
-            card.setAttribute('data-server-key', key);
-            
-            const infoDiv = document.createElement('div');
-            infoDiv.className = 'server-info';
-            
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'server-name';
-            nameDiv.innerHTML = `<span>${srv.name}</span>`;
-            
-            const pingWrapper = document.createElement('div');
-            pingWrapper.style.display = 'flex';
-            pingWrapper.style.alignItems = 'center';
-            pingWrapper.style.gap = '10px';
-            pingWrapper.style.flexWrap = 'wrap';
-            
-            const pingContainer = document.createElement('div');
-            pingContainer.className = 'ping-indicator';
-            const dotSpan = document.createElement('span');
-            dotSpan.className = 'ping-dot';
-            const pingText = document.createElement('span');
-            pingText.className = 'ping-value-white';
-            pingText.style.color = 'white';
-            pingText.textContent = '⏳ измерение...';
-            pingContainer.appendChild(dotSpan);
-            pingContainer.appendChild(pingText);
-            
-            const hostSpan = document.createElement('span');
-            hostSpan.className = 'server-host';
-            hostSpan.textContent = `${srv.server}:${srv.port}`;
-            
-            pingWrapper.appendChild(pingContainer);
-            pingWrapper.appendChild(hostSpan);
-            infoDiv.appendChild(nameDiv);
-            infoDiv.appendChild(pingWrapper);
-            
-            const connectBtnDiv = document.createElement('div');
-            connectBtnDiv.className = 'connect-btn';
-            connectBtnDiv.textContent = '▶ ПОДКЛЮЧИТЬ';
-            
-            card.appendChild(infoDiv);
-            card.appendChild(connectBtnDiv);
-            
-            card.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (window.navigator?.vibrate) window.navigator.vibrate(20);
-                connectToServerWithCheck(srv);
-            });
+
+        // Бейдж MTProto
+        const mtprotoBadge = document.createElement('div');
+        mtprotoBadge.className = 'info-badge';
+        mtprotoBadge.textContent = '🔐 MTProto — Высокое шифрование, хорошая скорость';
+        container.appendChild(mtprotoBadge);
+
+        // MTProto сервера
+        MT_PROTO_SERVERS.forEach(srv => {
+            const key = `mtproto_${srv.server}:${srv.port}`;
+            const card = createCard(srv, key);
             container.appendChild(card);
         });
-        
-        updateAllPings(false);
+
+        // Разделитель / бейдж SOCKS5
+        const socks5Badge = document.createElement('div');
+        socks5Badge.className = 'info-badge';
+        socks5Badge.style.marginTop = '12px';
+        socks5Badge.textContent = '⚡ SOCKS5 — Хорошее шифрование, высокая скорость';
+        container.appendChild(socks5Badge);
+
+        // SOCKS5 сервера
+        SOCKS5_SERVERS.forEach(srv => {
+            const key = `socks5_${srv.server}:${srv.port}`;
+            const card = createCard(srv, key);
+            container.appendChild(card);
+        });
+
+        refreshPings();
         if (window.pingInterval) clearInterval(window.pingInterval);
-        window.pingInterval = setInterval(() => updateAllPings(false), 30000);
+        window.pingInterval = setInterval(() => refreshPings(), 6000);
     }
 
-    function showToastMessage(msg, isError = false) {
-        const toast = document.getElementById('toastMsg');
-        if (!toast) return;
-        toast.textContent = msg;
-        toast.style.background = isError ? "#b13e4ccc" : "#1f212cee";
-        toast.classList.add('show');
-        if (window.toastTimeout) clearTimeout(window.toastTimeout);
-        window.toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
+    function createCard(srv, key) {
+        const card = document.createElement('div');
+        card.className = 'card-server';
+        card.setAttribute('data-ping-key', key);
+        const leftDiv = document.createElement('div');
+        leftDiv.className = 'server-info';
+        const nameSpan = document.createElement('div');
+        nameSpan.className = 'server-name-grad';
+        nameSpan.textContent = srv.name;
+        const pingWrap = document.createElement('div');
+        pingWrap.className = 'ping-container';
+        const bubble = document.createElement('div');
+        bubble.className = 'ping-bubble';
+        const dot = document.createElement('span');
+        dot.className = 'ping-dot';
+        const pingValSpan = document.createElement('span');
+        pingValSpan.className = 'ping-value-white';
+        pingValSpan.textContent = srv.type === 'mtproto' ? '— мс' : 'SOCKS5';
+        bubble.appendChild(dot);
+        bubble.appendChild(pingValSpan);
+        const addrSpan = document.createElement('span');
+        addrSpan.className = 'server-address';
+        addrSpan.textContent = `${srv.server}:${srv.port}`;
+        pingWrap.appendChild(bubble);
+        pingWrap.appendChild(addrSpan);
+        leftDiv.appendChild(nameSpan);
+        leftDiv.appendChild(pingWrap);
+        const connectBtn = document.createElement('div');
+        connectBtn.className = 'connect-button';
+        connectBtn.textContent = '▶ ПОДКЛЮЧИТЬ';
+        card.appendChild(leftDiv);
+        card.appendChild(connectBtn);
+        card.addEventListener('click', () => connectToServer(srv));
+        return card;
+    }
+
+    // Авто-подключение по минимальному пингу (только MTProto)
+    let autoRunning = false;
+    async function autoConnectMinPing() {
+        if (autoRunning) { showToast("⏳ Уже подключаем..."); return; }
+        const btn = document.getElementById('autoNeonBtn');
+        btn?.classList.add('active');
+        autoRunning = true;
+        showToast("🔍 Поиск сервера с минимальным пингом...");
+        await refreshPings();
+        let best = null;
+        let bestPing = Infinity;
+        for (let s of MT_PROTO_SERVERS) {
+            const key = `mtproto_${s.server}:${s.port}`;
+            let p = pingMap.get(key) || 9999;
+            if (p < bestPing && p < 2500) {
+                bestPing = p;
+                best = s;
+            }
+        }
+        if (!best && MT_PROTO_SERVERS.length) best = MT_PROTO_SERVERS[0];
+        if (best) {
+            showToast(`✨ Минимальный пинг: ${best.name} (${bestPing < 2500 ? bestPing + ' мс' : 'неизвестно'})`);
+            setTimeout(() => {
+                connectToServer(best);
+                setTimeout(() => btn?.classList.remove('active'), 1500);
+                autoRunning = false;
+            }, 300);
+        } else {
+            showToast("⚠️ Сервер не найден", true);
+            btn?.classList.remove('active');
+            autoRunning = false;
+        }
+    }
+
+    let serversVisible = true;
+    function toggleServers() {
+        const wrapper = document.getElementById('serversWrapper');
+        const toggleBtn = document.getElementById('serversToggleBtn');
+        if (serversVisible) {
+            wrapper.style.display = 'none';
+            toggleBtn.classList.add('active');
+            serversVisible = false;
+        } else {
+            wrapper.style.display = 'block';
+            toggleBtn.classList.remove('active');
+            serversVisible = true;
+        }
+    }
+
+    function showToast(msg, isErr = false) {
+        const t = document.getElementById('toastGlobal');
+        if (!t) return;
+        t.textContent = msg;
+        t.style.background = isErr ? "#b13e4ccc" : "#121a24ee";
+        t.classList.add('show');
+        if (window.toastTmr) clearTimeout(window.toastTmr);
+        window.toastTmr = setTimeout(() => t.classList.remove('show'), 2300);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        renderServersList();
-        const neonBtn = document.getElementById('neonAutoBtn');
-        if (neonBtn) {
-            neonBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (window.navigator?.vibrate) window.navigator.vibrate(40);
-                autoConnectFastest();
-            });
-        }
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        if (!isMobile) setTimeout(() => showToastMessage('💻 Установи Telegram Desktop для прокси'), 1800);
-        else showToastMessage('🚀 Нажми неоновую кнопку для автоподключения');
+        renderUnifiedList();
+        const autoBtn = document.getElementById('autoNeonBtn');
+        if (autoBtn) autoBtn.addEventListener('click', () => autoConnectMinPing());
+        const serversToggle = document.getElementById('serversToggleBtn');
+        if (serversToggle) serversToggle.addEventListener('click', toggleServers);
+        showToast("🔥 MTProto + SOCKS5 | Минимальный пинг автообновление");
     });
 </script>
 </body>
