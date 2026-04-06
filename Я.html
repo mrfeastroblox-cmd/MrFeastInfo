@@ -2,8 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>MrFeast Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MrFeastProject | Премиум код & Безопасность</title>
+    <!-- Элегантный шрифт -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (премиальные иконки) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,610 +16,497 @@
         }
 
         body {
-            min-height: 100vh;
-            background: radial-gradient(circle at 20% 30%, #0a0a1a, #020208);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            position: relative;
+            background-color: #0a0a0a;
+            /* Убираем радиальный градиент, который мог создавать лишний блюр по краям */
+            background-image: none;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            color: #e8e6e1;
+            line-height: 1.45;
+            scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
-        /* 3D анимированные линии на фоне */
-        .line-3d {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+        /* МЯГКОЕ ЗОЛОТОЕ СВЕЧЕНИЕ — без резкости, благородное */
+        .gold-glow {
+            text-shadow: 0 0 3px rgba(210, 160, 40, 0.5), 0 0 1px rgba(200, 150, 30, 0.6);
+            transition: text-shadow 0.2s ease;
         }
 
-        .line {
-            position: absolute;
-            background: linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,0.5), rgba(236,72,153,0.5), rgba(168,85,247,0));
-            height: 2px;
-            width: 100%;
-            filter: blur(2px);
-            animation: moveLine 14s linear infinite;
+        /* Динамичное, но мягкое переливание для текстов */
+        @keyframes softGoldPulse {
+            0% {
+                text-shadow: 0 0 1px rgba(200, 160, 40, 0.3), 0 0 1px rgba(190, 145, 25, 0.2);
+            }
+            70% {
+                text-shadow: 0 0 5px rgba(210, 170, 55, 0.55), 0 0 2px rgba(200, 155, 35, 0.5);
+            }
+            100% {
+                text-shadow: 0 0 4px rgba(215, 175, 60, 0.5), 0 0 1px rgba(195, 150, 30, 0.45);
+            }
+        }
+
+        .animated-gold {
+            animation: softGoldPulse 3.2s infinite alternate ease-in-out;
+        }
+
+        /* Шапка с логотипом слева */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem 0.3rem 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .site-logo {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            background: linear-gradient(135deg, #f5e6c4, #e2c48b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border: 1px solid rgba(210, 170, 50, 0.4);
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+            display: inline-block;
+        }
+
+        .right-corner {
+            font-size: 0.65rem;
+            color: #a08e66;
             opacity: 0.6;
         }
 
-        .line:nth-child(1) { top: 15%; animation-duration: 18s; opacity: 0.5; transform: rotate(5deg); width: 130%; left: -15%;}
-        .line:nth-child(2) { top: 35%; animation-duration: 22s; animation-delay: -3s; opacity: 0.6; transform: rotate(-3deg); width: 140%; left: -20%;}
-        .line:nth-child(3) { top: 55%; animation-duration: 16s; animation-delay: -7s; opacity: 0.5; transform: rotate(2deg);}
-        .line:nth-child(4) { top: 75%; animation-duration: 24s; animation-delay: -11s; opacity: 0.4; transform: rotate(-4deg); width: 120%; left: -10%;}
-        .line:nth-child(5) { top: 88%; animation-duration: 20s; animation-delay: -5s; opacity: 0.5; transform: rotate(1deg);}
-        
-        @keyframes moveLine {
-            0% { transform: translateX(-100%) rotate(var(--rot, 0deg)); }
-            100% { transform: translateX(100%) rotate(var(--rot, 0deg)); }
-        }
-        .line {
-            --rot: 0deg;
-        }
-        .line:nth-child(1) { --rot: 5deg; }
-        .line:nth-child(2) { --rot: -3deg; }
-        .line:nth-child(3) { --rot: 2deg; }
-        .line:nth-child(4) { --rot: -4deg; }
-        .line:nth-child(5) { --rot: 1deg; }
-
-        /* Партиклы/звезды */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            animation: twinkle 3s infinite;
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 0.8; transform: scale(1); }
+        /* основной контейнер — делаем уже и комфортнее */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0.5rem 1.5rem 2rem;
         }
 
-        /* Дополнительный градиентный шум/сияние */
-        .glow-orb {
-            position: fixed;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
-            border-radius: 50%;
-            top: -20%;
-            right: -10%;
-            filter: blur(80px);
-            pointer-events: none;
-            z-index: 0;
-            animation: floatGlow 10s ease-in-out infinite;
-        }
-        .glow-orb2 {
-            bottom: -20%;
-            left: -10%;
-            top: auto;
-            background: radial-gradient(circle, rgba(236,72,153,0.2), transparent 70%);
-            width: 60vw;
-            height: 60vw;
-            position: fixed;
-            filter: blur(100px);
-            pointer-events: none;
-            animation: floatGlow 12s ease-in-out infinite reverse;
-        }
-        @keyframes floatGlow {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
-            50% { transform: translate(3%, 2%) scale(1.05); opacity: 0.7; }
+        /* HERO секция */
+        .hero {
+            text-align: center;
+            margin-bottom: 2.2rem;
+            border-bottom: 1px solid rgba(210, 170, 50, 0.35);
+            padding-bottom: 1.2rem;
         }
 
-        /* Главный контейнер — игровая стеклянная карта */
-        .glass-card {
-            position: relative;
-            z-index: 10;
-            max-width: 680px;
-            width: 100%;
-            background: rgba(8, 8, 18, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 2.5rem;
-            border: 1px solid rgba(168, 85, 247, 0.4);
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(168, 85, 247, 0.2) inset, 0 0 40px rgba(168, 85, 247, 0.15);
-            padding: 2.2rem 2rem;
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            overflow: hidden;
-            animation: cardGlow 3s infinite alternate;
-        }
-        @keyframes cardGlow {
-            0% { box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(168, 85, 247, 0.2) inset, 0 0 20px rgba(168, 85, 247, 0.1); }
-            100% { box-shadow: 0 35px 60px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(168, 85, 247, 0.4) inset, 0 0 50px rgba(168, 85, 247, 0.3); }
+        .prestige-badge {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
+            padding: 0.2rem 1.3rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 1.2px;
+            border: 1px solid rgba(210, 170, 50, 0.6);
+            color: #e6d5a8;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 0 4px rgba(200, 160, 40, 0.2);
         }
 
-        .glass-card:hover {
-            transform: translateY(-6px) scale(1.01);
-            border-color: rgba(168, 85, 247, 0.7);
-        }
-
-        /* 3D линии на контейнере (игровые) */
-        .card-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            border-radius: 2.5rem;
-            overflow: hidden;
-        }
-
-        .card-line {
-            position: absolute;
-            background: linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,0.7), rgba(236,72,153,0.7), rgba(168,85,247,0));
-            height: 2px;
-            width: 200%;
-            animation: cardLineMove 10s linear infinite;
-            opacity: 0.5;
-            filter: blur(1px);
-        }
-
-        .card-line:nth-child(1) { top: 20%; animation-duration: 12s; animation-delay: -2s; transform: rotate(2deg); left: -50%;}
-        .card-line:nth-child(2) { top: 45%; animation-duration: 16s; animation-delay: -5s; transform: rotate(-1deg); left: -50%;}
-        .card-line:nth-child(3) { top: 70%; animation-duration: 14s; animation-delay: -8s; transform: rotate(3deg); left: -50%;}
-        .card-line:nth-child(4) { top: 85%; animation-duration: 18s; animation-delay: -11s; transform: rotate(-2deg); left: -50%;}
-        .card-line:nth-child(5) { top: 10%; animation-duration: 20s; animation-delay: -14s; transform: rotate(1deg); left: -50%;}
-        .card-line:nth-child(6) { top: 60%; animation-duration: 13s; animation-delay: -17s; transform: rotate(-3deg); left: -50%;}
-
-        @keyframes cardLineMove {
-            0% { transform: translateX(-30%) rotate(var(--rot, 0deg)); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateX(30%) rotate(var(--rot, 0deg)); opacity: 0; }
-        }
-        .card-line {
-            --rot: 0deg;
-        }
-        .card-line:nth-child(1) { --rot: 2deg; }
-        .card-line:nth-child(2) { --rot: -1deg; }
-        .card-line:nth-child(3) { --rot: 3deg; }
-        .card-line:nth-child(4) { --rot: -2deg; }
-        .card-line:nth-child(5) { --rot: 1deg; }
-        .card-line:nth-child(6) { --rot: -3deg; }
-
-        /* Заголовок с неоновым эффектом */
-        .title {
-            position: relative;
-            z-index: 2;
-            font-size: 2.2rem;
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             font-weight: 800;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #FFFFFF, #e0b0ff, #c084fc);
-            -webkit-background-clip: text;
+            background: linear-gradient(135deg, #f5e6c4, #e2c48b, #cfaa55);
             background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.3rem;
+            text-shadow: none;
+        }
+
+        .subhead {
+            font-size: clamp(0.9rem, 3.5vw, 1.15rem);
+            font-weight: 500;
+            border-left: 3px solid #cfaa55;
+            display: inline-block;
+            padding-left: 0.8rem;
+            color: #e0d6bf;
+        }
+
+        /* Карточки умений — уменьшенный паддинг для компактности */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.4rem;
+            margin: 2rem 0 1.8rem;
+        }
+
+        .skill-card {
+            background: rgba(12, 12, 14, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 1.6rem;
+            padding: 1.4rem 1.3rem;
+            border: 1px solid rgba(210, 170, 50, 0.35);
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 14px -8px rgba(0,0,0,0.6);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(210, 170, 50, 0.7);
+            box-shadow: 0 0 10px rgba(200, 160, 40, 0.2);
+            background: rgba(16, 16, 20, 0.92);
+        }
+
+        .skill-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+            filter: drop-shadow(0 0 2px rgba(210, 170, 50, 0.5));
+            color: #e2bc6e;
+        }
+
+        .skill-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f3e5c9, #e1c48b);
+            background-clip: text;
+            -webkit-background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(192,132,252,0.5);
-            animation: titlePulse 2s ease-in-out infinite;
-        }
-        @keyframes titlePulse {
-            0%, 100% { opacity: 1; text-shadow: 0 0 15px rgba(192,132,252,0.4); }
-            50% { opacity: 0.95; text-shadow: 0 0 30px rgba(192,132,252,0.8); }
+            border-left: 3px solid #cfaa55;
+            padding-left: 0.7rem;
         }
 
-        .sub {
-            position: relative;
-            z-index: 2;
-            font-size: 1rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.85);
-            border-left: 4px solid #c084fc;
-            padding-left: 0.9rem;
-            margin-bottom: 2rem;
-            letter-spacing: 0.3px;
-            background: linear-gradient(90deg, rgba(192,132,252,0.2), transparent);
-            border-radius: 0 12px 12px 0;
-            animation: subGlow 3s infinite;
-        }
-        @keyframes subGlow {
-            0%, 100% { border-left-color: #c084fc; }
-            50% { border-left-color: #ec489a; }
+        .skill-desc {
+            font-size: 0.85rem;
+            color: #cbc6b5;
+            line-height: 1.4;
         }
 
-        /* Разделитель — яркая анимированная линия */
-        .divider {
-            position: relative;
-            z-index: 2;
-            height: 2px;
-            background: linear-gradient(90deg, rgba(168,85,247,0.2), #c084fc, #ec489a, #c084fc, rgba(168,85,247,0.2));
-            margin: 1.5rem 0 1.8rem 0;
-            border-radius: 2px;
-            box-shadow: 0 0 15px rgba(192,132,252,0.7);
-            animation: dividerPulse 1.5s ease-in-out infinite;
-            width: 100%;
-        }
-        @keyframes dividerPulse {
-            0%, 100% { opacity: 0.8; box-shadow: 0 0 8px rgba(192,132,252,0.5); background-size: 100% 100%; }
-            50% { opacity: 1; box-shadow: 0 0 25px rgba(192,132,252,1), 0 0 12px rgba(236,72,153,0.8); background-size: 150% 100%; }
-        }
-
-        /* Блок ОБО МНЕ */
-        .about-title {
-            position: relative;
-            z-index: 2;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 1rem;
-        }
-
-        .premium-icon {
-            background: linear-gradient(145deg, #a855f7, #7c3aed);
-            width: 38px;
-            height: 38px;
-            border-radius: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 20px rgba(124,58,237,0.5);
-            transition: all 0.3s ease;
-            animation: iconGlow 2s infinite alternate;
-        }
-        @keyframes iconGlow {
-            0% { box-shadow: 0 5px 15px rgba(124,58,237,0.4); }
-            100% { box-shadow: 0 10px 30px rgba(124,58,237,0.8); }
-        }
-        
-        .premium-icon:hover {
-            transform: scale(1.05) rotate(5deg);
-        }
-
-        .premium-icon svg {
-            width: 22px;
-            height: 22px;
-            fill: none;
-            stroke: white;
-            stroke-width: 1.8;
-        }
-
-        .about-text {
-            position: relative;
-            z-index: 2;
-            color: rgba(255, 255, 255, 0.92);
-            line-height: 1.6;
-            font-weight: 450;
-            font-size: 0.98rem;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(168,85,247,0.08));
-            padding: 0.9rem 1.2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(168,85,247,0.25);
-            backdrop-filter: blur(4px);
-            transition: all 0.3s;
-        }
-        .about-text:hover {
-            border-color: rgba(168,85,247,0.5);
-            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(168,85,247,0.12));
-        }
-
-        /* Блок НАВЫКИ */
-        .skills-title {
-            position: relative;
-            z-index: 2;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 1.2rem;
-        }
-
-        .bolt-icon {
-            background: linear-gradient(145deg, #f59e0b, #dc2626);
-            width: 38px;
-            height: 38px;
-            border-radius: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 20px rgba(220,38,38,0.4);
-            transition: all 0.3s ease;
-            animation: boltGlow 1.8s infinite alternate;
-        }
-        @keyframes boltGlow {
-            0% { box-shadow: 0 5px 15px rgba(220,38,38,0.3); }
-            100% { box-shadow: 0 10px 28px rgba(220,38,38,0.7); }
-        }
-        
-        .bolt-icon:hover {
-            transform: scale(1.05) rotate(-5deg);
-        }
-
-        .bolt-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-            stroke: none;
-        }
-
-        .skills-grid {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-bottom: 2.2rem;
-        }
-
-        .skill-tag {
-            background: linear-gradient(135deg, rgba(20, 20, 45, 0.8), rgba(168,85,247,0.2));
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(168,85,247,0.5);
-            padding: 0.6rem 1.4rem;
-            border-radius: 60px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #f0eefc;
-            letter-spacing: 0.2px;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            cursor: pointer;
-        }
-
-        .skill-tag:hover {
-            background: linear-gradient(135deg, rgba(168,85,247,0.7), rgba(236,72,153,0.6));
-            border-color: #f0a3ff;
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(168,85,247,0.5);
-        }
-
-        /* Премиальная кнопка с игровым эффектом */
-        .btn-wrapper {
-            position: relative;
-            z-index: 2;
-            margin-top: 0.8rem;
+        /* Плюсы */
+        .plus-title {
             text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin: 1.8rem 0 1.2rem;
+            letter-spacing: -0.2px;
+            color: #ecdcaa;
         }
 
-        .contact-btn {
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            background: rgba(8, 8, 10, 0.7);
+            border-radius: 1.5rem;
+            padding: 1.2rem 1rem;
+            text-align: center;
+            border: 1px solid rgba(210, 170, 50, 0.35);
+            transition: 0.2s;
+            backdrop-filter: blur(2px);
+        }
+
+        .feature-item:hover {
+            border-color: #cfaa55;
+            background: rgba(20, 20, 26, 0.85);
+            transform: scale(1.01);
+        }
+
+        .feature-icon {
+            font-size: 1.9rem;
+            filter: drop-shadow(0 0 2px rgba(210, 170, 50, 0.5));
+            color: #ddbc73;
+        }
+
+        .feature-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            background: linear-gradient(135deg, #f0e2c2, #e2c48b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .feature-detail {
+            font-size: 0.8rem;
+            color: #b9b2a0;
+        }
+
+        /* КНОПКА "Написать нам" — Telegram */
+        .btn-wrapper {
+            text-align: center;
+            margin: 1.5rem 0 1.8rem;
+        }
+
+        .btn-telegram {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 14px;
-            background: linear-gradient(105deg, #a855f7, #7c3aed, #ec489a);
-            background-size: 200% auto;
-            border: none;
-            padding: 1rem 2.5rem;
-            border-radius: 80px;
-            font-size: 1.05rem;
+            gap: 12px;
+            background: linear-gradient(135deg, #0f0f0f, #1c1a12, #2a2418);
+            background-size: 180% auto;
+            color: #f3e2b0;
             font-weight: 700;
-            color: white;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.5);
-            letter-spacing: 0.5px;
-            backdrop-filter: blur(4px);
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
             text-decoration: none;
-            animation: gradientShift 2.5s ease infinite, buttonPulse 2s infinite;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .contact-btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: rotate(30deg);
-            animation: btnShine 3s infinite;
-        }
-        
-        @keyframes btnShine {
-            0% { transform: translateX(-100%) rotate(30deg); }
-            100% { transform: translateX(100%) rotate(30deg); }
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        @keyframes buttonPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 12px 30px rgba(124, 58, 237, 0.5); }
-            50% { transform: scale(1.02); box-shadow: 0 15px 40px rgba(124, 58, 237, 0.8); }
+            font-size: 1.1rem;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(210, 170, 50, 0.65);
+            box-shadow: 0 0 8px rgba(200, 160, 40, 0.3);
+            cursor: pointer;
+            backdrop-filter: blur(2px);
         }
 
-        .contact-btn svg {
-            width: 22px;
-            height: 22px;
-            fill: white;
+        .btn-telegram:hover {
+            background-position: right center;
+            transform: scale(1.01);
+            box-shadow: 0 0 12px rgba(210, 170, 50, 0.5);
+            border-color: #e2bc6e;
+            color: #fff3df;
         }
 
-        .contact-btn:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 45px rgba(124, 58, 237, 0.8);
-            gap: 18px;
-            animation: none;
+        .btn-telegram i {
+            font-size: 1.2rem;
+        }
+
+        /* Безопасность и футер */
+        .security-badge {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.8rem;
+        }
+
+        .security-badge span {
+            font-size: 0.65rem;
+            background: #0c0c0c;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            border: 0.5px solid rgba(210, 170, 50, 0.5);
+            font-weight: 500;
+            color: #cfc49c;
+        }
+
+        /* НОВЫЙ ФУТЕР С КОПИРАЙТОМ */
+        .main-footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1.2rem 1rem 1.5rem;
+            border-top: 1px solid rgba(210, 170, 50, 0.25);
+            font-size: 0.75rem;
+            color: #b8aa82;
+        }
+
+        .main-footer p {
+            margin: 0.2rem 0;
+        }
+
+        .footer-copyright {
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        /* Анимация появления карточек */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .fade-card {
+            animation: fadeUp 0.45s ease backwards;
+        }
+
+        /* Дополнительные штрихи — убираем любой лишний блюр справа */
+        i, .fas, .far {
+            transition: 0.2s;
+        }
+        .skill-card:hover .skill-icon {
+            filter: drop-shadow(0 0 5px rgba(210, 170, 50, 0.6));
         }
         
-        .contact-btn:hover::before {
-            animation: btnShine 1.5s infinite;
-        }
-
-        .contact-btn:active {
-            transform: translateY(1px);
-        }
-
-        /* Игровой 3D эффект для всего контейнера */
-        @keyframes gameFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
+        /* Убираем горизонтальный скролл и лишние свечения */
+        body, html {
+            overflow-x: hidden;
+            max-width: 100%;
         }
         
-        .glass-card {
-            animation: gameFloat 4s ease-in-out infinite, cardGlow 3s infinite alternate;
-        }
-        
-        .glass-card:hover {
-            animation: none;
-            transform: translateY(-8px) scale(1.01);
-        }
-
-        /* адаптив */
-        @media (max-width: 540px) {
-            body {
-                padding: 1rem;
-            }
-            .glass-card {
-                padding: 1.5rem;
-                animation: none;
-            }
-            .title {
-                font-size: 1.6rem;
-            }
-            .skill-tag {
-                font-size: 0.75rem;
-                padding: 0.45rem 1rem;
-            }
-            .contact-btn {
-                padding: 0.75rem 1.8rem;
-                font-size: 0.9rem;
-            }
-            .premium-icon, .bolt-icon {
-                width: 32px;
-                height: 32px;
-            }
-            .about-text {
-                font-size: 0.9rem;
-                padding: 0.7rem;
-            }
-        }
-
-        ::selection {
-            background: #a855f7;
-            color: white;
-        }
-        
-        /* скролл */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a1a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #a855f7;
-            border-radius: 10px;
+        /* Никакого лишнего блюра на контейнере */
+        .container, .top-bar, .main-footer {
+            backdrop-filter: none;
         }
     </style>
 </head>
 <body>
-    <!-- 3D линии с градиентом на фоне -->
-    <div class="line-3d">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
+
+<!-- ЛЕВЫЙ ВЕРХНИЙ УГОЛ: MrFeastProject.com -->
+<div class="top-bar">
+    <div class="site-logo animated-gold">
+        <i class="fas fa-crown" style="font-size: 0.7rem; margin-right: 5px;"></i> MrFeastProject.com
     </div>
-    
-    <!-- Звезды (партиклы) -->
-    <div class="stars" id="stars"></div>
-    
-    <div class="glow-orb"></div>
-    <div class="glow-orb2"></div>
+    <div class="right-corner">
+        <i class="fas fa-shield-alt"></i> secure
+    </div>
+</div>
 
-    <div class="glass-card">
-        <!-- 3D линии на контейнере -->
-        <div class="card-lines">
-            <div class="card-line"></div>
-            <div class="card-line"></div>
-            <div class="card-line"></div>
-            <div class="card-line"></div>
-            <div class="card-line"></div>
-            <div class="card-line"></div>
+<div class="container">
+    <div class="hero">
+        <div class="prestige-badge animated-gold">
         </div>
-
-        <!-- MrFeast Project -->
-        <div class="title">MrFeast Project</div>
-        <div class="sub">HTML и Python программист</div>
-
-        <!-- Яркая анимированная линия-разделитель -->
-        <div class="divider"></div>
-
-        <!-- ОБО МНЕ -->
-        <div class="about-title">
-            <div class="premium-icon">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2L15 8.5L22 9.5L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9.5L9 8.5L12 2Z" />
-                </svg>
-            </div>
-            <span>Обо мне</span>
-        </div>
-        <div class="about-text">
-            Я MrFeast, я создаю HTML и приложения (.exe) для Windows на языке программирования Python.<br>
-            Умею добавлять информацию о Python приложениях во вкладке (Свойства — Подробнее), также я создатель Антивируса на AI движке для Windows на базе Python.<br>
-            Дизайн не очень на Python, зато стабильный и понятный. На HTML там же везде всё хорошо в плане производительности и качества.
-        </div>
-
-        <!-- НАВЫКИ -->
-        <div class="skills-title">
-            <div class="bolt-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z"/>
-                </svg>
-            </div>
-            <span>Навыки</span>
-        </div>
-        <div class="skills-grid">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">HTML</span>
-            <span class="skill-tag">Cyber Protect</span>
-            <span class="skill-tag">Design (HTML)</span>
-        </div>
-
-        <!-- Кнопка Telegram -->
-        <div class="btn-wrapper">
-            <a href="https://t.me/MrFeast_Official" target="_blank" rel="noopener noreferrer" class="contact-btn">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.6-1.38-.97-2.23-1.56-.99-.67-.35-1.04.22-1.64.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.2-.04-.28-.02-.12.02-1.94 1.23-5.48 3.62-.52.36-.99.53-1.41.52-.46-.01-1.35-.26-2.01-.48-.81-.26-1.45-.4-1.4-.85.03-.23.35-.48.96-.74 3.78-1.65 6.3-2.74 7.56-3.28 3.6-1.52 4.35-1.78 4.84-1.79.11 0 .35.03.5.18.13.12.16.29.18.44-.01.11-.04.25-.07.44z"/>
-                </svg>
-                НАПИСАТЬ МНЕ
-            </a>
+        <h1 class="animated-gold">MrFeastProject</h1>
+        <div class="subhead animated-gold">
+            <i class="fas fa-code"></i> Lua · HTML · Python · Design · Cyber Security <i class="fas fa-lock"></i>
         </div>
     </div>
 
-    <script>
-        // Генерация звезд (оптимизировано)
-        const starsContainer = document.getElementById('stars');
-        const starCount = window.innerWidth < 768 ? 60 : 120;
-        
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            const size = Math.random() * 3 + 1;
-            star.style.width = size + 'px';
-            star.style.height = size + 'px';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 5 + 's';
-            star.style.animationDuration = Math.random() * 3 + 2 + 's';
-            starsContainer.appendChild(star);
-        }
-    </script>
+    <!-- КЛЮЧЕВЫЕ УМЕНИЯ -->
+    <div style="margin-bottom: 0.5rem;">
+        <h2 class="plus-title animated-gold"><i class="fas fa-gem"></i> КЛЮЧЕВЫЕ УМЕНИЯ <i class="fas fa-gem"></i></h2>
+    </div>
+    <div class="skills-grid">
+        <div class="skill-card fade-card" style="animation-delay: 0.02s;">
+            <div class="skill-icon"><i class="fab fa-laravel"></i></div>
+            <div class="skill-title">Lua Mastery</div>
+            <div class="skill-desc">Скрипты любой сложности, высокая производительность, чистая архитектура.</div>
+        </div>
+        <div class="skill-card fade-card" style="animation-delay: 0.06s;">
+            <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
+            <div class="skill-title">HTML / Design</div>
+            <div class="skill-desc">Адаптивная вёрстка, премиум UI/UX, элегантные анимации.</div>
+        </div>
+        <div class="skill-card fade-card" style="animation-delay: 0.1s;">
+            <div class="skill-icon"><i class="fab fa-python"></i></div>
+            <div class="skill-title">Python Power</div>
+            <div class="skill-desc">Бэкенд, автоматизация, парсинг, Telegram-боты, AI-интеграции.</div>
+        </div>
+        <div class="skill-card fade-card" style="animation-delay: 0.14s;">
+            <div class="skill-icon"><i class="fas fa-user-astronaut"></i></div>
+            <div class="skill-title">Create Avatar for Profile</div>
+            <div class="skill-desc">Эксклюзивные аватары, стиль под ваш бренд, векторные решения.</div>
+        </div>
+        <div class="skill-card fade-card" style="animation-delay: 0.18s;">
+            <div class="skill-icon"><i class="fas fa-shield-virus"></i></div>
+            <div class="skill-title">Cyber Security</div>
+            <div class="skill-desc">Обнаружение уязвимостей, аудит, защита кода и приложений.</div>
+        </div>
+        <div class="skill-card fade-card" style="animation-delay: 0.22s;">
+            <div class="skill-icon"><i class="fas fa-bug"></i></div>
+            <div class="skill-title">Detect & Fix Vulnerabilities</div>
+            <div class="skill-desc">Исправление Security Bugs, защита веб-ресурсов, пентест.</div>
+        </div>
+    </div>
+
+    <!-- ПЛЮСЫ / ПРЕИМУЩЕСТВА -->
+    <h2 class="plus-title animated-gold"><i class="fas fa-star-of-life"></i> ПРЕМИУМ ПРЕИМУЩЕСТВА <i class="fas fa-star-of-life"></i></h2>
+    <div class="features-grid">
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+            <div class="feature-name">Быстрый ответ</div>
+            <div class="feature-detail">Реакция 24/7, обсуждение в течение 5 минут</div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-check-double"></i></div>
+            <div class="feature-name">Гарантия рабочего скрипта/приложения</div>
+            <div class="feature-detail">Полное тестирование, отладка, гарантия функциональности</div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-broom"></i></div>
+            <div class="feature-name">Чистый и безопасный код</div>
+            <div class="feature-detail">Стандарты OWASP, ревью кода, отсутствие уязвимостей</div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-hand-holding-usd"></i></div>
+            <div class="feature-name">Простая и безопасная оплата</div>
+            <div class="feature-detail">Эскроу, криптовалюта, карты — защита сделки 100%</div>
+        </div>
+    </div>
+
+    <!-- Кнопка "Написать нам" — переход в Telegram -->
+    <div class="btn-wrapper">
+        <a href="https://t.me/MrFeast_Official" target="_blank" rel="noopener noreferrer" class="btn-telegram">
+            <i class="fab fa-telegram-plane"></i> Написать нам 
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Блок безопасности -->
+    <div class="security-badge">
+        <span><i class="fas fa-shield-alt"></i> Аудит безопасности в подарок</span>
+        <span><i class="fas fa-rocket"></i> Работа с Lua/Python/HTML</span>
+        <span><i class="fas fa-fingerprint"></i> Фикс security bugs</span>
+    </div>
+</div>
+
+<!-- ФУТЕР: MrFeastProject.com - Все права защищены -->
+<div class="main-footer">
+    <p class="footer-copyright animated-gold">
+        <i class="fas fa-copyright"></i> MrFeastProject.com - Все права защищены
+    </p>
+    <p style="font-size: 0.65rem; margin-top: 5px;">© 2026 | Новая эра | Быстро. Чисто. Надёжно.</p>
+</div>
+
+<script>
+    (function() {
+        // Добавляем мягкое золотое свечение для всех текстов
+        const allTextBlocks = document.querySelectorAll('p, span, h2, h3, .skill-desc, .feature-detail, .subhead, .prestige-badge, .main-footer p, .security-badge span, .footer-copyright');
+        allTextBlocks.forEach(el => {
+            if (!el.classList.contains('animated-gold')) {
+                el.classList.add('animated-gold');
+            }
+            // базовое свечение
+            el.style.textShadow = '0 0 1px rgba(200, 160, 40, 0.3)';
+        });
+
+        // Элегантный эффект для карточек навыков
+        const skillCards = document.querySelectorAll('.skill-card');
+        skillCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.skill-icon');
+                if(icon) icon.style.filter = 'drop-shadow(0 0 5px rgba(210, 170, 50, 0.6))';
+            });
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.skill-icon');
+                if(icon) icon.style.filter = 'drop-shadow(0 0 2px rgba(210, 170, 50, 0.5))';
+            });
+            // премиум-фидбек при клике (мягкий)
+            card.addEventListener('click', () => {
+                const titleElem = card.querySelector('.skill-title');
+                const skillName = titleElem ? titleElem.innerText : 'Навык';
+                const toast = document.createElement('div');
+                toast.innerHTML = `<i class="fas fa-crown" style="margin-right:6px;"></i> ${skillName} — экспертное качество`;
+                toast.style.position = 'fixed';
+                toast.style.bottom = '20px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.background = '#111111dd';
+                toast.style.border = '1px solid #cfaa55';
+                toast.style.color = '#f2e2bd';
+                toast.style.padding = '0.4rem 1.2rem';
+                toast.style.borderRadius = '40px';
+                toast.style.fontSize = '0.75rem';
+                toast.style.fontWeight = '500';
+                toast.style.backdropFilter = 'blur(8px)';
+                toast.style.zIndex = '999';
+                toast.style.boxShadow = '0 0 10px rgba(200, 160, 40, 0.3)';
+                toast.style.pointerEvents = 'none';
+                toast.style.fontFamily = "'Inter', sans-serif";
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }, 1500);
+            });
+        });
+
+        // Убираем любой потенциальный блюр на body и контейнерах
+        document.body.style.overflowX = 'hidden';
+        console.log('MrFeastProject | Интерфейс компактный, блюр убран | Telegram: @MrFeast_Official');
+    })();
+</script>
 </body>
 </html>
