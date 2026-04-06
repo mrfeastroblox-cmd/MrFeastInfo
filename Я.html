@@ -32,7 +32,7 @@
             transition: text-shadow 0.2s ease;
         }
 
-        /* Динамичное, но мягкое переливание для текстов */
+        /* Динамическое, но мягкое переливание для текстов */
         @keyframes softGoldPulse {
             0% {
                 text-shadow: 0 0 1px rgba(200, 160, 40, 0.3), 0 0 1px rgba(190, 145, 25, 0.2);
@@ -237,7 +237,7 @@
             color: #b9b2a0;
         }
 
-        /* КНОПКА "Написать нам" — Telegram */
+        /* КНОПКА "Написать нам" — Telegram (ОРИГИНАЛЬНАЯ, не изменена) */
         .btn-wrapper {
             text-align: center;
             margin: 1.5rem 0 1.8rem;
@@ -273,6 +273,45 @@
 
         .btn-telegram i {
             font-size: 1.2rem;
+        }
+
+        /* НОВАЯ КНОПКА VPN — ТОЧНО ТАКАЯ ЖЕ, НО ЧУТЬ БОЛЬШЕ И С ДРУГОЙ ИКОНКОЙ */
+        .btn-vpn-wrapper {
+            text-align: center;
+            margin: 1rem 0 1.8rem; /* чуть меньше верхний отступ, чтобы визуально быть под кнопкой телеграм */
+        }
+
+        .btn-vpn {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px; /* чуть больше gap для лёгкости */
+            background: linear-gradient(135deg, #0f0f0f, #1c1a12, #2a2418);
+            background-size: 180% auto;
+            color: #f3e2b0;
+            font-weight: 700;
+            /* Делаем кнопку чуть больше: увеличиваем padding и font-size */
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.2rem; /* немного крупнее */
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(210, 170, 50, 0.7);
+            box-shadow: 0 0 10px rgba(200, 160, 40, 0.4);
+            cursor: pointer;
+            backdrop-filter: blur(2px);
+        }
+
+        .btn-vpn:hover {
+            background-position: right center;
+            transform: scale(1.02);
+            box-shadow: 0 0 16px rgba(210, 170, 50, 0.6);
+            border-color: #e8c876;
+            color: #fff7ea;
+        }
+
+        .btn-vpn i {
+            font-size: 1.3rem; /* иконка слегка увеличена */
         }
 
         /* Безопасность и футер */
@@ -426,13 +465,23 @@
         </div>
     </div>
 
-    <!-- Кнопка "Написать нам" — переход в Telegram -->
+    <!-- Кнопка "Написать нам" — переход в Telegram (ОРИГИНАЛЬНАЯ, НЕ ИЗМЕНЕНА) -->
     <div class="btn-wrapper">
         <a href="https://t.me/MrFeast_Official" target="_blank" rel="noopener noreferrer" class="btn-telegram">
             <i class="fab fa-telegram-plane"></i> Написать нам 
             <i class="fas fa-arrow-right"></i>
         </a>
     </div>
+
+    <!-- ========= НОВАЯ КНОПКА: FeastVPN обход для Telegram ========= -->
+    <!-- Добавлена точно под кнопкой "Написать нам", стиль идентичный, но чуть увеличен размер -->
+    <div class="btn-vpn-wrapper">
+        <a href="https://mrfeastroblox-cmd.github.io/MrFeastInfo/FeastVPN.html" target="_blank" rel="noopener noreferrer" class="btn-vpn">
+            <i class="fas fa-globe"></i> FeastVPN обход для Telegram
+            <i class="fas fa-shield-alt"></i>
+        </a>
+    </div>
+    <!-- ========= КОНЕЦ НОВОЙ КНОПКИ ========= -->
 
     <!-- Блок безопасности -->
     <div class="security-badge">
