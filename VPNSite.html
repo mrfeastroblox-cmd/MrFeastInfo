@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>FeastVPN_BoostTG | Компактный VPN для Telegram</title>
+    <!-- Элегантный шрифт -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            color: #e8e6e1;
+            line-height: 1.4;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Зелёное свечение */
+        .green-glow {
+            text-shadow: 0 0 2px rgba(50, 210, 80, 0.4), 0 0 1px rgba(40, 190, 70, 0.5);
+        }
+
+        @keyframes softGreenPulse {
+            0% { text-shadow: 0 0 1px rgba(60, 200, 90, 0.2), 0 0 1px rgba(50, 180, 70, 0.2); }
+            70% { text-shadow: 0 0 4px rgba(70, 220, 100, 0.5), 0 0 2px rgba(60, 200, 85, 0.4); }
+            100% { text-shadow: 0 0 3px rgba(80, 225, 105, 0.45), 0 0 1px rgba(55, 195, 75, 0.4); }
+        }
+
+        .animated-green {
+            animation: softGreenPulse 3.2s infinite alternate ease-in-out;
+        }
+
+        /* Шапка - более компактная */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 1.2rem 0.2rem 1.2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .site-logo {
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #c4f5d6, #8be2a0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border: 1px solid rgba(70, 200, 100, 0.5);
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            display: inline-block;
+        }
+
+        .right-corner {
+            font-size: 0.6rem;
+            color: #6ea07a;
+            opacity: 0.7;
+        }
+
+        /* Контейнер - уже */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0.3rem 1.2rem 1.5rem;
+        }
+
+        /* HERO - компактнее */
+        .hero {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(70, 200, 100, 0.35);
+            padding-bottom: 0.8rem;
+        }
+
+        .prestige-badge {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.15rem 1rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            border: 1px solid rgba(70, 200, 100, 0.6);
+            color: #b8f0c5;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #c4f5d6, #8be2a0, #55cf77);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.2rem;
+        }
+
+        .subhead {
+            font-size: clamp(0.8rem, 3vw, 0.95rem);
+            font-weight: 500;
+            border-left: 2px solid #55cf77;
+            display: inline-block;
+            padding-left: 0.6rem;
+            color: #d0f0da;
+        }
+
+        /* Сетка карточек - уменьшенный gap */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin: 1.2rem 0 1.2rem;
+        }
+
+        .skill-card {
+            background: rgba(12, 12, 14, 0.85);
+            border-radius: 1.2rem;
+            padding: 1rem 1rem;
+            border: 1px solid rgba(70, 200, 100, 0.4);
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px -6px rgba(0,0,0,0.5);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(70, 200, 100, 0.8);
+            box-shadow: 0 0 8px rgba(70, 200, 100, 0.25);
+            background: rgba(16, 20, 16, 0.92);
+        }
+
+        .skill-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 2px rgba(70, 200, 100, 0.5));
+            color: #7be298;
+        }
+
+        .skill-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #daf5e2, #a0e6b5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+            border-left: 2px solid #55cf77;
+            padding-left: 0.5rem;
+        }
+
+        .skill-desc {
+            font-size: 0.75rem;
+            color: #c5e0ce;
+            line-height: 1.35;
+        }
+
+        /* Заголовки */
+        .plus-title {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 1.2rem 0 0.8rem;
+            letter-spacing: -0.2px;
+            color: #bcf0cb;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-item {
+            background: rgba(8, 8, 10, 0.7);
+            border-radius: 1.2rem;
+            padding: 0.9rem 0.8rem;
+            text-align: center;
+            border: 1px solid rgba(70, 200, 100, 0.4);
+            transition: 0.2s;
+        }
+
+        .feature-item:hover {
+            border-color: #55cf77;
+            background: rgba(20, 26, 20, 0.85);
+            transform: scale(1.01);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 2px rgba(70, 200, 100, 0.5));
+            color: #7be298;
+        }
+
+        .feature-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0.3rem 0;
+            background: linear-gradient(135deg, #e0f5e6, #a0e6b5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .feature-detail {
+            font-size: 0.7rem;
+            color: #c0e0ca;
+            line-height: 1.3;
+        }
+
+        /* Кнопки - чуть компактнее */
+        .btn-wrapper, .btn-social-wrapper, .btn-vpn-wrapper {
+            text-align: center;
+            margin: 0.7rem 0;
+        }
+
+        .btn-telegram, .btn-social, .btn-vpn, .modal-channel-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #0f0f0f, #1a221c, #1e2a1f);
+            background-size: 180% auto;
+            color: #daf5e2;
+            font-weight: 600;
+            padding: 0.55rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.2px;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(70, 200, 100, 0.6);
+            box-shadow: 0 0 5px rgba(70, 200, 100, 0.25);
+            cursor: pointer;
+        }
+
+        .btn-telegram:hover, .btn-social:hover, .btn-vpn:hover, .modal-channel-btn:hover {
+            background-position: right center;
+            transform: scale(1.01);
+            box-shadow: 0 0 10px rgba(70, 200, 100, 0.45);
+            border-color: #8be2a0;
+            color: #ffffff;
+        }
+
+        .btn-vpn {
+            padding: 0.6rem 1.8rem;
+            font-size: 1rem;
+        }
+
+        .btn-telegram i, .btn-social i, .btn-vpn i {
+            font-size: 0.95rem;
+        }
+
+        /* Модальное окно */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.2s, opacity 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-container {
+            background: #0f0f12;
+            border: 1px solid rgba(70, 200, 100, 0.7);
+            border-radius: 1.5rem;
+            max-width: 360px;
+            width: 85%;
+            padding: 1.2rem 1.5rem 1.5rem;
+            text-align: center;
+            transform: scale(0.96);
+            transition: transform 0.2s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c4f5d6, #8be2a0, #55cf77);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.7rem;
+            border-bottom: 1px solid rgba(70, 200, 100, 0.4);
+            display: inline-block;
+            padding-bottom: 0.1rem;
+        }
+
+        .modal-sub {
+            color: #b8ecc8;
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-channel-btn {
+            padding: 0.5rem 1.4rem;
+            font-size: 0.85rem;
+        }
+
+        .modal-divider {
+            margin: 0.8rem 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(70, 200, 100, 0.4), transparent);
+        }
+
+        .modal-game-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #bcf0cb;
+            margin: 0.3rem 0 0.1rem;
+        }
+
+        .modal-game-desc {
+            font-size: 0.65rem;
+            color: #b0cfba;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-close {
+            margin-top: 1.2rem;
+            background: none;
+            border: none;
+            color: #8bb892;
+            font-size: 0.7rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .modal-close:hover {
+            color: #8be2a0;
+        }
+
+        /* Безопасность */
+        .security-badge {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .security-badge span {
+            font-size: 0.6rem;
+            background: #0c0c0c;
+            padding: 0.15rem 0.6rem;
+            border-radius: 40px;
+            border: 0.5px solid rgba(70, 200, 100, 0.5);
+            font-weight: 500;
+            color: #c5e8d2;
+        }
+
+        /* Футер */
+        .main-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            padding: 0.8rem 1rem 1rem;
+            border-top: 1px solid rgba(70, 200, 100, 0.25);
+            font-size: 0.65rem;
+            color: #9cc4a8;
+        }
+
+        .footer-copyright {
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .fade-card {
+            animation: fadeUp 0.35s ease backwards;
+        }
+
+        /* Убираем любые блюры */
+        .skill-card, .feature-item, .btn-telegram, .btn-social, .btn-vpn {
+            backdrop-filter: none !important;
+        }
+
+        body, html {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+        
+        /* Дополнительный комфорт: плавные скроллы */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #55cf77 #1a1a1a;
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #55cf77;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="site-logo animated-green">
+        <i class="fas fa-shield-vpn" style="font-size: 0.65rem; margin-right: 4px;"></i> FeastVPN_BoostTG.com
+    </div>
+    <div class="right-corner">
+        <i class="fas fa-bolt"></i> ultra speed
+    </div>
+</div>
+
+<div class="container">
+    <div class="hero">
+        <div class="prestige-badge animated-green">
+            <i class="fas fa-globe"></i> MTProto 16x
+        </div>
+        <h1 class="animated-green">FeastVPN_BoostTG</h1>
+        <div class="subhead animated-green">
+            <i class="fas fa-tachometer-alt"></i> Высокая скорость · Ping минимум · Стабильность 24/7
+        </div>
+    </div>
+
+    <!-- ПЛЮСЫ НАШЕГО VPN -->
+    <div>
+        <h2 class="plus-title animated-green"><i class="fas fa-chart-line"></i> Плюсы нашего VPN <i class="fas fa-chart-line"></i></h2>
+    </div>
+    <div class="skills-grid">
+        <div class="skill-card fade-card" style="animation-delay: 0.02s;">
+            <div class="skill-icon"><i class="fas fa-rocket"></i></div>
+            <div class="skill-title">Высокая скорость серверов</div>
+            <div class="skill-desc">Оптимизированные магистрали, стабильный поток данных без ограничений.</div>
+        </div>
+        <div class="skill-card fade-card" style="animation-delay: 0.06s;">
+            <div class="skill-icon"><i class="fas fa-charging-station"></i></div>
+            <div class="skill-title">Минимальный Ping</div>
+            <div class="skill-desc">Идеально для комфортного использования Telegram, игр внутри Telegram и стриминга. Все быстро и стабильно.</div>
+        </div>
+        <div class="skill-card fade-card" style="animation-delay: 0.1s;">
+            <div class="skill-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="skill-title">Проверенные MTProto</div>
+            <div class="skill-desc">Только надёжные протоколы, устойчивые к блокировкам.</div>
+        </div>
+        <div class="skill-card fade-card" style="animation-delay: 0.14s;">
+            <div class="skill-icon"><i class="fas fa-layer-group"></i></div>
+            <div class="skill-title">16 MTProto, любой на свой вкус</div>
+            <div class="skill-desc">Огромный выбор серверных конфигураций под ваши задачи.</div>
+        </div>
+        <div class="skill-card fade-card" style="animation-delay: 0.18s;">
+            <div class="skill-icon"><i class="fas fa-microchip"></i></div>
+            <div class="skill-title">Автоподключение к самому быстрому серверу</div>
+            <div class="skill-desc">Интеллектуальный выбор пикового канала без вашего участия.</div>
+        </div>
+    </div>
+
+    <!-- ПОЧЕМУ НАС ВЫБИРАЮТ -->
+    <h2 class="plus-title animated-green"><i class="fas fa-star-of-life"></i> Почему нас выбирают <i class="fas fa-star-of-life"></i></h2>
+    <div class="features-grid">
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-wifi"></i></div>
+            <div class="feature-name">Работает прямо в браузере</div>
+            <div class="feature-detail">Лёгкий доступ через веб-интерфейс, никаких сложных установок.</div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-palette"></i></div>
+            <div class="feature-name">Стильный и понятный интерфейс</div>
+            <div class="feature-detail">Минималистичный дизайн, интуитивное управление, тёмная тема.</div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-server"></i></div>
+            <div class="feature-name">16 MTProto в 1 красивом интерфейсе</div>
+            <div class="feature-detail">Все конфигурации собраны в единой удобной панели.</div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-clock"></i></div>
+            <div class="feature-name">24/7 Работает без перебоев</div>
+            <div class="feature-detail">Мониторинг серверов, автоматическая смена при сбоях.</div>
+        </div>
+    </div>
+
+    <!-- Кнопка "Написать нам" -->
+    <div class="btn-wrapper">
+        <a href="https://t.me/MrFeast_Official" target="_blank" rel="noopener noreferrer" class="btn-telegram">
+            <i class="fab fa-telegram-plane"></i> Написать нам 
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Кнопка "Прочее" -->
+    <div class="btn-social-wrapper">
+        <button id="openSocialModalBtn" class="btn-social">
+            <i class="fas fa-link"></i> Прочее
+            <i class="fas fa-share-alt"></i>
+        </button>
+    </div>
+
+    <!-- Главная кнопка VPN -->
+    <div class="btn-vpn-wrapper">
+        <a href="https://mrfeastroblox-cmd.github.io/MrFeastInfo/FeastVPN.html" target="_blank" rel="noopener noreferrer" class="btn-vpn">
+            <i class="fas fa-shield-vpn"></i> FeastVPN обход для Telegram
+            <i class="fas fa-bolt"></i>
+        </a>
+    </div>
+
+    <!-- Блок безопасности -->
+    <div class="security-badge">
+        <span><i class="fas fa-shield-alt"></i> 16 MTProto серверов</span>
+        <span><i class="fas fa-tachometer-alt"></i> Автовыбор быстрого узла</span>
+        <span><i class="fas fa-fingerprint"></i> Без логов, конфиденциальность</span>
+    </div>
+</div>
+
+<div class="main-footer">
+    <p class="footer-copyright animated-green">
+        <i class="fas fa-copyright"></i> FeastVPN_BoostTG.com — Все права защищены
+    </p>
+    <p style="font-size: 0.6rem; margin-top: 4px;">© 2026 | Сверхскоростной VPN | 24/7 стабильность</p>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО -->
+<div id="socialModal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-title">Прочее</div>
+        <div class="modal-sub">Официальный канал студии</div>
+        <a href="https://t.me/MrFeastChannel" target="_blank" rel="noopener noreferrer" class="modal-channel-btn">
+            <i class="fab fa-telegram-plane"></i> Открыть канал
+            <i class="fas fa-external-link-alt"></i>
+        </a>
+        <div class="modal-divider"></div>
+        <div class="modal-game-title">
+            <i class="fas fa-gamepad"></i> MrFeastClicker (Game)
+        </div>
+        <div class="modal-game-desc">Кликер в стиле MrFeast — набирай очки!</div>
+        <a href="https://nacruka000-eng.github.io/FeastClicker/FeastClicker.html" target="_blank" rel="noopener noreferrer" class="modal-channel-btn">
+            <i class="fas fa-play"></i> Играть
+            <i class="fas fa-arrow-right"></i>
+        </a>
+        <div>
+            <button id="closeModalBtn" class="modal-close">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Добавляем мягкое свечение текстам
+        const allTextBlocks = document.querySelectorAll('p, span, h2, h3, .skill-desc, .feature-detail, .subhead, .prestige-badge, .main-footer p, .security-badge span, .footer-copyright');
+        allTextBlocks.forEach(el => {
+            if (!el.classList.contains('animated-green')) {
+                el.classList.add('animated-green');
+            }
+            el.style.textShadow = '0 0 1px rgba(70, 200, 100, 0.3)';
+        });
+
+        // Эффекты для карточек с тостами
+        const skillCards = document.querySelectorAll('.skill-card');
+        skillCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.skill-icon');
+                if(icon) icon.style.filter = 'drop-shadow(0 0 4px rgba(70, 200, 100, 0.6))';
+            });
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.skill-icon');
+                if(icon) icon.style.filter = 'drop-shadow(0 0 2px rgba(70, 200, 100, 0.4))';
+            });
+            card.addEventListener('click', () => {
+                const titleElem = card.querySelector('.skill-title');
+                const skillName = titleElem ? titleElem.innerText : 'Преимущество';
+                const toast = document.createElement('div');
+                toast.innerHTML = `<i class="fas fa-bolt" style="margin-right:5px;"></i> ${skillName} — премиум качество`;
+                toast.style.position = 'fixed';
+                toast.style.bottom = '20px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.background = '#111111dd';
+                toast.style.border = '1px solid #55cf77';
+                toast.style.color = '#daf5e2';
+                toast.style.padding = '0.3rem 1rem';
+                toast.style.borderRadius = '40px';
+                toast.style.fontSize = '0.7rem';
+                toast.style.fontWeight = '500';
+                toast.style.backdropFilter = 'blur(6px)';
+                toast.style.zIndex = '999';
+                toast.style.boxShadow = '0 0 8px rgba(70, 200, 100, 0.4)';
+                toast.style.pointerEvents = 'none';
+                toast.style.fontFamily = "'Inter', sans-serif";
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }, 1300);
+            });
+        });
+
+        // Модальное окно
+        const modal = document.getElementById('socialModal');
+        const openBtn = document.getElementById('openSocialModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (openBtn) openBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        // Убираем любые остаточные фильтры
+        document.body.style.filter = 'none';
+        
+        console.log('FeastVPN_BoostTG | Компактный комфортный интерфейс | Уменьшены отступы и размеры');
+    })();
+</script>
+</body>
+</html>
