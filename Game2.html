@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>🌈 РАЗНОЦВЕТНАЯ ЗАЩИТА · УДАЛЕНИЕ БАШЕН</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #0b1020;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            touch-action: pan-y;
+        }
+        .game-container {
+            background: #131a30;
+            border-radius: 32px;
+            padding: 12px 12px 20px;
+            box-shadow: 0 20px 30px #00000080, 0 0 0 2px #3f518b inset;
+            max-width: 480px;
+            width: 100%;
+            margin: 8px;
+        }
+        .top-panel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 8px 8px;
+            background: #1b2440;
+            border-radius: 60px;
+            margin-bottom: 8px;
+            box-shadow: inset 0 2px 5px #0a0f1c;
+        }
+        .wave-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #2a1f3d;
+            padding: 6px 18px;
+            border-radius: 40px;
+            box-shadow: inset 0 0 6px black;
+        }
+        .wave-box span { font-size: 1.7rem; }
+        .wave-text {
+            font-weight: 900;
+            color: #ffdb9d;
+            font-size: 1.2rem;
+        }
+        .hp-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #2d1e1e;
+            padding: 5px 16px;
+            border-radius: 40px;
+        }
+        .hp-bar-bg {
+            width: 80px;
+            height: 14px;
+            background: #3d2a2a;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .hp-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #ff6a6a, #dc143c);
+            border-radius: 20px;
+            transition: width 0.1s;
+        }
+        .money-box {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #2a3a2a;
+            padding: 6px 16px;
+            border-radius: 40px;
+            color: #ffd966;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        canvas {
+            display: block;
+            margin: 4px auto;
+            background: radial-gradient(circle at 30% 30%, #1f2e5c, #0a1022);
+            border-radius: 28px;
+            box-shadow: inset 0 0 30px #000000b0, 0 8px 0 #090d16, 0 0 0 2px #5f74b0;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1/1;
+            touch-action: none;
+            cursor: grab;
+        }
+        canvas.dragging { cursor: grabbing; }
+        .tower-panel {
+            display: flex;
+            justify-content: space-around;
+            gap: 8px;
+            margin: 14px 4px 8px;
+        }
+        .tower-card {
+            background: #1d2745;
+            border-radius: 30px;
+            padding: 8px 2px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: inset 0 2px 5px #0f172a, 0 6px 0 #0b111f, 0 0 0 2px #4f66a0;
+            transition: 0.05s;
+            color: white;
+        }
+        .tower-card.active {
+            box-shadow: inset 0 2px 5px #0f172a, 0 2px 0 #0b111f, 0 0 0 4px #ffd966;
+            transform: translateY(4px);
+        }
+        .tower-emoji { font-size: 2.2rem; line-height: 1.2; }
+        .tower-name {
+            font-weight: bold;
+            font-size: 0.7rem;
+            background: #2f4370;
+            padding: 4px 6px;
+            border-radius: 40px;
+            margin: 2px 0;
+        }
+        .tower-cost {
+            color: #ffd966;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+        .tower-damage {
+            color: #ff9999;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .action-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 5px;
+        }
+        .delete-btn {
+            background: linear-gradient(to bottom, #ff6b6b, #cc3333);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 12px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: white;
+            box-shadow: 0 4px 0 #8b2222, 0 0 0 2px #ffaaaa;
+            transition: 0.05s;
+            cursor: pointer;
+            flex: 0.8;
+            text-transform: uppercase;
+        }
+        .delete-btn.active {
+            box-shadow: inset 0 2px 5px #5a1515, 0 2px 0 #8b2222, 0 0 0 4px #ff6666;
+            transform: translateY(2px);
+            background: linear-gradient(to bottom, #cc3333, #aa2222);
+        }
+        .delete-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #8b2222, 0 0 0 2px #ffaaaa;
+        }
+        .reset-btn {
+            background: linear-gradient(to bottom, #ff8a7a, #b33b2e);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 12px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: white;
+            box-shadow: 0 4px 0 #6e241a, 0 0 0 2px #ffb3a8;
+            transition: 0.05s;
+            cursor: pointer;
+            flex: 0.8;
+            text-transform: uppercase;
+        }
+        .reset-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #6e241a, 0 0 0 2px #ffb3a8;
+        }
+        .upgrade-btn {
+            background: linear-gradient(to bottom, #c5a3ff, #7b4fcc);
+            border: none;
+            border-radius: 60px;
+            padding: 14px 8px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: #f0e6ff;
+            box-shadow: 0 6px 0 #4b2c7a, 0 0 0 2px #d4b5ff;
+            transition: 0.05s;
+            cursor: pointer;
+            flex: 1.2;
+            text-transform: uppercase;
+        }
+        .upgrade-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #4b2c7a, 0 0 0 2px #d4b5ff;
+        }
+        .selected-indicator {
+            background: #5f3b8c;
+            padding: 6px 10px;
+            border-radius: 30px;
+            color: #ffecb3;
+            font-size: 0.8rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .info-hint {
+            color: #b9ceff;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        .save-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2a3a2a;
+            color: #aaffaa;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            box-shadow: 0 4px 10px black;
+            z-index: 1000;
+        }
+        .save-indicator.show {
+            opacity: 1;
+        }
+        .control-row {
+            display: flex;
+            gap: 6px;
+            margin: 6px 5px;
+        }
+        .boss-speed-badge {
+            color: #aaaaff;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div class="top-panel">
+        <div class="wave-box">
+            <span>🌊</span>
+            <span class="wave-text" id="waveDisplay">1</span>
+        </div>
+        <div class="hp-box">
+            <span>❤️</span>
+            <div class="hp-bar-bg">
+                <div class="hp-fill" id="hpFill" style="width:100%"></div>
+            </div>
+        </div>
+        <div class="money-box">
+            <span>🪙</span>
+            <span id="moneyDisplay">250</span>
+        </div>
+    </div>
+
+    <canvas id="gameCanvas" width="600" height="600"></canvas>
+
+    <div class="tower-panel">
+        <div class="tower-card" data-type="basic">
+            <div class="tower-emoji">🔫</div>
+            <div class="tower-name">КРАСКОМЁТ (4)</div>
+            <div class="tower-cost">100 🪙</div>
+            <div class="tower-damage">💥 5</div>
+        </div>
+        <div class="tower-card" data-type="sniper">
+            <div class="tower-emoji">🎯</div>
+            <div class="tower-name">СНАЙПЕР (3)</div>
+            <div class="tower-cost">180 🪙</div>
+            <div class="tower-damage">💥 15</div>
+        </div>
+        <div class="tower-card" data-type="splash">
+            <div class="tower-emoji">💥</div>
+            <div class="tower-name">ВЗРЫВ (2)</div>
+            <div class="tower-cost">220 🪙</div>
+            <div class="tower-damage">💥 50</div>
+        </div>
+    </div>
+
+    <div class="control-row">
+        <button class="delete-btn" id="deleteModeBtn">🗑️ УДАЛИТЬ</button>
+        <button class="reset-btn" id="resetBtn">🔄 СБРОС</button>
+        <button class="upgrade-btn" id="upgradeBtn">⭐ UPGRADE</button>
+    </div>
+    
+    <div class="action-bar">
+        <div class="selected-indicator" id="mergeHint">👆 выберите тип и стройте</div>
+    </div>
+    <div class="info-hint" id="bossHint"></div>
+    <div class="boss-speed-badge">🐌 Боссы: 2% скорости</div>
+</div>
+<div class="save-indicator" id="saveIndicator">💾 Автосохранение</div>
+
+<script>
+    (function(){
+        "use strict";
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const moneySpan = document.getElementById('moneyDisplay');
+        const waveSpan = document.getElementById('waveDisplay');
+        const hpFill = document.getElementById('hpFill');
+        const mergeHint = document.getElementById('mergeHint');
+        const bossHint = document.getElementById('bossHint');
+        const saveIndicator = document.getElementById('saveIndicator');
+
+        const COLS = 8, ROWS = 8;
+        const CELL_SIZE = 600 / COLS;
+        const PATH = [
+            [0,3], [1,3], [2,3], [3,3], [3,4], [3,5], [3,6], [3,7],
+            [4,7], [5,7], [6,7], [7,7]
+        ];
+
+        let towers = [];
+        let enemies = [];
+        let money = 250;
+        let baseHp = 100;
+        const MAX_BASE_HP = 100;
+        let wave = 1;
+        let gameOver = false;
+        let frame = 0;
+        let enemiesToSpawn = 5;
+        let spawnedCount = 0;
+        let gameLoopId = null;
+        let bossSpawnedThisWave = false;
+        let isBossWave = false;
+
+        let attackEffects = [];
+        let isDragging = false;
+        let draggedTowerIndex = -1;
+        let dragStartCol = -1, dragStartRow = -1;
+        let dragCurrentCol = -1, dragCurrentRow = -1;
+        let hasMoved = false;
+        let selectedTowerType = 'basic';
+        let autoSaveTimer = null;
+        let deleteMode = false;
+
+        const towerTypes = {
+            basic:   { name:'Краскомёт',   color:'#FFB347', cost:100, dmg:5,  range:4.0, cooldown:20, emoji:'🔫' },
+            sniper:  { name:'Снайпер',     color:'#6EC8FF', cost:180, dmg:15, range:3.0, cooldown:30, emoji:'🎯' },
+            splash:  { name:'Взрыв-краска',color:'#C47AFF', cost:220, dmg:50, range:2.0, cooldown:35, splash:1.8, emoji:'💥' }
+        };
+
+        // ========== РАСЧЁТ СТОИМОСТИ ПРОКАЧКИ ==========
+        function getTowerTotalCost(type, level) {
+            const base = towerTypes[type];
+            let total = base.cost;
+            for(let lvl = 2; lvl <= level; lvl++) {
+                total += Math.floor(base.cost * (1 + (lvl-2)*0.3));
+            }
+            return total;
+        }
+
+        function getRefundAmount(type, level) {
+            const totalCost = getTowerTotalCost(type, level);
+            return Math.floor(totalCost * 0.8);
+        }
+
+        // ========== АВТОСОХРАНЕНИЕ ==========
+        function showSaveIndicator() {
+            saveIndicator.classList.add('show');
+            if(autoSaveTimer) clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => {
+                saveIndicator.classList.remove('show');
+            }, 1500);
+        }
+
+        function autoSave() {
+            if(gameOver) return;
+            
+            const saveData = {
+                towers: towers.map(t => ({
+                    col: t.col, row: t.row, type: t.type, level: t.level
+                })),
+                money: money,
+                baseHp: baseHp,
+                wave: wave,
+                enemiesToSpawn: enemiesToSpawn,
+                spawnedCount: spawnedCount,
+                bossSpawnedThisWave: bossSpawnedThisWave,
+                isBossWave: isBossWave,
+                enemies: enemies.map(e => ({
+                    pathIndex: e.pathIndex, x: e.x, y: e.y,
+                    hp: e.hp, maxHp: e.maxHp, speed: e.speed,
+                    reward: e.reward, color: e.color, size: e.size,
+                    isBoss: e.isBoss
+                })),
+                timestamp: Date.now()
+            };
+            
+            try {
+                localStorage.setItem('colorfulTowerDefense_autosave', JSON.stringify(saveData));
+                showSaveIndicator();
+            } catch(e) {
+                console.warn('Ошибка автосохранения:', e);
+            }
+        }
+
+        function autoLoad() {
+            try {
+                const saved = localStorage.getItem('colorfulTowerDefense_autosave');
+                if(!saved) return false;
+                
+                const data = JSON.parse(saved);
+                
+                if(data.timestamp && Date.now() - data.timestamp > 7 * 24 * 60 * 60 * 1000) {
+                    localStorage.removeItem('colorfulTowerDefense_autosave');
+                    return false;
+                }
+                
+                towers = data.towers.map(t => ({ ...t, lastShotFrame: -100 }));
+                money = data.money;
+                baseHp = data.baseHp;
+                wave = data.wave;
+                enemiesToSpawn = data.enemiesToSpawn;
+                spawnedCount = data.spawnedCount;
+                bossSpawnedThisWave = data.bossSpawnedThisWave;
+                isBossWave = data.isBossWave;
+                enemies = data.enemies.map(e => ({...e}));
+                
+                gameOver = false;
+                frame = 0;
+                isDragging = false;
+                draggedTowerIndex = -1;
+                deleteMode = false;
+                document.getElementById('deleteModeBtn').classList.remove('active');
+                
+                updateUI();
+                mergeHint.innerText = `📂 Игра загружена (волна ${wave})`;
+                setTimeout(() => updateMergeHintDefault(), 2000);
+                draw();
+                return true;
+            } catch(e) {
+                console.warn('Ошибка загрузки:', e);
+                return false;
+            }
+        }
+
+        function resetGame() {
+            if(confirm('Сбросить весь прогресс? Начнёте с первой волны.')) {
+                localStorage.removeItem('colorfulTowerDefense_autosave');
+                
+                towers = [];
+                enemies = [];
+                money = 250;
+                baseHp = 100;
+                wave = 1;
+                gameOver = false;
+                frame = 0;
+                enemiesToSpawn = 5;
+                spawnedCount = 0;
+                bossSpawnedThisWave = false;
+                isBossWave = false;
+                isDragging = false;
+                draggedTowerIndex = -1;
+                attackEffects = [];
+                deleteMode = false;
+                document.getElementById('deleteModeBtn').classList.remove('active');
+                
+                updateUI();
+                mergeHint.innerText = '🔄 Игра сброшена';
+                setTimeout(() => updateMergeHintDefault(), 1500);
+                
+                spawnEnemy(false);
+                spawnedCount = 1;
+                draw();
+                autoSave();
+            }
+        }
+
+        function updateMergeHintDefault() {
+            if(deleteMode) {
+                mergeHint.innerText = `🗑️ Режим удаления (возврат 80%)`;
+            } else {
+                mergeHint.innerText = `🔧 выбран ${towerTypes[selectedTowerType].name} (${towerTypes[selectedTowerType].cost}🪙)`;
+            }
+        }
+
+        // ========== ОСТАЛЬНЫЕ ФУНКЦИИ ==========
+        function getTowerStats(type, level) {
+            const base = towerTypes[type];
+            const mult = 1 + (level-1)*0.5;
+            return {
+                dmg: Math.floor(base.dmg * mult),
+                range: base.range * (1 + (level-1)*0.1),
+                cooldown: Math.max(12, base.cooldown - (level-1)*3),
+                color: level === 1 ? base.color : shiftColor(base.color, level*12),
+                splash: base.splash ? base.splash * (1+(level-1)*0.15) : 0
+            };
+        }
+        
+        function shiftColor(hex, offset) {
+            let r = parseInt(hex.slice(1,3),16);
+            let g = parseInt(hex.slice(3,5),16);
+            let b = parseInt(hex.slice(5,7),16);
+            r = Math.min(255, r+offset*3);
+            g = Math.min(255, g+offset*2);
+            b = Math.min(255, b+offset*5);
+            return `#${((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1)}`;
+        }
+
+        function updateUI() {
+            moneySpan.textContent = money;
+            waveSpan.textContent = wave;
+            let hpPercent = Math.max(0, (baseHp / MAX_BASE_HP)*100);
+            hpFill.style.width = hpPercent + '%';
+            if(baseHp <= 0) gameOver = true;
+            if(isBossWave && !bossSpawnedThisWave && !gameOver) bossHint.innerText = '👾 БОСС-ВОЛНА!';
+            else if(isBossWave && enemies.some(e=>e.isBoss)) bossHint.innerText = '💢 БОСС НА ПОЛЕ! (🐌 2% скорости)';
+            else bossHint.innerText = '';
+        }
+
+        function isPathCell(col, row) { return PATH.some(p => p[0]===col && p[1]===row); }
+        function isCellFree(col, row) { return !towers.some(t => t.col === col && t.row === row); }
+
+        function tryPlaceTower(col, row, typeKey) {
+            if(gameOver) return false;
+            if(isPathCell(col, row)) {
+                mergeHint.innerText = '⛔ нельзя строить на пути';
+                return false;
+            }
+            if(!isCellFree(col, row)) {
+                mergeHint.innerText = '❌ клетка занята';
+                return false;
+            }
+            const type = towerTypes[typeKey];
+            if(!type || money < type.cost) {
+                mergeHint.innerText = '💰 недостаточно монет';
+                return false;
+            }
+            money -= type.cost;
+            towers.push({ col, row, type: typeKey, level: 1, lastShotFrame: -100 });
+            mergeHint.innerText = `✅ ${type.name} построен`;
+            updateUI();
+            autoSave();
+            return true;
+        }
+
+        function deleteTower(index) {
+            const tower = towers[index];
+            const refund = getRefundAmount(tower.type, tower.level);
+            money += refund;
+            towers.splice(index, 1);
+            mergeHint.innerText = `🗑️ Башня удалена! +${refund}🪙 (80%)`;
+            updateUI();
+            autoSave();
+        }
+
+        function tryMergeTowers(draggedIdx, targetIdx) {
+            if(draggedIdx === targetIdx) return false;
+            const t1 = towers[draggedIdx];
+            const t2 = towers[targetIdx];
+            if(t1.type !== t2.type || t1.level !== t2.level) {
+                mergeHint.innerText = `❌ разные типы или уровни`;
+                return false;
+            }
+            const newLevel = t1.level + 1;
+            const keepCol = t2.col, keepRow = t2.row;
+            if(draggedIdx > targetIdx) {
+                towers.splice(draggedIdx, 1);
+                towers.splice(targetIdx, 1);
+            } else {
+                towers.splice(targetIdx, 1);
+                towers.splice(draggedIdx, 1);
+            }
+            towers.push({ col: keepCol, row: keepRow, type: t1.type, level: newLevel, lastShotFrame: frame });
+            mergeHint.innerText = `✅ СЛИЯНИЕ! ${towerTypes[t1.type].name} ур.${newLevel}`;
+            updateUI();
+            autoSave();
+            return true;
+        }
+
+        function moveTower(towerIdx, newCol, newRow) {
+            if(!isCellFree(newCol, newRow) || isPathCell(newCol, newRow)) return false;
+            towers[towerIdx].col = newCol;
+            towers[towerIdx].row = newRow;
+            mergeHint.innerText = `↗️ башня перемещена`;
+            autoSave();
+            return true;
+        }
+
+        function getWavePowerMultiplier() {
+            if (wave <= 5) return 1;
+            const tier = Math.floor((wave - 1) / 5);
+            return Math.pow(2, tier);
+        }
+
+        function spawnEnemy(isBoss = false) {
+            if(gameOver) return;
+            const start = PATH[0];
+            const powerMult = getWavePowerMultiplier();
+            
+            let baseHp = 20 + wave * 6;
+            let hp = Math.floor(baseHp * powerMult);
+            let baseSpeed = 0.012 + wave * 0.0015;
+            let speed = baseSpeed; // Без множителя скорости!
+            let reward = 35 + wave * 8;
+            
+            if(isBoss) {
+                hp = Math.floor(hp * 15);
+                speed = baseSpeed * 0.02; // БОСС: 2% скорости
+                reward = reward * 5;
+            }
+            
+            const hue = (wave * 45 + (isBoss?180:0)) % 360;
+            enemies.push({
+                pathIndex: 0, x: start[0]*CELL_SIZE+CELL_SIZE/2, y: start[1]*CELL_SIZE+CELL_SIZE/2,
+                hp, maxHp: hp, speed, reward,
+                color: isBoss ? '#b03e5b' : `hsl(${hue}, 85%, 58%)`,
+                size: isBoss ? 30 : 20,
+                isBoss: isBoss || false
+            });
+        }
+
+        function updateEnemies() {
+            for(let i=enemies.length-1; i>=0; i--) {
+                const e = enemies[i];
+                if(e.hp <= 0) { 
+                    money += e.reward; 
+                    enemies.splice(i,1);
+                    updateUI();
+                    autoSave();
+                    continue; 
+                }
+                const targetIdx = Math.min(e.pathIndex+1, PATH.length-1);
+                const target = PATH[targetIdx];
+                const tx = target[0]*CELL_SIZE+CELL_SIZE/2, ty = target[1]*CELL_SIZE+CELL_SIZE/2;
+                const dx = tx - e.x, dy = ty - e.y, dist = Math.hypot(dx, dy);
+                if(dist < 4) {
+                    e.pathIndex = targetIdx;
+                    if(targetIdx === PATH.length-1) {
+                        baseHp = Math.max(0, baseHp - (e.isBoss ? 35 : Math.floor(e.hp/3+8)));
+                        enemies.splice(i,1);
+                        updateUI();
+                        autoSave();
+                    }
+                } else {
+                    const move = Math.min(dist, e.speed * CELL_SIZE * 2.5);
+                    e.x += (dx/dist) * move;
+                    e.y += (dy/dist) * move;
+                }
+            }
+        }
+
+        function updateTowers() {
+            for(let t of towers) {
+                const stats = getTowerStats(t.type, t.level);
+                if(frame - t.lastShotFrame < stats.cooldown) continue;
+                const cx = t.col*CELL_SIZE+CELL_SIZE/2, cy = t.row*CELL_SIZE+CELL_SIZE/2;
+                let closest = null, minDist = Infinity;
+                for(let e of enemies) {
+                    const dist = Math.hypot(e.x - cx, e.y - cy);
+                    if(dist < stats.range * CELL_SIZE && dist < minDist) { minDist = dist; closest = e; }
+                }
+                if(closest) {
+                    t.lastShotFrame = frame;
+                    attackEffects.push({ x: closest.x, y: closest.y, color: stats.color, life: 12 });
+                    
+                    if(t.type === 'splash' && stats.splash) {
+                        const splashR = stats.splash * CELL_SIZE;
+                        for(let e of enemies) {
+                            if(Math.hypot(e.x-closest.x, e.y-closest.y) <= splashR) {
+                                e.hp -= Math.floor(stats.dmg*0.8);
+                                attackEffects.push({ x: e.x, y: e.y, color: stats.color, life: 10 });
+                            }
+                        }
+                        closest.hp -= stats.dmg;
+                    } else {
+                        closest.hp -= stats.dmg;
+                    }
+                }
+            }
+            attackEffects = attackEffects.filter(e => e.life > 0).map(e => ({...e, life: e.life-1}));
+        }
+
+        function draw() {
+            ctx.clearRect(0,0,600,600);
+            
+            ctx.strokeStyle = '#35487a'; ctx.lineWidth = 1;
+            for(let i=0;i<=COLS;i++) {
+                ctx.beginPath();
+                ctx.moveTo(i*CELL_SIZE,0); ctx.lineTo(i*CELL_SIZE,600);
+                ctx.moveTo(0,i*CELL_SIZE); ctx.lineTo(600,i*CELL_SIZE);
+                ctx.stroke();
+            }
+            
+            ctx.fillStyle = '#7350a070';
+            PATH.forEach(([col,row])=> ctx.fillRect(col*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE));
+            ctx.fillStyle = '#b0302a90';
+            let end = PATH[PATH.length-1];
+            ctx.fillRect(end[0]*CELL_SIZE, end[1]*CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            
+            towers.forEach((t, idx) => {
+                if(idx === draggedTowerIndex) return;
+                drawTower(t, t.col*CELL_SIZE, t.row*CELL_SIZE);
+            });
+            
+            attackEffects.forEach(e => {
+                ctx.beginPath();
+                ctx.arc(e.x, e.y, 8 + (12-e.life)*1.5, 0, Math.PI*2);
+                ctx.fillStyle = e.color + '80';
+                ctx.shadowColor = e.color;
+                ctx.shadowBlur = 15;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+            
+            enemies.forEach(e=>{
+                ctx.shadowColor = e.color; ctx.shadowBlur = 22;
+                ctx.beginPath(); ctx.arc(e.x, e.y, e.size, 0, 2*Math.PI);
+                ctx.fillStyle = e.color; ctx.fill();
+                ctx.shadowBlur = 0;
+                ctx.strokeStyle = '#ffffffb0'; ctx.lineWidth = e.isBoss?5:3; ctx.stroke();
+                
+                const hpPercent = e.hp/e.maxHp;
+                const barW = e.isBoss ? 56 : 44;
+                ctx.fillStyle = '#121212';
+                ctx.fillRect(e.x-barW/2, e.y-e.size-12, barW, 8);
+                ctx.fillStyle = e.isBoss ? '#ff4f75' : '#ff7b7b';
+                ctx.fillRect(e.x-barW/2, e.y-e.size-12, barW*hpPercent, 8);
+                
+                ctx.font = `bold ${e.isBoss ? 12 : 10}px sans-serif`;
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowColor = '#000000';
+                ctx.shadowBlur = 4;
+                ctx.textAlign = 'center';
+                ctx.fillText(`${Math.floor(e.hp)}/${e.maxHp}`, e.x, e.y-e.size-16);
+                ctx.shadowBlur = 0;
+                
+                if(e.isBoss) { 
+                    ctx.font='bold 16px sans-serif'; 
+                    ctx.fillStyle='#ffb0b0'; 
+                    ctx.fillText('👑', e.x-15, e.y-28);
+                    ctx.font='bold 10px sans-serif';
+                    ctx.fillStyle = '#aaaaff';
+                    ctx.fillText('🐌🐌', e.x+10, e.y-20);
+                }
+            });
+            
+            if(isDragging && draggedTowerIndex !== -1 && draggedTowerIndex < towers.length) {
+                const t = towers[draggedTowerIndex];
+                const x = dragCurrentCol * CELL_SIZE;
+                const y = dragCurrentRow * CELL_SIZE;
+                ctx.shadowColor = '#FFD966';
+                ctx.shadowBlur = 28;
+                ctx.globalAlpha = 0.85;
+                drawTower(t, x, y);
+                ctx.globalAlpha = 1.0;
+                ctx.shadowBlur = 0;
+            }
+            
+            if(gameOver) {
+                ctx.font='bold 34px sans-serif'; ctx.fillStyle='#ffcaca'; ctx.shadowColor='red'; ctx.shadowBlur=16;
+                ctx.fillText(baseHp<=0?'💔 ПОРАЖЕНИЕ':'🏆', 300, 300);
+                ctx.shadowBlur=0;
+            }
+            
+            // Отображение режима удаления
+            if(deleteMode) {
+                ctx.font = 'bold 14px sans-serif';
+                ctx.fillStyle = '#ff6666';
+                ctx.shadowColor = '#ff0000';
+                ctx.shadowBlur = 10;
+                ctx.fillText('🗑️ РЕЖИМ УДАЛЕНИЯ', 300, 30);
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function drawTower(t, x, y) {
+            const stats = getTowerStats(t.type, t.level);
+            ctx.shadowColor = stats.color+'c0'; 
+            ctx.shadowBlur = 14;
+            ctx.fillStyle = stats.color;
+            ctx.beginPath(); 
+            ctx.arc(x+CELL_SIZE/2, y+CELL_SIZE/2, CELL_SIZE/3, 0, 2*Math.PI);
+            ctx.fill();
+            ctx.shadowBlur = 6;
+            ctx.font = `bold ${CELL_SIZE/2.5}px "Segoe UI Emoji", "Apple Color Emoji"`;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#121624';
+            ctx.fillText(towerTypes[t.type].emoji, x+CELL_SIZE/2, y+CELL_SIZE/2-2);
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${CELL_SIZE/5}px sans-serif`;
+            ctx.fillText(`⚡${t.level}`, x+CELL_SIZE/2, y+CELL_SIZE/2+20);
+            
+            ctx.font = `bold ${CELL_SIZE/6}px sans-serif`;
+            ctx.fillStyle = '#ffaaaa';
+            ctx.fillText(`${stats.dmg}`, x+CELL_SIZE/2, y+CELL_SIZE/2+35);
+            ctx.shadowBlur = 0;
+        }
+
+        // ----- УПРАВЛЕНИЕ -----
+        function getGridFromEvent(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            let clientX, clientY;
+            if(e.touches) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            const canvasX = (clientX - rect.left) * scaleX;
+            const canvasY = (clientY - rect.top) * scaleY;
+            return [
+                Math.min(COLS-1, Math.max(0, Math.floor(canvasX / CELL_SIZE))),
+                Math.min(ROWS-1, Math.max(0, Math.floor(canvasY / CELL_SIZE)))
+            ];
+        }
+
+        function startDrag(col, row) {
+            const idx = towers.findIndex(t => t.col === col && t.row === row);
+            if(idx === -1) return false;
+            draggedTowerIndex = idx;
+            dragStartCol = col; dragStartRow = row;
+            dragCurrentCol = col; dragCurrentRow = row;
+            isDragging = true; hasMoved = false;
+            canvas.classList.add('dragging');
+            mergeHint.innerText = `🖐️ перетащите для слияния/перемещения`;
+            draw();
+            return true;
+        }
+
+        function moveDrag(col, row) {
+            if(!isDragging) return;
+            if(dragCurrentCol !== col || dragCurrentRow !== row) hasMoved = true;
+            dragCurrentCol = col; dragCurrentRow = row;
+            draw();
+        }
+
+        function endDrag(col, row) {
+            if(!isDragging || draggedTowerIndex === -1) {
+                isDragging = false;
+                canvas.classList.remove('dragging');
+                return;
+            }
+            if(draggedTowerIndex >= towers.length) {
+                isDragging = false;
+                canvas.classList.remove('dragging');
+                draw();
+                return;
+            }
+            const targetIdx = towers.findIndex(t => t.col === col && t.row === row);
+            let actionDone = false;
+            if(targetIdx !== -1 && targetIdx !== draggedTowerIndex) {
+                actionDone = tryMergeTowers(draggedTowerIndex, targetIdx);
+            }
+            if(!actionDone) {
+                if(!isPathCell(col, row) && isCellFree(col, row)) {
+                    actionDone = moveTower(draggedTowerIndex, col, row);
+                } else {
+                    mergeHint.innerText = isPathCell(col, row) ? '⛔ нельзя на путь' : '❌ клетка занята';
+                }
+            }
+            isDragging = false;
+            draggedTowerIndex = -1;
+            canvas.classList.remove('dragging');
+            updateUI();
+            draw();
+        }
+
+        function handleClick(col, row) {
+            if(gameOver) return;
+            
+            const towerIdx = towers.findIndex(t => t.col === col && t.row === row);
+            
+            // Режим удаления
+            if(deleteMode) {
+                if(towerIdx !== -1) {
+                    const tower = towers[towerIdx];
+                    const refund = getRefundAmount(tower.type, tower.level);
+                    if(confirm(`Удалить ${towerTypes[tower.type].name} ур.${tower.level}?\nВозврат: ${refund}🪙 (80%)`)) {
+                        deleteTower(towerIdx);
+                    }
+                } else {
+                    mergeHint.innerText = '🗑️ Нажмите на башню для удаления';
+                }
+                draw();
+                return;
+            }
+            
+            // Обычный режим
+            if(towerIdx !== -1) {
+                const t = towers[towerIdx];
+                const stats = getTowerStats(t.type, t.level);
+                const totalCost = getTowerTotalCost(t.type, t.level);
+                const refund = getRefundAmount(t.type, t.level);
+                mergeHint.innerText = `🔍 ${towerTypes[t.type].name} ур.${t.level} | 💥${stats.dmg} | 💰${totalCost} (возврат ${refund})`;
+                draw();
+                return;
+            }
+            
+            tryPlaceTower(col, row, selectedTowerType);
+            draw();
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            const [col, row] = getGridFromEvent(e);
+            startDrag(col, row);
+        });
+        canvas.addEventListener('mousemove', (e) => {
+            if(!isDragging) return;
+            e.preventDefault();
+            const [col, row] = getGridFromEvent(e);
+            moveDrag(col, row);
+        });
+        canvas.addEventListener('mouseup', (e) => {
+            if(!isDragging) {
+                const [col, row] = getGridFromEvent(e);
+                handleClick(col, row);
+                return;
+            }
+            e.preventDefault();
+            const [col, row] = getGridFromEvent(e);
+            endDrag(col, row);
+        });
+        canvas.addEventListener('mouseleave', () => {
+            if(isDragging) {
+                isDragging = false;
+                draggedTowerIndex = -1;
+                canvas.classList.remove('dragging');
+                draw();
+            }
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const [col, row] = getGridFromEvent(touch);
+            startDrag(col, row);
+        }, {passive: false});
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if(!isDragging) return;
+            const touch = e.touches[0];
+            const [col, row] = getGridFromEvent(touch);
+            moveDrag(col, row);
+        }, {passive: false});
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if(!isDragging) {
+                const touch = e.changedTouches[0];
+                const [col, row] = getGridFromEvent(touch);
+                handleClick(col, row);
+                return;
+            }
+            const touch = e.changedTouches[0];
+            const [col, row] = getGridFromEvent(touch);
+            endDrag(col, row);
+        });
+
+        // Выбор башни
+        document.querySelectorAll('.tower-card').forEach(card => {
+            card.addEventListener('click', () => {
+                if(deleteMode) {
+                    deleteMode = false;
+                    document.getElementById('deleteModeBtn').classList.remove('active');
+                }
+                document.querySelectorAll('.tower-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                selectedTowerType = card.dataset.type;
+                updateMergeHintDefault();
+            });
+        });
+        document.querySelector('.tower-card').classList.add('active');
+
+        // Кнопка удаления
+        document.getElementById('deleteModeBtn').addEventListener('click', () => {
+            deleteMode = !deleteMode;
+            const btn = document.getElementById('deleteModeBtn');
+            if(deleteMode) {
+                btn.classList.add('active');
+                mergeHint.innerText = '🗑️ Режим удаления (возврат 80%)';
+            } else {
+                btn.classList.remove('active');
+                updateMergeHintDefault();
+            }
+            draw();
+        });
+
+        document.getElementById('upgradeBtn').addEventListener('click', () => {
+            if(gameOver) return;
+            mergeHint.innerText = '⭐ UPGRADE — скоро';
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', resetGame);
+
+        function nextWave() {
+            wave++;
+            enemiesToSpawn = 5 + wave * 2;
+            spawnedCount = 0;
+            bossSpawnedThisWave = false;
+            isBossWave = (wave % 5 === 0);
+            updateUI();
+            autoSave();
+        }
+
+        function gameTick() {
+            if(gameOver) { draw(); return; }
+            frame++;
+            if(enemies.length === 0 && spawnedCount >= enemiesToSpawn) nextWave();
+            if(spawnedCount < enemiesToSpawn) {
+                let spawnDelay = (isBossWave && !bossSpawnedThisWave) ? 45 : 28;
+                if(frame % spawnDelay === 0) {
+                    let isBossNow = (isBossWave && !bossSpawnedThisWave && spawnedCount === enemiesToSpawn-1);
+                    if(isBossNow) bossSpawnedThisWave = true;
+                    spawnEnemy(isBossNow);
+                    spawnedCount++;
+                }
+            }
+            updateTowers();
+            updateEnemies();
+            if(baseHp <= 0) gameOver = true;
+            updateUI();
+            draw();
+        }
+
+        function startLoop() {
+            if(gameLoopId) cancelAnimationFrame(gameLoopId);
+            function loop() { gameTick(); gameLoopId = requestAnimationFrame(loop); }
+            loop();
+        }
+        
+        if(!autoLoad()) {
+            spawnEnemy(false);
+            spawnedCount = 1;
+        }
+        startLoop();
+        updateUI();
+        draw();
+    })();
+</script>
+</body>
+</html>
