@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover">
-  <title>FeastOS 1.0 • Редактор • Облако</title>
+  <title>FeastOS 1.0 • Towers Fight • Полный экран</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -19,9 +19,6 @@
       height: 100%;
       overflow: hidden;
       background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       position: fixed;
     }
 
@@ -40,62 +37,53 @@
       pointer-events: none;
     }
 
-    .boot-logo {
-      text-align: center;
-      animation: subtlePulse 2.2s infinite alternate;
-    }
-
+    .boot-logo { text-align: center; animation: subtlePulse 2.2s infinite alternate; }
     .win-icon-large {
-      font-size: min(120px, 20vw);
+      font-size: min(100px, 15vw);
       color: #1eff6e;
-      filter: drop-shadow(0 0 35px #1eff6e88);
-      margin-bottom: 20px;
+      filter: drop-shadow(0 0 30px #1eff6e88);
+      margin-bottom: 15px;
     }
-
     .boot-text {
-      font-size: clamp(24px, 8vw, 38px);
+      font-size: clamp(20px, 6vw, 32px);
       font-weight: 600;
-      letter-spacing: 6px;
+      letter-spacing: 5px;
       background: linear-gradient(135deg, #a0ffb0, #1eff6e, #0bc05e);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       text-transform: uppercase;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
     }
-
     .boot-version {
       color: #7affaa;
-      font-size: clamp(14px, 4vw, 18px);
+      font-size: clamp(12px, 3vw, 16px);
       font-weight: 300;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       opacity: 0.9;
       border-top: 1px solid #2b8c4b;
-      padding-top: 14px;
+      padding-top: 10px;
       display: inline-block;
     }
-
     .loading-bar-container {
-      width: min(280px, 70vw);
-      height: 4px;
+      width: min(240px, 60vw);
+      height: 3px;
       background: #112211;
-      border-radius: 10px;
-      margin-top: 40px;
+      border-radius: 8px;
+      margin-top: 30px;
       overflow: hidden;
     }
-
     .loading-fill {
       width: 0%;
       height: 100%;
       background: linear-gradient(90deg, #1eff6e, #a0ffb0, #1eff6e);
-      border-radius: 10px;
-      box-shadow: 0 0 20px #1eff6e;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #1eff6e;
       transition: width 0.08s linear;
     }
-
     @keyframes subtlePulse {
-      0% { filter: drop-shadow(0 0 15px #0f6); }
-      100% { filter: drop-shadow(0 0 30px #3aff8c); }
+      0% { filter: drop-shadow(0 0 10px #0f6); }
+      100% { filter: drop-shadow(0 0 25px #3aff8c); }
     }
 
     /* === ЭКРАН ЗАВЕРШЕНИЯ РАБОТЫ === */
@@ -111,53 +99,30 @@
       opacity: 0;
       transition: opacity 0.5s;
     }
-
-    #shutdown-screen.show {
-      opacity: 1;
-    }
-
-    .shutdown-content {
-      text-align: center;
-      color: #1eff6e;
-    }
-
+    #shutdown-screen.show { opacity: 1; }
+    .shutdown-content { text-align: center; color: #1eff6e; }
     .shutdown-icon {
-      font-size: 80px;
-      margin-bottom: 30px;
-      filter: drop-shadow(0 0 30px #1eff6e);
+      font-size: 60px;
+      margin-bottom: 25px;
+      filter: drop-shadow(0 0 25px #1eff6e);
       animation: shutdownPulse 2s infinite;
     }
-
     @keyframes shutdownPulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
-
-    .shutdown-text {
-      font-size: 32px;
-      font-weight: 300;
-      letter-spacing: 4px;
-      margin-bottom: 20px;
-    }
-
-    .shutdown-subtext {
-      font-size: 16px;
-      opacity: 0.7;
-    }
-
+    .shutdown-text { font-size: 26px; font-weight: 300; letter-spacing: 3px; margin-bottom: 15px; }
+    .shutdown-subtext { font-size: 14px; opacity: 0.7; }
     .shutdown-spinner {
-      margin-top: 40px;
-      width: 40px;
-      height: 40px;
+      margin-top: 30px;
+      width: 35px;
+      height: 35px;
       border: 3px solid #1eff6e33;
       border-top-color: #1eff6e;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* === РАБОЧИЙ СТОЛ === */
     #desktop {
@@ -171,20 +136,18 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: inset 0 0 180px #000000cc;
+      box-shadow: inset 0 0 150px #000000cc;
     }
-
     #desktop.show-desktop {
       opacity: 1;
       visibility: visible;
       transition: opacity 0.8s, visibility 0s 0s;
     }
-
     #desktop::before {
       content: "";
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: repeating-linear-gradient(45deg, rgba(30, 255, 110, 0.02) 0px, transparent 8px);
+      background: repeating-linear-gradient(45deg, rgba(30, 255, 110, 0.02) 0px, transparent 6px);
       pointer-events: none;
       z-index: 1;
     }
@@ -192,170 +155,84 @@
     /* === МЕНЮ ПУСК === */
     #start-menu {
       position: absolute;
-      bottom: 70px;
-      left: 20px;
-      width: 320px;
+      bottom: 50px;
+      left: 10px;
+      width: 280px;
       background: rgba(6, 22, 6, 0.95);
-      backdrop-filter: blur(30px);
+      backdrop-filter: blur(25px);
       border: 1px solid #1eff6e77;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px #000000dd, 0 0 40px #1eff6e33;
+      border-radius: 10px;
+      box-shadow: 0 15px 40px #000000dd, 0 0 30px #1eff6e33;
       z-index: 150;
       display: none;
       overflow: hidden;
     }
-
-    #start-menu.show {
-      display: block;
-    }
-
-    @media (orientation: portrait) and (max-width: 1023px) {
-      #start-menu {
-        right: 70px;
-        left: auto;
-        bottom: 20px;
-        width: 260px;
-      }
-    }
-
+    #start-menu.show { display: block; }
     .start-menu-header {
-      padding: 20px;
+      padding: 14px;
       border-bottom: 1px solid #1eff6e44;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
-
-    .start-menu-header i {
-      font-size: 36px;
-      color: #1eff6e;
-    }
-
-    .start-menu-header span {
-      color: #d0ffd0;
-      font-weight: 600;
-      font-size: 18px;
-    }
-
-    .start-menu-items {
-      padding: 10px 0;
-    }
-
+    .start-menu-header i { font-size: 28px; color: #1eff6e; }
+    .start-menu-header span { color: #d0ffd0; font-weight: 600; font-size: 15px; }
+    .start-menu-items { padding: 6px 0; }
     .start-menu-item {
       display: flex;
       align-items: center;
-      gap: 15px;
-      padding: 14px 20px;
+      gap: 10px;
+      padding: 10px 14px;
       color: #b0ffc0;
       cursor: pointer;
       transition: 0.15s;
-      border-left: 3px solid transparent;
+      font-size: 14px;
     }
-
-    .start-menu-item i {
-      font-size: 22px;
-      width: 28px;
-      color: #1eff6e;
-    }
-
-    .start-menu-item:hover {
-      background: #1eff6e22;
-      border-left-color: #1eff6e;
-      color: #fff;
-    }
-
-    .start-menu-divider {
-      height: 1px;
-      background: #1eff6e33;
-      margin: 10px 0;
-    }
+    .start-menu-item i { font-size: 18px; width: 22px; color: #1eff6e; }
+    .start-menu-item:hover { background: #1eff6e22; color: #fff; }
+    .start-menu-divider { height: 1px; background: #1eff6e33; margin: 6px 0; }
 
     /* === ПАНЕЛЬ ЗАДАЧ === */
     .taskbar {
       position: absolute;
-      background: rgba(4, 18, 4, 0.78);
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 42px;
+      background: rgba(4, 18, 4, 0.85);
       backdrop-filter: blur(18px);
-      border: 1px solid #1eff6e33;
-      box-shadow: 0 -8px 30px #000000b3;
+      border-top: 1px solid #1eff6e33;
+      box-shadow: 0 -3px 15px #000000b3;
       display: flex;
       align-items: center;
+      padding: 0 10px;
       z-index: 100;
     }
-
-    @media (orientation: landscape) and (min-width: 768px) {
-      .taskbar {
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 54px;
-        padding: 0 18px;
-        flex-direction: row;
-      }
-    }
-
-    @media (orientation: portrait) and (max-width: 1023px) {
-      .taskbar {
-        right: 0;
-        top: 0;
-        width: 55px;
-        height: 100%;
-        padding: 12px 0;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-      .start-btn {
-        flex-direction: column;
-        gap: 4px;
-        padding: 8px 6px;
-      }
-      .start-btn i {
-        font-size: 24px;
-      }
-      .start-btn span {
-        font-size: 10px;
-      }
-      .taskbar-time {
-        padding: 6px 2px;
-        font-size: 11px;
-      }
-    }
-
     .start-btn {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
       background: linear-gradient(145deg, #0c2a0c, #031103);
       border: 1px solid #1eff6e66;
-      border-radius: 30px;
-      padding: 6px 18px 6px 14px;
+      border-radius: 5px;
+      padding: 5px 12px;
       color: #b3ffcc;
       font-weight: 500;
-      box-shadow: 0 0 14px #1eff6e33;
+      font-size: 13px;
+      box-shadow: 0 0 8px #1eff6e33;
       cursor: pointer;
       transition: 0.2s;
     }
-
-    .start-btn i {
-      font-size: 22px;
-      color: #1eff6e;
-    }
-
-    .start-btn:hover {
-      background: #0f3a1a;
-      border-color: #3aff8c;
-      box-shadow: 0 0 22px #1eff6eaa;
-      color: white;
-    }
-
+    .start-btn i { font-size: 16px; color: #1eff6e; }
+    .start-btn:hover { background: #0f3a1a; border-color: #3aff8c; }
     .taskbar-time {
+      margin-left: auto;
       color: #b6ffcf;
-      font-size: 15px;
-      text-shadow: 0 0 8px #1eff6e;
+      font-size: 13px;
+      text-shadow: 0 0 5px #1eff6e;
       background: #0a1f0ac9;
-      border-radius: 40px;
-      backdrop-filter: blur(5px);
-      border: 1px solid #2b8c4b55;
-      padding: 6px 18px;
+      border-radius: 4px;
+      padding: 4px 10px;
     }
 
     /* Иконки рабочего стола */
@@ -364,406 +241,285 @@
       z-index: 10;
       display: flex;
       flex-wrap: wrap;
-      gap: 14px 30px;
-      padding: 30px 26px;
+      gap: 15px;
+      padding: 15px;
       pointer-events: auto;
     }
-
-    @media (orientation: portrait) and (max-width: 1023px) {
-      .desktop-icons {
-        padding-right: 70px;
-        padding-top: 12px;
-        padding-left: 10px;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .desktop-icon {
-        width: 70px;
-        padding: 6px 4px;
-      }
-      .desktop-icon i {
-        font-size: 34px;
-        margin-bottom: 4px;
-      }
-      .desktop-icon span {
-        font-size: 11px;
-      }
-    }
-
     .desktop-icon {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 90px;
-      padding: 8px 6px;
-      border-radius: 12px;
+      width: 70px;
+      padding: 6px 4px;
+      border-radius: 6px;
       background: transparent;
       transition: 0.12s;
       cursor: pointer;
       color: #dcffdc;
-      text-shadow: 0 2px 8px black;
+      text-shadow: 0 2px 6px black;
       border: 1px solid transparent;
     }
-
     .desktop-icon:hover {
       background: rgba(30, 255, 110, 0.12);
       border: 1px solid #1eff6e55;
-      box-shadow: 0 8px 18px #00000055, 0 0 18px #1eff6e33;
-      transform: translateY(-3px);
+      box-shadow: 0 3px 10px #00000055, 0 0 10px #1eff6e33;
     }
-
-    .desktop-icon i {
-      font-size: 46px;
-      margin-bottom: 8px;
-      color: #1eff6e;
-      filter: drop-shadow(0 4px 8px #000000dd);
-    }
-
-    .desktop-icon span {
-      font-size: 14px;
-      font-weight: 500;
-      text-align: center;
-    }
+    .desktop-icon i { font-size: 34px; margin-bottom: 5px; color: #1eff6e; }
+    .desktop-icon span { font-size: 11px; font-weight: 500; text-align: center; }
 
     /* Окна */
     .window {
       position: absolute;
-      top: 60px;
-      left: 80px;
-      width: min(680px, 85vw);
-      height: min(460px, 70vh);
-      background: rgba(6, 22, 6, 0.9);
-      backdrop-filter: blur(24px);
+      top: 30px;
+      left: 30px;
+      width: min(800px, 85vw);
+      height: min(550px, 75vh);
+      max-width: 85vw;
+      max-height: 75vh;
+      background: rgba(6, 22, 6, 0.92);
+      backdrop-filter: blur(20px);
       border: 1px solid #1eff6e77;
-      border-radius: 18px;
-      box-shadow: 0 30px 50px #000000dd, 0 0 40px #1eff6e33;
+      border-radius: 8px;
+      box-shadow: 0 15px 35px #000000dd, 0 0 25px #1eff6e33;
       display: flex;
       flex-direction: column;
       z-index: 200;
-      min-width: 280px;
-      min-height: 220px;
-      touch-action: none;
+      min-width: 320px;
+      min-height: 240px;
+      overflow: hidden;
+      transition: all 0.2s;
     }
-
-    @media (orientation: portrait) and (max-width: 1023px) {
-      .window {
-        width: 75vw;
-        height: 55vh;
-        left: 5vw;
-        top: 8vh;
-        min-width: 250px;
-      }
-      .window-header {
-        padding: 10px 14px;
-      }
-      .window-title {
-        font-size: 14px;
-      }
-      .window-content {
-        padding: 14px 16px;
-      }
+    
+    .window.fullscreen {
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: calc(100% - 42px) !important;
+      max-width: 100% !important;
+      max-height: calc(100% - 42px) !important;
+      border-radius: 0 !important;
     }
-
+    
     .window-header {
-      padding: 14px 20px;
-      background: rgba(2, 14, 2, 0.6);
+      padding: 8px 14px;
+      background: rgba(2, 14, 2, 0.7);
       border-bottom: 1px solid #1eff6e66;
       display: flex;
       align-items: center;
-      border-radius: 18px 18px 0 0;
+      border-radius: 8px 8px 0 0;
       cursor: grab;
-      touch-action: none;
+      user-select: none;
     }
-
-    .window-header:active {
-      cursor: grabbing;
+    
+    .window.fullscreen .window-header {
+      border-radius: 0;
     }
-
+    
+    .window-header:active { cursor: grabbing; }
     .window-title {
       color: #baffcc;
       font-weight: 600;
+      font-size: 13px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
     }
-
-    .window-title i {
-      color: #1eff6e;
-      font-size: 20px;
-    }
-
-    .window-controls {
-      margin-left: auto;
-      display: flex;
-      gap: 12px;
-    }
-
+    .window-title i { color: #1eff6e; font-size: 14px; }
+    .window-controls { margin-left: auto; display: flex; gap: 6px; }
     .win-btn {
       color: #a0f0b0;
-      font-size: 18px;
+      font-size: 14px;
       cursor: pointer;
-      padding: 4px 10px;
-      border-radius: 8px;
+      padding: 3px 8px;
+      border-radius: 4px;
       transition: 0.15s;
     }
-
-    .win-btn:hover {
-      background: #1eff6e33;
-      color: #fff;
-    }
-
+    .win-btn:hover { background: #1eff6e33; color: #fff; }
     .window-content {
-      padding: 22px 24px;
+      padding: 0;
       flex: 1;
       color: #dbffe3;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      overflow-y: auto;
+      overflow: hidden;
     }
-
-    /* Редактор файлов */
-    .editor-type-selector {
+    
+    /* Контент с отступами */
+    .padded-content {
+      padding: 12px 16px;
+      flex: 1;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .editor-type-btn {
-      background: #0a1a0a;
-      border: 1px solid #1eff6e55;
-      color: #b0ffc0;
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.15s;
-      text-align: left;
-    }
-
-    .editor-type-btn i {
-      margin-right: 12px;
-      color: #1eff6e;
-      width: 24px;
-    }
-
-    .editor-type-btn:hover {
-      background: #1a3f1a;
-      border-color: #1eff6e;
-    }
-
-    .editor-textarea {
-      width: 100%;
-      min-height: 200px;
-      background: #0a1a0a;
-      border: 1px solid #1eff6e77;
-      border-radius: 12px;
-      padding: 16px;
-      color: #d0ffd0;
-      font-family: 'Consolas', monospace;
-      font-size: 14px;
-      resize: vertical;
-    }
-
-    .editor-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .save-dialog {
-      background: #0a1a0a;
-      border: 1px solid #1eff6e;
-      border-radius: 16px;
-      padding: 24px;
-      margin-top: 16px;
-    }
-
-    .save-dialog input {
-      width: 100%;
-      background: #0a1f0a;
-      border: 1px solid #1eff6e77;
-      border-radius: 10px;
-      padding: 14px;
-      color: #d0ffd0;
-      font-size: 16px;
-      margin: 16px 0;
+      gap: 10px;
+      font-size: 13px;
     }
 
     /* Файлы */
     .file-item {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 12px 16px;
+      gap: 10px;
+      padding: 8px 12px;
       background: #0a1a0ad9;
-      border-radius: 14px;
+      border-radius: 6px;
       border: 1px solid #1eff6e33;
-      backdrop-filter: blur(4px);
       transition: 0.15s;
       cursor: pointer;
     }
-
-    .file-item i {
-      font-size: 28px;
-      color: #1eff6e;
-      width: 32px;
-    }
-
-    .file-info {
-      flex: 1;
-    }
-
-    .file-name {
-      font-weight: 600;
-      font-size: 18px;
-    }
-
-    .file-meta {
-      font-size: 13px;
-      opacity: 0.8;
-      color: #a0e0b0;
-    }
-
-    .file-actions {
-      display: flex;
-      gap: 8px;
-    }
-
+    .file-item i { font-size: 20px; color: #1eff6e; width: 24px; }
+    .file-info { flex: 1; }
+    .file-name { font-weight: 600; font-size: 13px; }
+    .file-meta { font-size: 11px; opacity: 0.8; color: #a0e0b0; }
+    .file-actions { display: flex; gap: 4px; }
     .file-action-btn {
       color: #8effaa;
       cursor: pointer;
-      padding: 6px;
-      border-radius: 8px;
+      padding: 3px 6px;
+      border-radius: 4px;
       transition: 0.15s;
+      font-size: 12px;
     }
+    .file-action-btn:hover { background: #1eff6e33; color: #fff; }
+    .file-item:hover { background: #1a3f1a; border-color: #1eff6e; }
 
-    .file-action-btn:hover {
-      background: #1eff6e33;
-      color: #fff;
-    }
-
-    .file-item:hover {
-      background: #1a3f1a;
-      border-color: #1eff6e;
-    }
-
-    .upload-area {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
-    }
-
+    /* Кнопки */
     .feast-btn {
       background: linear-gradient(145deg, #0b2e0b, #031803);
       border: 1.5px solid #1eff6eaa;
       color: #d0ffd0;
-      padding: 12px 24px;
-      border-radius: 40px;
+      padding: 8px 16px;
+      border-radius: 5px;
       font-weight: 600;
-      font-size: 16px;
-      box-shadow: 0 6px 14px #00000066, 0 0 18px #1eff6e55;
+      font-size: 12px;
+      box-shadow: 0 3px 8px #00000066, 0 0 10px #1eff6e55;
       cursor: pointer;
       transition: 0.2s;
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
-
-    .feast-btn i {
-      color: #1eff6e;
-    }
-
-    .feast-btn:hover {
-      background: #155215;
-      box-shadow: 0 0 28px #1eff6e;
-      border-color: #9effb0;
-    }
-
-    .file-input-hidden {
-      display: none;
-    }
-
-    .upload-status {
-      color: #9effb0;
-      font-size: 15px;
-    }
+    .feast-btn i { color: #1eff6e; font-size: 13px; }
+    .feast-btn:hover { background: #155215; box-shadow: 0 0 18px #1eff6e; border-color: #9effb0; }
 
     /* Диск */
     .disk-usage-bar {
-      margin: 16px 0;
+      margin: 10px 0;
       background: #0a1a0a;
-      border-radius: 20px;
-      padding: 16px;
+      border-radius: 6px;
+      padding: 12px;
       border: 1px solid #1eff6e55;
     }
-
     .disk-bar {
-      height: 24px;
+      height: 16px;
       background: #1a3a1a;
-      border-radius: 12px;
+      border-radius: 8px;
       overflow: hidden;
-      margin: 10px 0;
+      margin: 6px 0;
     }
-
     .disk-used {
       height: 100%;
       background: linear-gradient(90deg, #1eff6e, #3aff8c);
-      box-shadow: 0 0 15px #1eff6e;
+      box-shadow: 0 0 10px #1eff6e;
       width: 0%;
       transition: width 0.3s;
     }
-
     .disk-legend {
       display: flex;
       justify-content: space-between;
       color: #b0ffc0;
+      font-size: 11px;
+    }
+
+    /* Редактор */
+    .editor-type-selector { display: flex; flex-direction: column; gap: 5px; }
+    .editor-type-btn {
+      background: #0a1a0a;
+      border: 1px solid #1eff6e55;
+      color: #b0ffc0;
+      padding: 10px 14px;
+      border-radius: 5px;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+    }
+    .editor-type-btn i { margin-right: 10px; color: #1eff6e; width: 20px; font-size: 16px; }
+    .editor-type-btn:hover { background: #1a3f1a; border-color: #1eff6e; }
+    .editor-textarea {
+      width: 100%;
+      min-height: 150px;
+      background: #0a1a0a;
+      border: 1px solid #1eff6e77;
+      border-radius: 5px;
+      padding: 12px;
+      color: #d0ffd0;
+      font-family: 'Consolas', monospace;
+      font-size: 12px;
+      resize: vertical;
+    }
+
+    /* Медиа */
+    .media-preview {
+      background: #0a1a0a;
+      border-radius: 6px;
+      padding: 12px;
+      margin: 8px 0;
+    }
+    audio, video { width: 100%; border-radius: 5px; max-height: 150px; }
+    img { max-width: 100%; max-height: 150px; border-radius: 6px; border: 1px solid #1eff6e77; }
+
+    /* Игровое окно с прокруткой */
+    .game-container {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: #000;
+    }
+    
+    .game-iframe {
+      width: 100%;
+      min-height: 100%;
+      height: auto;
+      display: block;
+      border: none;
+      background: #000;
     }
 
     .window.active {
       z-index: 210;
       border-color: #1eff6e;
-      box-shadow: 0 30px 50px #000000dd, 0 0 50px #1eff6e88;
+      box-shadow: 0 15px 35px #000000dd, 0 0 35px #1eff6e88;
     }
 
     /* Системная информация */
-    .system-info-line {
-      margin-left: 20px;
-      margin-bottom: 8px;
-      line-height: 1.8;
-    }
-
-    .system-info-section {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid #1eff6e44;
-    }
-
+    .system-info-line { margin-left: 12px; margin-bottom: 5px; line-height: 1.6; font-size: 13px; }
     .spec-grid {
       display: grid;
       grid-template-columns: auto 1fr;
-      gap: 12px 20px;
-      margin-left: 20px;
-      margin-top: 8px;
+      gap: 8px 12px;
+      margin-left: 12px;
+      margin-top: 5px;
+      font-size: 13px;
     }
+    .spec-label { color: #8effaa; font-weight: 500; }
+    .spec-value { color: #d0ffd0; font-family: 'Consolas', monospace; }
 
-    .spec-label {
-      color: #8effaa;
-      font-weight: 500;
-    }
-
-    .spec-value {
-      color: #d0ffd0;
-      font-family: 'Consolas', monospace;
+    @media (max-width: 600px) {
+      .window {
+        width: 90vw;
+        height: 60vh;
+        left: 5vw;
+        top: 5vh;
+      }
+      .desktop-icon { width: 60px; }
+      .desktop-icon i { font-size: 28px; }
     }
   </style>
 </head>
 <body>
-  <!-- ЭКРАН ЗАВЕРШЕНИЯ РАБОТЫ -->
+  <!-- ЭКРАНЫ -->
   <div id="shutdown-screen">
     <div class="shutdown-content">
       <i class="fab fa-windows shutdown-icon"></i>
@@ -773,12 +529,11 @@
     </div>
   </div>
 
-  <!-- BOOT SCREEN -->
   <div id="boot-screen">
     <div class="boot-logo">
       <i class="fab fa-windows win-icon-large"></i>
       <div class="boot-text">FEAST OS 1.0</div>
-      <div class="boot-version">EDITOR • CLOUD</div>
+      <div class="boot-version">TOWERS FIGHT • SCROLLABLE</div>
     </div>
     <div class="loading-bar-container">
       <div class="loading-fill" id="boot-loader-fill"></div>
@@ -794,173 +549,111 @@
         <span>FeastOS 1.0</span>
       </div>
       <div class="start-menu-items">
-        <div class="start-menu-item" data-action="my-computer">
-          <i class="fas fa-desktop"></i>
-          <span>Мой компьютер</span>
-        </div>
-        <div class="start-menu-item" data-action="explorer">
-          <i class="fas fa-hdd"></i>
-          <span>Локальный диск (C:)</span>
-        </div>
-        <div class="start-menu-item" data-action="new-file">
-          <i class="fas fa-plus-circle"></i>
-          <span>Создать файл</span>
-        </div>
+        <div class="start-menu-item" data-action="my-computer"><i class="fas fa-desktop"></i> Мой компьютер</div>
+        <div class="start-menu-item" data-action="explorer"><i class="fas fa-hdd"></i> Локальный диск (C:)</div>
+        <div class="start-menu-item" data-action="new-file"><i class="fas fa-plus-circle"></i> Создать файл</div>
+        <div class="start-menu-item" data-action="game"><i class="fas fa-gamepad"></i> Towers Fight</div>
         <div class="start-menu-divider"></div>
-        <div class="start-menu-item" data-action="restart">
-          <i class="fas fa-sync-alt"></i>
-          <span>Перезагрузить</span>
-        </div>
-        <div class="start-menu-item" data-action="shutdown">
-          <i class="fas fa-power-off"></i>
-          <span>Выключить</span>
-        </div>
+        <div class="start-menu-item" data-action="restart"><i class="fas fa-sync-alt"></i> Перезагрузить</div>
+        <div class="start-menu-item" data-action="shutdown"><i class="fas fa-power-off"></i> Выключить</div>
       </div>
     </div>
 
     <div class="desktop-icons">
-      <div class="desktop-icon" data-action="open-my-computer">
-        <i class="fas fa-desktop"></i>
-        <span>Мой компьютер</span>
-      </div>
-      <div class="desktop-icon" data-action="open-explorer">
-        <i class="fas fa-hdd"></i>
-        <span>Локальный диск (C:)</span>
-      </div>
-      <div class="desktop-icon" data-action="new-file">
-        <i class="fas fa-plus-circle"></i>
-        <span>Создать файл</span>
-      </div>
+      <div class="desktop-icon" data-action="open-my-computer"><i class="fas fa-desktop"></i><span>Компьютер</span></div>
+      <div class="desktop-icon" data-action="open-explorer"><i class="fas fa-hdd"></i><span>Диск (C:)</span></div>
+      <div class="desktop-icon" data-action="new-file"><i class="fas fa-plus-circle"></i><span>Создать</span></div>
+      <div class="desktop-icon" data-action="open-game"><i class="fas fa-gamepad"></i><span>Towers Fight</span></div>
     </div>
 
     <div class="taskbar">
-      <div class="start-btn" id="start-button">
-        <i class="fab fa-windows"></i>
-        <span>Пуск</span>
-      </div>
+      <div class="start-btn" id="start-button"><i class="fab fa-windows"></i><span>Пуск</span></div>
       <div class="taskbar-time" id="live-time">12:00</div>
     </div>
 
-    <!-- ОКНО ПРОВОДНИКА (ДИСК C:) -->
+    <!-- ОКНО ПРОВОДНИКА -->
     <div class="window" id="explorer-window" style="display: none;">
-      <div class="window-header" id="window-header-drag">
-        <div class="window-title">
-          <i class="fas fa-hdd"></i> 
-          <span>Локальный диск (C:) · 2048 GB</span>
-        </div>
+      <div class="window-header" data-window-header>
+        <div class="window-title"><i class="fas fa-hdd"></i> Диск (C:) · 2048 GB</div>
         <div class="window-controls">
-          <div class="win-btn" id="minimize-window"><i class="fas fa-window-minimize"></i></div>
-          <div class="win-btn" id="close-window"><i class="fas fa-times"></i></div>
+          <div class="win-btn" data-action="fullscreen"><i class="fas fa-square"></i></div>
+          <div class="win-btn" data-action="minimize"><i class="fas fa-minus"></i></div>
+          <div class="win-btn" data-action="close"><i class="fas fa-times"></i></div>
         </div>
       </div>
-      <div class="window-content">
+      <div class="padded-content">
         <div class="disk-usage-bar">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-            <i class="fas fa-database" style="color: #1eff6e; font-size: 24px;"></i>
-            <span style="font-weight: 600;">Локальный диск (C:) · 2048 GB</span>
-          </div>
-          <div class="disk-bar">
-            <div class="disk-used" id="disk-usage-fill"></div>
-          </div>
-          <div class="disk-legend">
-            <span id="disk-used-text">Занято: 0 GB</span>
-            <span id="disk-free-text">Свободно: 2048 GB</span>
-          </div>
-          <div style="margin-top: 12px; font-size: 13px; opacity: 0.9;">
-            <i class="fas fa-microchip"></i> Система: 4.2 MB
-            <span style="margin-left: 16px;"><i class="fas fa-database"></i> Файлы: <span id="user-files-size">0 MB</span></span>
-          </div>
+          <div style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-database" style="color: #1eff6e; font-size: 16px;"></i><span>Локальный диск (C:) · 2048 GB</span></div>
+          <div class="disk-bar"><div class="disk-used" id="disk-usage-fill"></div></div>
+          <div class="disk-legend"><span id="disk-used-text">Занято: 0 GB</span><span id="disk-free-text">Свободно: 2048 GB</span></div>
+          <div style="margin-top: 6px; font-size: 11px;"><i class="fas fa-microchip"></i> Система: 4.2 MB <span style="margin-left: 10px;"><i class="fas fa-database"></i> Файлы: <span id="user-files-size">0 MB</span></span></div>
         </div>
-
-        <h3 style="color: #b3ffb3; margin: 8px 0;">
-          <i class="fas fa-folder-open" style="margin-right: 10px;"></i>Файлы на диске
-        </h3>
-        
-        <div id="file-list-container"></div>
-
-        <div class="upload-area">
-          <label class="feast-btn" for="file-upload-input">
-            <i class="fas fa-cloud-upload-alt"></i> Загрузить файлы
-          </label>
-          <input type="file" id="file-upload-input" class="file-input-hidden" multiple>
-          <span class="upload-status" id="upload-feedback"></span>
+        <h3 style="color: #b3ffb3; margin: 6px 0; font-size: 13px;"><i class="fas fa-folder-open"></i> Файлы</h3>
+        <div id="file-list-container" style="max-height: 180px; overflow-y: auto;"></div>
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+          <label class="feast-btn" for="file-upload-input"><i class="fas fa-cloud-upload-alt"></i> Загрузить</label>
+          <input type="file" id="file-upload-input" style="display: none;" multiple>
+          <span class="upload-status" id="upload-feedback" style="font-size: 12px;"></span>
         </div>
-        <div id="image-preview-container"></div>
+        <div id="media-preview-container"></div>
       </div>
     </div>
 
     <!-- ОКНО "МОЙ КОМПЬЮТЕР" -->
     <div class="window" id="my-computer-window" style="display: none;">
-      <div class="window-header" id="computer-header-drag">
-        <div class="window-title">
-          <i class="fas fa-desktop"></i> 
-          <span>Мой компьютер</span>
-        </div>
+      <div class="window-header" data-window-header>
+        <div class="window-title"><i class="fas fa-desktop"></i> Мой компьютер</div>
         <div class="window-controls">
-          <div class="win-btn" id="minimize-computer"><i class="fas fa-window-minimize"></i></div>
-          <div class="win-btn" id="close-computer"><i class="fas fa-times"></i></div>
+          <div class="win-btn" data-action="fullscreen"><i class="fas fa-square"></i></div>
+          <div class="win-btn" data-action="minimize"><i class="fas fa-minus"></i></div>
+          <div class="win-btn" data-action="close"><i class="fas fa-times"></i></div>
         </div>
       </div>
-      <div class="window-content">
-        <h2 style="color: #1eff6e; margin-bottom: 16px;">
-          <i class="fas fa-microchip" style="margin-right: 12px;"></i>FeastOS
-        </h2>
-        
-        <div class="system-info-line">
-          <span style="color: #8effaa;">Версия:</span> 
-          <span style="color: #d0ffd0; font-family: monospace;">1.0</span>
-        </div>
-        <div class="system-info-line">
-          <span style="color: #8effaa;">Прошивка:</span> 
-          <span style="color: #d0ffd0; font-family: monospace;">FEOS_1.0_2026_04_12_18:13</span>
-        </div>
-        <div class="system-info-line">
-          <span style="color: #8effaa;">Ключ активации:</span> 
-          <span style="color: #d0ffd0; font-family: monospace;">Feast-OS-7696-9696</span>
-        </div>
-
-        <div class="system-info-section">
-          <h3 style="color: #b3ffb3; margin-bottom: 12px;">
-            <i class="fas fa-info-circle" style="margin-right: 8px;"></i>Информация:
-          </h3>
-          
+      <div class="padded-content">
+        <h2 style="color: #1eff6e; margin-bottom: 10px; font-size: 16px;"><i class="fas fa-microchip"></i> FeastOS</h2>
+        <div class="system-info-line"><span style="color: #8effaa;">Версия:</span> <span style="color: #d0ffd0; font-family: monospace;">1.0</span></div>
+        <div class="system-info-line"><span style="color: #8effaa;">Прошивка:</span> <span style="color: #d0ffd0; font-family: monospace;">FEOS_1.0_2026_04_12_22:46</span></div>
+        <div class="system-info-line"><span style="color: #8effaa;">Ключ:</span> <span style="color: #d0ffd0; font-family: monospace;">Feast-OS-7696-9696</span></div>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #1eff6e44;">
+          <h3 style="color: #b3ffb3; margin-bottom: 8px; font-size: 13px;"><i class="fas fa-info-circle"></i> Информация:</h3>
           <div class="spec-grid">
-            <span class="spec-label">Процессор:</span>
-            <span class="spec-value">Intel I9-14600K</span>
-            
-            <span class="spec-label">Видеокарта:</span>
-            <span class="spec-value">NVIDIA RTX 6000</span>
-            
-            <span class="spec-label">ОЗУ:</span>
-            <span class="spec-value">128 GB X 6 X 3566 MHz</span>
-            
-            <span class="spec-label">Память:</span>
-            <span class="spec-value">2048 GB</span>
+            <span class="spec-label">Процессор:</span><span class="spec-value">Intel I9-14600K</span>
+            <span class="spec-label">Видеокарта:</span><span class="spec-value">NVIDIA RTX 6000</span>
+            <span class="spec-label">ОЗУ:</span><span class="spec-value">128 GB X 6 X 3566 MHz</span>
+            <span class="spec-label">Память:</span><span class="spec-value">2048 GB</span>
           </div>
         </div>
-
-        <div style="margin-top: 20px;">
-          <button class="feast-btn" id="open-disk-from-computer" style="width: 100%;">
-            <i class="fas fa-hdd"></i> Открыть диск (C:)
-          </button>
-        </div>
+        <div style="margin-top: 14px;"><button class="feast-btn" id="open-disk-from-computer"><i class="fas fa-hdd"></i> Открыть диск (C:)</button></div>
       </div>
     </div>
 
     <!-- ОКНО РЕДАКТОРА -->
     <div class="window" id="editor-window" style="display: none;">
-      <div class="window-header" id="editor-header-drag">
-        <div class="window-title">
-          <i class="fas fa-pen"></i> 
-          <span>Создать новый файл</span>
-        </div>
+      <div class="window-header" data-window-header>
+        <div class="window-title"><i class="fas fa-pen"></i> Создать файл</div>
         <div class="window-controls">
-          <div class="win-btn" id="minimize-editor"><i class="fas fa-window-minimize"></i></div>
-          <div class="win-btn" id="close-editor"><i class="fas fa-times"></i></div>
+          <div class="win-btn" data-action="fullscreen"><i class="fas fa-square"></i></div>
+          <div class="win-btn" data-action="minimize"><i class="fas fa-minus"></i></div>
+          <div class="win-btn" data-action="close"><i class="fas fa-times"></i></div>
         </div>
       </div>
-      <div class="window-content" id="editor-content">
-        <!-- Динамическое содержимое -->
+      <div class="padded-content" id="editor-content"></div>
+    </div>
+
+    <!-- ОКНО ИГРЫ С ПРОКРУТКОЙ -->
+    <div class="window" id="game-window" style="display: none;">
+      <div class="window-header" data-window-header>
+        <div class="window-title"><i class="fas fa-gamepad"></i> Towers Fight</div>
+        <div class="window-controls">
+          <div class="win-btn" data-action="fullscreen"><i class="fas fa-square"></i></div>
+          <div class="win-btn" data-action="minimize"><i class="fas fa-minus"></i></div>
+          <div class="win-btn" data-action="close"><i class="fas fa-times"></i></div>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="game-container">
+          <iframe class="game-iframe" src="https://mrfeastroblox-cmd.github.io/MrFeastInfo/Game2.html" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen scrolling="yes"></iframe>
+        </div>
       </div>
     </div>
   </div>
@@ -970,515 +663,311 @@
       "use strict";
 
       // --- IndexedDB ---
-      const DB_NAME = 'FeastOS_Cloud';
-      const STORE_NAME = 'files';
+      const DB_NAME = 'FeastOS_Cloud', STORE_NAME = 'files';
       let db = null;
 
       async function openDatabase() {
         return new Promise((resolve, reject) => {
-          const request = indexedDB.open(DB_NAME, 1);
-          request.onerror = () => reject(request.error);
-          request.onsuccess = () => { db = request.result; resolve(db); };
-          request.onupgradeneeded = (e) => {
-            const db = e.target.result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-              db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-            }
-          };
+          const r = indexedDB.open(DB_NAME, 1);
+          r.onerror = () => reject(r.error);
+          r.onsuccess = () => { db = r.result; resolve(db); };
+          r.onupgradeneeded = (e) => { if (!e.target.result.objectStoreNames.contains(STORE_NAME)) e.target.result.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true }); };
         });
       }
 
-      async function saveFileToCloud(fileData) {
+      async function saveFile(fileData) {
         if (!db) await openDatabase();
         return new Promise((resolve, reject) => {
           const tx = db.transaction([STORE_NAME], 'readwrite');
-          const store = tx.objectStore(STORE_NAME);
-          const request = store.add(fileData);
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = () => reject(request.error);
+          const r = tx.objectStore(STORE_NAME).add(fileData);
+          r.onsuccess = () => resolve(r.result);
+          r.onerror = () => reject(r.error);
         });
       }
 
-      async function getAllFilesFromCloud() {
+      async function getAllFiles() {
         if (!db) await openDatabase();
         return new Promise((resolve, reject) => {
-          const tx = db.transaction([STORE_NAME], 'readonly');
-          const store = tx.objectStore(STORE_NAME);
-          const request = store.getAll();
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = () => reject(request.error);
+          const r = db.transaction([STORE_NAME], 'readonly').objectStore(STORE_NAME).getAll();
+          r.onsuccess = () => resolve(r.result);
+          r.onerror = () => reject(r.error);
         });
       }
 
-      async function deleteFileFromCloud(id) {
+      async function deleteFile(id) {
         if (!db) await openDatabase();
         return new Promise((resolve, reject) => {
-          const tx = db.transaction([STORE_NAME], 'readwrite');
-          const store = tx.objectStore(STORE_NAME);
-          const request = store.delete(id);
-          request.onsuccess = () => resolve();
-          request.onerror = () => reject(request.error);
+          const r = db.transaction([STORE_NAME], 'readwrite').objectStore(STORE_NAME).delete(id);
+          r.onsuccess = () => resolve();
+          r.onerror = () => reject(r.error);
         });
       }
 
-      // --- ЗАГРУЗКА ---
+      // --- Загрузка ---
       const bootScreen = document.getElementById('boot-screen');
       const desktop = document.getElementById('desktop');
       const loaderFill = document.getElementById('boot-loader-fill');
-      
       let progress = 0;
       const interval = setInterval(() => {
         progress += Math.random() * 12 + 5;
-        if (progress >= 100) {
-          progress = 100;
-          loaderFill.style.width = '100%';
-          clearInterval(interval);
-          setTimeout(() => {
-            bootScreen.style.opacity = '0';
-            desktop.classList.add('show-desktop');
-            setTimeout(() => bootScreen.style.display = 'none', 1000);
-          }, 380);
-        } else {
-          loaderFill.style.width = progress + '%';
-        }
+        if (progress >= 100) { progress = 100; loaderFill.style.width = '100%'; clearInterval(interval);
+          setTimeout(() => { bootScreen.style.opacity = '0'; desktop.classList.add('show-desktop'); setTimeout(() => bootScreen.style.display = 'none', 1000); }, 380);
+        } else loaderFill.style.width = progress + '%';
       }, 70);
 
-      // --- МЕНЮ ПУСК ---
+      // --- Меню Пуск ---
       const startMenu = document.getElementById('start-menu');
-      const startButton = document.getElementById('start-button');
-      
-      startButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        startMenu.classList.toggle('show');
-      });
-      
-      document.addEventListener('click', (e) => {
-        if (!startMenu.contains(e.target) && !startButton.contains(e.target)) {
-          startMenu.classList.remove('show');
-        }
-      });
+      document.getElementById('start-button').addEventListener('click', (e) => { e.stopPropagation(); startMenu.classList.toggle('show'); });
+      document.addEventListener('click', (e) => { if (!startMenu.contains(e.target) && !e.target.closest('.start-btn')) startMenu.classList.remove('show'); });
 
-      // --- ВЫКЛЮЧЕНИЕ И ПЕРЕЗАГРУЗКА ---
+      // --- Выключение/Перезагрузка ---
       const shutdownScreen = document.getElementById('shutdown-screen');
-      
       function shutdownSystem() {
-        closeAllWindows();
-        startMenu.classList.remove('show');
-        shutdownScreen.style.display = 'flex';
-        shutdownScreen.querySelector('.shutdown-text').textContent = 'Завершение работы';
-        shutdownScreen.querySelector('.shutdown-subtext').textContent = 'FeastOS 1.0';
+        closeAllWindows(); startMenu.classList.remove('show');
+        shutdownScreen.style.display = 'flex'; shutdownScreen.querySelector('.shutdown-text').textContent = 'Завершение работы';
         setTimeout(() => shutdownScreen.classList.add('show'), 10);
-        
-        setTimeout(() => {
-          shutdownScreen.style.opacity = '0';
-          setTimeout(() => {
-            window.close();
-            if (!window.closed) {
-              document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#1eff6e;font-size:24px;text-align:center;">FeastOS завершила работу.<br>Закройте вкладку.</div>';
-            }
-          }, 500);
-        }, 3000);
+        setTimeout(() => { shutdownScreen.style.opacity = '0'; setTimeout(() => { window.close(); if (!window.closed) document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#1eff6e;font-size:24px;">FeastOS завершила работу.</div>'; }, 500); }, 3000);
       }
-      
       function restartSystem() {
-        closeAllWindows();
-        startMenu.classList.remove('show');
-        
-        // Скрываем рабочий стол
-        desktop.classList.remove('show-desktop');
-        desktop.style.opacity = '0';
-        desktop.style.visibility = 'hidden';
-        
-        // Показываем boot-screen заново
-        bootScreen.style.display = 'flex';
-        bootScreen.style.opacity = '1';
-        
-        // Сбрасываем прогресс-бар
-        loaderFill.style.width = '0%';
-        
-        // Запускаем анимацию загрузки
-        let progress = 0;
-        const loadInterval = setInterval(() => {
-          progress += Math.random() * 12 + 5;
-          if (progress >= 100) {
-            progress = 100;
-            loaderFill.style.width = '100%';
-            clearInterval(loadInterval);
-            setTimeout(() => {
-              bootScreen.style.opacity = '0';
-              desktop.classList.add('show-desktop');
-              desktop.style.opacity = '1';
-              desktop.style.visibility = 'visible';
-              setTimeout(() => bootScreen.style.display = 'none', 1000);
-            }, 380);
-          } else {
-            loaderFill.style.width = progress + '%';
-          }
-        }, 70);
+        closeAllWindows(); startMenu.classList.remove('show');
+        desktop.classList.remove('show-desktop'); desktop.style.opacity = '0'; desktop.style.visibility = 'hidden';
+        bootScreen.style.display = 'flex'; bootScreen.style.opacity = '1'; loaderFill.style.width = '0%';
+        let p = 0;
+        const int = setInterval(() => { p += Math.random() * 12 + 5; if (p >= 100) { p = 100; loaderFill.style.width = '100%'; clearInterval(int);
+          setTimeout(() => { bootScreen.style.opacity = '0'; desktop.classList.add('show-desktop'); desktop.style.opacity = '1'; desktop.style.visibility = 'visible'; setTimeout(() => bootScreen.style.display = 'none', 1000); }, 380);
+        } else loaderFill.style.width = p + '%'; }, 70);
       }
+      function closeAllWindows() { document.querySelectorAll('.window').forEach(w => w.style.display = 'none'); }
 
-      function closeAllWindows() {
-        explorerWindow.style.display = 'none';
-        myComputerWindow.style.display = 'none';
-        editorWindow.style.display = 'none';
-      }
-
-      // --- ФАЙЛОВАЯ СИСТЕМА ---
-      const TOTAL_DISK_GB = 2048;
-      const SYSTEM_SIZE_MB = 4.2;
-      
+      // --- Файловая система ---
+      const TOTAL_DISK_GB = 2048, SYSTEM_SIZE_MB = 4.2;
       const explorerWindow = document.getElementById('explorer-window');
       const myComputerWindow = document.getElementById('my-computer-window');
       const editorWindow = document.getElementById('editor-window');
-      const editorContent = document.getElementById('editor-content');
+      const gameWindow = document.getElementById('game-window');
       const fileListContainer = document.getElementById('file-list-container');
       const uploadInput = document.getElementById('file-upload-input');
       const uploadFeedback = document.getElementById('upload-feedback');
-      
-      const diskUsageFill = document.getElementById('disk-usage-fill');
-      const diskUsedText = document.getElementById('disk-used-text');
-      const diskFreeText = document.getElementById('disk-free-text');
-      const userFilesSizeSpan = document.getElementById('user-files-size');
-      
+      const mediaContainer = document.getElementById('media-preview-container');
       let feastFiles = [];
 
-      async function initializeCloudStorage() {
-        try {
-          await openDatabase();
-          let files = await getAllFilesFromCloud();
-          feastFiles = files.map(f => ({ ...f, id: f.id }));
-          renderFileList();
-          updateDiskUsage();
-        } catch (error) {
-          console.error('Ошибка облака:', error);
-        }
+      async function initializeCloud() {
+        try { await openDatabase(); let files = await getAllFiles(); feastFiles = files.map(f => ({ ...f, id: f.id })); renderFileList(); updateDiskUsage(); } catch(e) {}
       }
 
-      function calculateUsedSpace() {
-        return feastFiles.reduce((sum, f) => sum + (f.bytes || 0), 0);
-      }
-
-      function formatBytes(bytes) {
-        if (bytes < 1024) return bytes + ' B';
-        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
-        if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
-        return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
-      }
-
+      function calculateUsedSpace() { return feastFiles.reduce((s, f) => s + (f.bytes || 0), 0); }
+      function formatBytes(b) { if (b < 1024) return b + ' B'; if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB'; if (b < 1024*1024*1024) return (b/(1024*1024)).toFixed(2) + ' MB'; return (b/(1024*1024*1024)).toFixed(2) + ' GB'; }
       function updateDiskUsage() {
-        const usedBytes = calculateUsedSpace();
-        const totalUsedGB = (usedBytes / (1024 * 1024 * 1024)) + SYSTEM_SIZE_MB / 1024;
-        const freeGB = TOTAL_DISK_GB - totalUsedGB;
-        const percent = (totalUsedGB / TOTAL_DISK_GB) * 100;
-        
-        diskUsageFill.style.width = Math.min(percent, 100) + '%';
-        diskUsedText.textContent = `Занято: ${totalUsedGB.toFixed(2)} GB`;
-        diskFreeText.textContent = `Свободно: ${freeGB.toFixed(2)} GB`;
-        if (userFilesSizeSpan) userFilesSizeSpan.textContent = formatBytes(usedBytes);
+        const used = calculateUsedSpace();
+        const totalGB = (used/(1024*1024*1024)) + SYSTEM_SIZE_MB/1024;
+        const free = TOTAL_DISK_GB - totalGB;
+        document.getElementById('disk-usage-fill').style.width = Math.min((totalGB/TOTAL_DISK_GB)*100, 100) + '%';
+        document.getElementById('disk-used-text').textContent = `Занято: ${totalGB.toFixed(2)} GB`;
+        document.getElementById('disk-free-text').textContent = `Свободно: ${free.toFixed(2)} GB`;
+        document.getElementById('user-files-size').textContent = formatBytes(used);
       }
 
       async function renderFileList() {
         if (!fileListContainer) return;
-        
-        if (feastFiles.length === 0) {
-          fileListContainer.innerHTML = '<div style="padding:20px;text-align:center;opacity:0.7;">Диск пуст. Загрузите файлы.</div>';
-          return;
-        }
-        
+        if (feastFiles.length === 0) { fileListContainer.innerHTML = '<div style="padding:12px;text-align:center;opacity:0.7;font-size:12px;">Диск пуст</div>'; return; }
         let html = '';
-        feastFiles.forEach((file) => {
-          const icon = file.icon || 'fa-file';
-          const isImage = file.type === 'image' || file.name?.match(/\.(png|jpg|jpeg|gif|webp|bmp)$/i);
+        feastFiles.forEach(f => {
+          const isImage = f.type?.startsWith('image') || f.name?.match(/\.(png|jpg|jpeg|gif|webp|bmp)$/i);
+          const isAudio = f.type?.startsWith('audio') || f.name?.match(/\.(mp3|wav|ogg|m4a)$/i);
+          const isVideo = f.type?.startsWith('video') || f.name?.match(/\.(mp4|webm|mov)$/i);
+          let icon = f.icon || 'fa-file';
+          if (isImage) icon = 'fa-image';
+          else if (isAudio) icon = 'fa-music';
+          else if (isVideo) icon = 'fa-video';
           
-          html += `
-            <div class="file-item" data-file-id="${file.id}">
-              <i class="fas ${icon}"></i>
-              <div class="file-info">
-                <div class="file-name">${file.name || 'Безымянный'}</div>
-                <div class="file-meta">${file.type || 'file'} · ${file.size || formatBytes(file.bytes || 0)}</div>
-              </div>
-              <div class="file-actions">
-                ${isImage ? '<i class="fas fa-eye file-action-btn" data-action="preview"></i>' : ''}
-                <i class="fas fa-download file-action-btn" data-action="download"></i>
-                <i class="fas fa-trash-alt file-action-btn" data-action="delete"></i>
-              </div>
-            </div>
-          `;
+          html += `<div class="file-item" data-file-id="${f.id}"><i class="fas ${icon}"></i><div class="file-info"><div class="file-name">${f.name}</div><div class="file-meta">${f.type || 'file'} · ${f.size || formatBytes(f.bytes||0)}</div></div><div class="file-actions">`;
+          if (isImage || isAudio || isVideo) html += '<i class="fas fa-play file-action-btn" data-action="open"></i>';
+          html += '<i class="fas fa-download file-action-btn" data-action="download"></i><i class="fas fa-trash-alt file-action-btn" data-action="delete"></i></div></div>';
         });
-        
         fileListContainer.innerHTML = html;
-        
         document.querySelectorAll('.file-item').forEach(item => {
-          const fileId = parseInt(item.dataset.fileId);
-          const file = feastFiles.find(f => f.id === fileId);
+          const fid = parseInt(item.dataset.fileId);
+          const file = feastFiles.find(f => f.id === fid);
           if (!file) return;
-          
-          item.querySelectorAll('.file-action-btn').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-              e.stopPropagation();
-              const action = btn.dataset.action;
-              
-              if (action === 'preview' && file.blob) {
-                const url = URL.createObjectURL(file.blob);
-                const container = document.getElementById('image-preview-container');
-                container.innerHTML = `<div class="image-preview-modal"><img src="${url}" style="max-width:100%;max-height:200px;border-radius:16px;"></div>`;
-              } else if (action === 'download') {
-                if (file.blob) {
-                  const url = URL.createObjectURL(file.blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = file.name;
-                  a.click();
-                  URL.revokeObjectURL(url);
-                }
-              } else if (action === 'delete') {
-                await deleteFileFromCloud(fileId);
-                feastFiles = feastFiles.filter(f => f.id !== fileId);
-                renderFileList();
-                updateDiskUsage();
-              }
-            });
-          });
+          item.querySelectorAll('[data-action="open"]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); openMediaFile(file); }));
+          item.querySelectorAll('[data-action="download"]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); downloadFile(file); }));
+          item.querySelectorAll('[data-action="delete"]').forEach(b => b.addEventListener('click', async e => { e.stopPropagation(); await deleteFile(fid); feastFiles = feastFiles.filter(f => f.id !== fid); renderFileList(); updateDiskUsage(); }));
         });
       }
 
-      uploadInput.addEventListener('change', async function(e) {
+      function openMediaFile(file) {
+        if (!file.blob) return;
+        const url = URL.createObjectURL(file.blob);
+        let html = `<div class="media-preview"><div style="display:flex; gap:6px; margin-bottom:6px;"><i class="fas fa-times" style="cursor:pointer;" onclick="this.closest('.media-preview').remove()"></i><span style="font-size:12px;">${file.name}</span></div>`;
+        if (file.type?.startsWith('image')) html += `<img src="${url}">`;
+        else if (file.type?.startsWith('audio')) html += `<audio controls src="${url}"></audio>`;
+        else if (file.type?.startsWith('video')) html += `<video controls src="${url}"></video>`;
+        else html += `<a href="${url}" download="${file.name}">Скачать ${file.name}</a>`;
+        html += '</div>';
+        mediaContainer.innerHTML = html;
+      }
+
+      function downloadFile(file) { if (file.blob) { const a = document.createElement('a'); a.href = URL.createObjectURL(file.blob); a.download = file.name; a.click(); } }
+
+      uploadInput.addEventListener('change', async e => {
         const files = Array.from(e.target.files);
-        if (files.length === 0) return;
-        
-        for (const file of files) {
-          const fileType = file.type || 'application/octet-stream';
-          const typeShort = fileType.split('/')[0] || 'file';
+        for (const f of files) {
+          const type = f.type || 'application/octet-stream';
           let icon = 'fa-file';
-          if (fileType.startsWith('image')) icon = 'fa-image';
-          
-          const fileData = {
-            name: file.name,
-            type: typeShort,
-            size: formatBytes(file.size),
-            icon: icon,
-            bytes: file.size,
-            blob: file,
-            uploadedAt: new Date().toISOString()
-          };
-          
-          const id = await saveFileToCloud(fileData);
-          feastFiles.push({ ...fileData, id });
+          if (type.startsWith('image')) icon = 'fa-image';
+          else if (type.startsWith('audio')) icon = 'fa-music';
+          else if (type.startsWith('video')) icon = 'fa-video';
+          const data = { name: f.name, type: type.split('/')[0], size: formatBytes(f.size), icon, bytes: f.size, blob: f };
+          const id = await saveFile(data);
+          feastFiles.push({ ...data, id });
         }
-        
-        renderFileList();
-        updateDiskUsage();
-        uploadFeedback.textContent = `✅ Загружено ${files.length} файл(ов)`;
+        renderFileList(); updateDiskUsage();
+        uploadFeedback.textContent = `✅ ${files.length} файл(ов)`;
         uploadInput.value = '';
       });
 
-      // --- РЕДАКТОР ФАЙЛОВ ---
+      // --- Редактор ---
       let selectedType = null;
-      let editorStep = 'select';
+      function openEditor() { editorWindow.style.display = 'flex'; bringToFront(editorWindow); selectedType = null; renderEditorSelect(); }
       
-      function openEditor() {
-        editorWindow.style.display = 'flex';
-        bringToFront(editorWindow);
-        selectedType = null;
-        editorStep = 'select';
-        renderEditorSelect();
-      }
-
-      function renderEditorSelect() {
-        editorContent.innerHTML = `
-          <h3 style="color: #b3ffb3; margin-bottom: 16px;">Выберите тип файла</h3>
-          <div class="editor-type-selector">
-            <div class="editor-type-btn" data-type="txt">
-              <i class="fas fa-file-alt"></i> Текстовый документ (.txt)
-            </div>
-            <div class="editor-type-btn" data-type="py">
-              <i class="fab fa-python"></i> Python (.py)
-            </div>
-            <div class="editor-type-btn" data-type="bat">
-              <i class="fas fa-terminal"></i> Пакетный файл (.bat)
-            </div>
-            <div class="editor-type-btn" data-type="lua">
-              <i class="fas fa-code"></i> Lua (.lua)
-            </div>
-            <div class="editor-type-btn" data-type="html">
-              <i class="fab fa-html5"></i> HTML (.html)
-            </div>
-          </div>
-        `;
-        
-        editorContent.querySelectorAll('.editor-type-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            selectedType = btn.dataset.type;
-            editorStep = 'edit';
-            renderEditorEdit();
-          });
-        });
-      }
-
-      function renderEditorEdit() {
-        const typeNames = { txt: 'Текст', py: 'Python', bat: 'Batch', lua: 'Lua', html: 'HTML' };
-        editorContent.innerHTML = `
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <i class="fas fa-arrow-left" style="cursor: pointer; color: #1eff6e;" id="back-to-select"></i>
-            <h3 style="color: #b3ffb3;">Редактор ${typeNames[selectedType]}</h3>
-          </div>
-          <textarea class="editor-textarea" id="file-content" placeholder="Введите содержимое файла..."></textarea>
-          <div class="editor-actions">
-            <button class="feast-btn" id="save-file-btn">
-              <i class="fas fa-save"></i> Сохранить
-            </button>
-          </div>
-          <div id="save-dialog-container"></div>
-        `;
-        
-        document.getElementById('back-to-select').addEventListener('click', () => {
-          editorStep = 'select';
-          renderEditorSelect();
-        });
-        
-        document.getElementById('save-file-btn').addEventListener('click', () => {
-          const content = document.getElementById('file-content').value;
-          renderSaveDialog(content);
-        });
-      }
-
-      function renderSaveDialog(content) {
-        const container = document.getElementById('save-dialog-container');
-        container.innerHTML = `
-          <div class="save-dialog">
-            <h4 style="color: #1eff6e; margin-bottom: 12px;">
-              <i class="fas fa-save"></i> Введите название файла
-            </h4>
-            <input type="text" id="filename-input" placeholder="например: script" value="новый_файл">
-            <div style="color: #8effaa; margin-bottom: 12px;">.${selectedType}</div>
-            <div style="display: flex; gap: 12px;">
-              <button class="feast-btn" id="confirm-save">
-                <i class="fas fa-check"></i> Сохранить
-              </button>
-              <button class="feast-btn" id="cancel-save" style="background: #1a1a1a;">
-                <i class="fas fa-times"></i> Отмена
-              </button>
-            </div>
-          </div>
-        `;
-        
-        document.getElementById('cancel-save').addEventListener('click', () => {
-          container.innerHTML = '';
-        });
-        
-        document.getElementById('confirm-save').addEventListener('click', async () => {
-          let filename = document.getElementById('filename-input').value.trim();
-          if (!filename) filename = 'новый_файл';
-          const fullName = `${filename}.${selectedType}`;
-          
-          const blob = new Blob([content], { type: 'text/plain' });
-          
-          const fileData = {
-            name: fullName,
-            type: selectedType,
-            size: formatBytes(blob.size),
-            icon: getIconForType(selectedType),
-            bytes: blob.size,
-            blob: blob,
-            uploadedAt: new Date().toISOString()
-          };
-          
-          const id = await saveFileToCloud(fileData);
-          feastFiles.push({ ...fileData, id });
-          renderFileList();
-          updateDiskUsage();
-          
-          container.innerHTML = '<div style="color: #1eff6e; padding: 16px;">✅ Файл сохранён!</div>';
-          setTimeout(() => {
-            editorWindow.style.display = 'none';
-          }, 1000);
-        });
-      }
-
       function getIconForType(type) {
         const icons = { txt: 'fa-file-alt', py: 'fa-python', bat: 'fa-terminal', lua: 'fa-code', html: 'fa-html5' };
         return icons[type] || 'fa-file';
       }
-
-      // --- ОБЩИЕ ФУНКЦИИ ---
-      function openExplorer() {
-        explorerWindow.style.display = 'flex';
-        bringToFront(explorerWindow);
-        renderFileList();
-        uploadFeedback.textContent = '';
-        document.getElementById('image-preview-container').innerHTML = '';
+      
+      function getIconPrefix(type) {
+        const prefixes = { txt: 'fas', py: 'fab', bat: 'fas', lua: 'fas', html: 'fab' };
+        return prefixes[type] || 'fas';
       }
-
-      function openMyComputer() {
-        myComputerWindow.style.display = 'flex';
-        bringToFront(myComputerWindow);
-      }
-
-      function bringToFront(win) {
-        document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
-        win.classList.add('active');
-      }
-
-      // --- ОБРАБОТЧИКИ МЕНЮ И ИКОНОК ---
-      document.querySelectorAll('.start-menu-item').forEach(item => {
-        item.addEventListener('click', () => {
-          const action = item.dataset.action;
-          startMenu.classList.remove('show');
-          
-          if (action === 'my-computer') openMyComputer();
-          else if (action === 'explorer') openExplorer();
-          else if (action === 'new-file') openEditor();
-          else if (action === 'restart') restartSystem();
-          else if (action === 'shutdown') shutdownSystem();
+      
+      function renderEditorSelect() {
+        const types = ['txt', 'py', 'bat', 'lua', 'html'];
+        const typeNames = { txt: 'Текстовый', py: 'Python', bat: 'Batch', lua: 'Lua', html: 'HTML' };
+        let html = '<h3 style="color:#b3ffb3; font-size:13px;">Выберите тип</h3><div class="editor-type-selector">';
+        types.forEach(t => {
+          const prefix = getIconPrefix(t);
+          const icon = getIconForType(t);
+          html += `<div class="editor-type-btn" data-type="${t}"><i class="${prefix} ${icon}"></i> ${typeNames[t]} (.${t})</div>`;
         });
-      });
-
-      document.querySelectorAll('.desktop-icon').forEach(icon => {
-        icon.addEventListener('click', () => {
-          const action = icon.dataset.action;
-          if (action === 'open-my-computer') openMyComputer();
-          else if (action === 'open-explorer') openExplorer();
-          else if (action === 'new-file') openEditor();
+        html += '</div>';
+        document.getElementById('editor-content').innerHTML = html;
+        document.querySelectorAll('.editor-type-btn').forEach(b => b.addEventListener('click', () => { selectedType = b.dataset.type; renderEditorEdit(); }));
+      }
+      
+      function renderEditorEdit() {
+        const typeNames = { txt: 'Текст', py: 'Python', bat: 'Batch', lua: 'Lua', html: 'HTML' };
+        const prefix = getIconPrefix(selectedType);
+        const icon = getIconForType(selectedType);
+        
+        document.getElementById('editor-content').innerHTML = `
+          <div style="display:flex; gap:6px; margin-bottom:10px;">
+            <i class="fas fa-arrow-left" id="back-to-select" style="cursor:pointer;color:#1eff6e;"></i>
+            <h3 style="color:#b3ffb3; font-size:13px;"><i class="${prefix} ${icon}" style="margin-right:6px;"></i>${typeNames[selectedType]} (.${selectedType})</h3>
+          </div>
+          <textarea class="editor-textarea" id="file-content" placeholder="Введите содержимое..."></textarea>
+          <div style="display:flex; gap:8px; margin-top:10px;">
+            <button class="feast-btn" id="save-file-btn"><i class="fas fa-save"></i> Сохранить</button>
+          </div>
+          <div id="save-dialog"></div>
+        `;
+        document.getElementById('back-to-select').addEventListener('click', renderEditorSelect);
+        document.getElementById('save-file-btn').addEventListener('click', () => {
+          const content = document.getElementById('file-content').value;
+          const dialog = document.getElementById('save-dialog');
+          dialog.innerHTML = `
+            <div style="margin-top:12px;padding:12px;background:#0a1a0a;border-radius:6px;">
+              <input type="text" id="fname" value="новый_файл" style="width:100%;padding:8px;background:#0a1f0a;border:1px solid #1eff6e;color:#d0ffd0;border-radius:4px;margin:10px 0;font-size:12px;">
+              <div style="color:#8effaa; margin-bottom:8px;">.${selectedType}</div>
+              <div style="display:flex; gap:6px;">
+                <button class="feast-btn" id="confirm-save">Сохранить</button>
+                <button class="feast-btn" id="cancel-save" style="background:#1a1a1a;">Отмена</button>
+              </div>
+            </div>
+          `;
+          document.getElementById('cancel-save').addEventListener('click', () => dialog.innerHTML = '');
+          document.getElementById('confirm-save').addEventListener('click', async () => {
+            let name = document.getElementById('fname').value.trim() || 'новый_файл';
+            const blob = new Blob([content], {type: 'text/plain'});
+            const data = { name: `${name}.${selectedType}`, type: selectedType, size: formatBytes(blob.size), icon: getIconForType(selectedType), bytes: blob.size, blob };
+            const id = await saveFile(data);
+            feastFiles.push({...data, id});
+            renderFileList(); updateDiskUsage();
+            dialog.innerHTML = '<div style="color:#1eff6e; font-size:12px;">✅ Сохранено!</div>';
+            setTimeout(() => editorWindow.style.display = 'none', 800);
+          });
         });
-      });
+      }
 
-      // --- ЗАКРЫТИЕ ОКОН ---
-      document.getElementById('close-window').addEventListener('click', () => explorerWindow.style.display = 'none');
-      document.getElementById('minimize-window').addEventListener('click', () => explorerWindow.style.display = 'none');
-      document.getElementById('close-computer').addEventListener('click', () => myComputerWindow.style.display = 'none');
-      document.getElementById('minimize-computer').addEventListener('click', () => myComputerWindow.style.display = 'none');
-      document.getElementById('close-editor').addEventListener('click', () => editorWindow.style.display = 'none');
-      document.getElementById('minimize-editor').addEventListener('click', () => editorWindow.style.display = 'none');
-      document.getElementById('open-disk-from-computer').addEventListener('click', () => {
-        myComputerWindow.style.display = 'none';
-        openExplorer();
-      });
+      // --- Игра ---
+      function openGame() { gameWindow.style.display = 'flex'; bringToFront(gameWindow); }
 
-      // --- ПЕРЕТАСКИВАНИЕ ---
-      function makeDraggable(win, header) {
+      // --- Управление окнами ---
+      function bringToFront(win) { document.querySelectorAll('.window').forEach(w => w.classList.remove('active')); win.classList.add('active'); }
+      
+      const windowStates = new Map();
+      
+      function toggleFullscreen(win) {
+        if (win.classList.contains('fullscreen')) {
+          const state = windowStates.get(win);
+          if (state) {
+            win.style.left = state.left;
+            win.style.top = state.top;
+            win.style.width = state.width;
+            win.style.height = state.height;
+          }
+          win.classList.remove('fullscreen');
+          win.querySelector('[data-action="fullscreen"] i').className = 'fas fa-square';
+        } else {
+          windowStates.set(win, {
+            left: win.style.left,
+            top: win.style.top,
+            width: win.style.width,
+            height: win.style.height
+          });
+          win.classList.add('fullscreen');
+          win.querySelector('[data-action="fullscreen"] i').className = 'fas fa-compress';
+        }
+      }
+      
+      function setupWindow(win) {
+        const header = win.querySelector('[data-window-header]');
+        if (!header) return;
+        
         let isDragging = false, startX, startY, initialLeft, initialTop;
         
         header.addEventListener('mousedown', (e) => {
           if (e.target.closest('.win-btn')) return;
+          if (win.classList.contains('fullscreen')) return;
           e.preventDefault();
           bringToFront(win);
+          
           const rect = win.getBoundingClientRect();
           initialLeft = rect.left;
           initialTop = rect.top;
           startX = e.clientX;
           startY = e.clientY;
           isDragging = true;
-          win.classList.add('dragging');
+          win.style.cursor = 'grabbing';
           
           const onMove = (e) => {
             if (!isDragging) return;
-            win.style.left = (initialLeft + e.clientX - startX) + 'px';
-            win.style.top = (initialTop + e.clientY - startY) + 'px';
+            e.preventDefault();
+            let newLeft = initialLeft + e.clientX - startX;
+            let newTop = initialTop + e.clientY - startY;
+            
+            const maxX = window.innerWidth - win.offsetWidth;
+            const maxY = window.innerHeight - win.offsetHeight - 42;
+            
+            newLeft = Math.max(0, Math.min(newLeft, maxX));
+            newTop = Math.max(0, Math.min(newTop, maxY));
+            
+            win.style.left = newLeft + 'px';
+            win.style.top = newTop + 'px';
           };
           
           const onUp = () => {
             isDragging = false;
-            win.classList.remove('dragging');
+            win.style.cursor = '';
             window.removeEventListener('mousemove', onMove);
             window.removeEventListener('mouseup', onUp);
           };
@@ -1486,26 +975,57 @@
           window.addEventListener('mousemove', onMove);
           window.addEventListener('mouseup', onUp);
         });
+        
+        const fullscreenBtn = win.querySelector('[data-action="fullscreen"]');
+        const minimizeBtn = win.querySelector('[data-action="minimize"]');
+        const closeBtn = win.querySelector('[data-action="close"]');
+        
+        if (fullscreenBtn) fullscreenBtn.addEventListener('click', () => toggleFullscreen(win));
+        if (minimizeBtn) minimizeBtn.addEventListener('click', () => win.style.display = 'none');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => {
+            win.classList.remove('fullscreen');
+            win.style.display = 'none';
+          });
+        }
       }
 
-      makeDraggable(explorerWindow, document.getElementById('window-header-drag'));
-      makeDraggable(myComputerWindow, document.getElementById('computer-header-drag'));
-      makeDraggable(editorWindow, document.getElementById('editor-header-drag'));
+      setupWindow(explorerWindow);
+      setupWindow(myComputerWindow);
+      setupWindow(editorWindow);
+      setupWindow(gameWindow);
 
-      // --- ЧАСЫ ---
-      function updateClock() {
-        document.getElementById('live-time').textContent = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-      }
-      setInterval(updateClock, 1000);
-      updateClock();
+      // --- Обработчики ---
+      document.querySelectorAll('.start-menu-item').forEach(i => i.addEventListener('click', () => {
+        const a = i.dataset.action; startMenu.classList.remove('show');
+        if (a === 'my-computer') { myComputerWindow.style.display = 'flex'; bringToFront(myComputerWindow); }
+        else if (a === 'explorer') { explorerWindow.style.display = 'flex'; bringToFront(explorerWindow); renderFileList(); }
+        else if (a === 'new-file') openEditor();
+        else if (a === 'game') openGame();
+        else if (a === 'restart') restartSystem();
+        else if (a === 'shutdown') shutdownSystem();
+      }));
+      
+      document.querySelectorAll('.desktop-icon').forEach(i => i.addEventListener('click', () => {
+        const a = i.dataset.action;
+        if (a === 'open-my-computer') { myComputerWindow.style.display = 'flex'; bringToFront(myComputerWindow); }
+        else if (a === 'open-explorer') { explorerWindow.style.display = 'flex'; bringToFront(explorerWindow); renderFileList(); }
+        else if (a === 'new-file') openEditor();
+        else if (a === 'open-game') openGame();
+      }));
+      
+      document.getElementById('open-disk-from-computer').addEventListener('click', () => { 
+        myComputerWindow.style.display = 'none'; 
+        explorerWindow.style.display = 'flex'; 
+        bringToFront(explorerWindow); 
+      });
 
-      // --- АКТИВАЦИЯ ОКОН ---
-      [explorerWindow, myComputerWindow, editorWindow].forEach(win => {
+      [explorerWindow, myComputerWindow, editorWindow, gameWindow].forEach(win => {
         win.addEventListener('mousedown', () => bringToFront(win));
       });
 
-      // --- СТАРТ ---
-      initializeCloudStorage();
+      setInterval(() => document.getElementById('live-time').textContent = new Date().toLocaleTimeString('ru-RU', { hour:'2-digit', minute:'2-digit' }), 1000);
+      initializeCloud();
     })();
   </script>
 </body>
