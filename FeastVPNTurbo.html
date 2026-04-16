@@ -60,7 +60,6 @@
     .crown-badge { background: linear-gradient(135deg, #ffd700, #ffaa00); border-radius: 30px; padding: 6px 12px; display: flex; align-items: center; gap: 5px; }
     .crown-badge i, .crown-badge span { color: #1a1f2e; font-size: 12px; font-weight: 700; }
 
-    /* FeastAI панель */
     .feastai-panel {
       background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(123,47,247,0.08));
       border-radius: 28px; padding: 12px 18px; margin-bottom: 20px;
@@ -136,6 +135,26 @@
     .servers-page, .stats-page { padding: 10px 0; }
     .servers-title, .stats-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
     .server-list { display: flex; flex-direction: column; gap: 12px; }
+    
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 16px 0 12px 0;
+    }
+    .section-divider span {
+      font-size: 13px;
+      font-weight: 600;
+      color: #8899cc;
+      letter-spacing: 0.5px;
+    }
+    .section-divider .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(136,153,204,0.3), transparent);
+    }
+    .recommended-icon { color: #fbbf24; margin-right: 6px; }
+    
     .server-card {
       background: rgba(20,28,45,0.8); border-radius: 20px; padding: 16px; display: flex; align-items: center; gap: 15px;
       border: 0.5px solid rgba(255,255,255,0.05); transition: all 0.2s; cursor: pointer;
@@ -144,15 +163,20 @@
     .server-card.ai-locked { opacity: 0.7; filter: grayscale(0.15); cursor: not-allowed; pointer-events: none; }
     .server-card .flag { font-size: 32px; }
     .server-details { flex: 1; }
-    .server-country { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .server-country-wrapper {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .server-country { font-size: 16px; font-weight: 700; }
     .server-stats-row { display: flex; align-items: center; gap: 15px; }
     .ping-indicator { display: flex; align-items: center; gap: 5px; font-size: 12px; }
     .ping-bar { width: 60px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
-    .ping-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
-    .ping-fill.good { background: #2ecc71; } .ping-fill.medium { background: #f39c12; } .ping-fill.bad { background: #e74c3c; }
+    .ping-fill { height: 100%; border-radius: 2px; transition: width 0.3s; background: #2ecc71; }
     .connect-server-btn { background: linear-gradient(135deg, #0066ff, #7b2ff7); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-size: 12px; font-weight: 600; cursor: pointer; }
     
-    /* НОВЫЙ ДИЗАЙН КНОПКИ ОБНОВЛЕНИЯ ПИНГА */
     .refresh-ping-btn {
       width: 100%;
       margin-top: 24px;
@@ -174,11 +198,7 @@
       letter-spacing: 0.3px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    .refresh-ping-btn i {
-      font-size: 18px;
-      transition: transform 0.3s ease;
-      color: #3b82f6;
-    }
+    .refresh-ping-btn i { font-size: 18px; transition: transform 0.3s ease; color: #3b82f6; }
     .refresh-ping-btn:hover {
       background: linear-gradient(135deg, rgba(0,102,255,0.25), rgba(123,47,247,0.25));
       border-color: rgba(0,150,255,0.6);
@@ -189,7 +209,6 @@
     .refresh-ping-btn.rotating i { animation: spinRefresh 0.6s linear; }
     @keyframes spinRefresh { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* СТАТИСТИКА — ИДЕАЛЬНОЕ ВЫРАВНИВАНИЕ, БЕЗ ЗАЕЗДОВ */
     .ping-summary {
       background: rgba(20,28,45,0.8);
       border-radius: 28px;
@@ -197,22 +216,8 @@
       margin-bottom: 8px;
       border: 0.5px solid rgba(255,255,255,0.05);
     }
-    .summary-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #8899cc;
-      margin-bottom: 20px;
-      letter-spacing: 0.3px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .server-pings-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    /* Главный контейнер строки — используем грид для жёсткого выравнивания */
+    .summary-title { font-size: 14px; font-weight: 600; color: #8899cc; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .server-pings-list { display: flex; flex-direction: column; gap: 14px; }
     .ping-item {
       display: grid;
       grid-template-columns: 36px minmax(0, 1fr) auto;
@@ -221,57 +226,13 @@
       padding: 8px 0;
       border-bottom: 0.5px solid rgba(255,255,255,0.05);
     }
-    .ping-item .flag {
-      font-size: 26px;
-      text-align: left;
-      line-height: 1;
-    }
-    .country-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: #eef3ff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
-    }
-    .ping-stats {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-    .ping-number {
-      font-size: 18px;
-      font-weight: 700;
-      min-width: 48px;
-      text-align: right;
-      font-feature-settings: "tnum";
-    }
-    .ping-number.good { color: #2ecc71; }
-    .ping-number.medium { color: #f39c12; }
-    .ping-number.bad { color: #e74c3c; }
-    .ping-unit {
-      font-size: 11px;
-      color: #6677aa;
-      margin-left: 2px;
-    }
-    .ping-bar-mini {
-      width: 70px;
-      height: 5px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 3px;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .ping-fill-mini {
-      height: 100%;
-      border-radius: 3px;
-      transition: width 0.2s;
-    }
-    .ping-fill-mini.good { background: #2ecc71; }
-    .ping-fill-mini.medium { background: #f39c12; }
-    .ping-fill-mini.bad { background: #e74c3c; }
+    .ping-item .flag { font-size: 26px; text-align: left; line-height: 1; }
+    .country-name { font-size: 15px; font-weight: 500; color: #eef3ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ping-stats { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+    .ping-number { font-size: 18px; font-weight: 700; min-width: 48px; text-align: right; color: #2ecc71; }
+    .ping-unit { font-size: 11px; color: #6677aa; margin-left: 2px; }
+    .ping-bar-mini { width: 70px; height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; flex-shrink: 0; }
+    .ping-fill-mini { height: 100%; border-radius: 3px; transition: width 0.2s; background: #2ecc71; }
 
     .bottom-nav { display: flex; align-items: center; justify-content: space-around; margin-top: 20px; padding-top: 15px; border-top: 0.5px solid rgba(255,255,255,0.05); }
     .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #556688; font-size: 12px; font-weight: 500; cursor: pointer; transition: 0.2s; }
@@ -295,7 +256,7 @@
   </div>
 
   <div class="feastai-panel">
-    <div class="ai-info"><div class="ai-icon"><i class="fas fa-brain"></i></div><div class="ai-text"><span class="ai-title">FeastAI • Нейросеть</span><div class="ai-desc"><span>Оптимальный сервер: <strong id="optimalServerName">Netherlands</strong></span><span class="fastest-badge" id="optimalPingBadge">45ms</span></div></div></div>
+    <div class="ai-info"><div class="ai-icon"><i class="fas fa-brain"></i></div><div class="ai-text"><span class="ai-title">FeastAI • Нейросеть</span><div class="ai-desc"><span>Оптимальный сервер: <strong id="optimalServerName">Netherlands</strong></span><span class="fastest-badge" id="optimalPingBadge">12ms</span></div></div></div>
     <label class="toggle-switch"><input type="checkbox" id="feastAIToggle" checked><span class="slider"></span></label>
   </div>
 
@@ -324,46 +285,64 @@
 
 <script>
 (function(){
+  // ========= ВСЕ СЕРВЕРЫ =========
+  // VIP.alotaxi (netherlands) и rio.alotaxi (germany) — пинг 10-15ms
+  // Остальные alotaxi — пинг 15-30ms
+  // Остальные (other) — пинг 30-60ms
+  
   const SERVERS = {
-    netherlands: { name: 'Netherlands', flag: '🇳🇱', tgUrl: 'tg://proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    germany: { name: 'Germany', flag: '🇩🇪', tgUrl: 'tg://proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d', proxyUrl: 'https://t.me/proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d' },
-    france: { name: 'France', flag: '🇫🇷', tgUrl: 'tg://proxy?server=super.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e6d61782e7275', proxyUrl: 'https://t.me/proxy?server=super.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e6d61782e7275' },
-    italy: { name: 'Italy', flag: '🇮🇹', tgUrl: 'tg://proxy?server=pro.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=pro.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    usa: { name: 'USA', flag: '🇺🇸', tgUrl: 'tg://proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    czech: { name: 'Czechia', flag: '🇨🇿', tgUrl: 'tg://proxy?server=alo.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=alo.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    poland: { name: 'Poland', flag: '🇵🇱', tgUrl: 'tg://proxy?server=peyk.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=peyk.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' }
+    netherlands: { name: 'Netherlands', flag: '🇳🇱', group: 'vip', tgUrl: 'tg://proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    germany: { name: 'Germany', flag: '🇩🇪', group: 'fast', tgUrl: 'tg://proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d', proxyUrl: 'https://t.me/proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d' },
+    france: { name: 'France', flag: '🇫🇷', group: 'alotaxi', tgUrl: 'tg://proxy?server=super.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e6d61782e7275', proxyUrl: 'https://t.me/proxy?server=super.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e6d61782e7275' },
+    italy: { name: 'Italy', flag: '🇮🇹', group: 'alotaxi', tgUrl: 'tg://proxy?server=pro.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=pro.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    brazil: { name: 'Brazil', flag: '🇧🇷', group: 'alotaxi', tgUrl: 'tg://proxy?server=alo.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=alo.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    poland: { name: 'Poland', flag: '🇵🇱', group: 'alotaxi', tgUrl: 'tg://proxy?server=peyk.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=peyk.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    canada: { name: 'Canada', flag: '🇨🇦', group: 'alotaxi', tgUrl: 'tg://proxy?server=test.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=test.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    ireland: { name: 'Ireland', flag: '🇮🇪', group: 'alotaxi', tgUrl: 'tg://proxy?server=gem.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=gem.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    usa2: { name: 'USA (Dedicated)', flag: '🇺🇸', group: 'alotaxi', tgUrl: 'tg://proxy?server=dedicated.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=dedicated.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    usa: { name: 'USA', flag: '🇺🇸', group: 'other', tgUrl: 'tg://proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    newcaledonia: { name: 'New Caledonia', flag: '🇨🇵', group: 'other', tgUrl: 'tg://proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275', proxyUrl: 'https://t.me/proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275' }
   };
 
   let currentServer = 'netherlands';
   let feastAIEnabled = true;
-  let currentPings = { netherlands: 34, germany: 65, france: 56, italy: 50, usa: 101, czech: 59, poland: 70 };
-
-  function getRandomPing(base, variance) { return Math.floor(base + Math.random() * variance); }
+  
+  // Функция получения пинга:
+  // vip (netherlands) — 10-15ms
+  // fast (germany rio) — 10-15ms
+  // alotaxi (остальные) — 15-30ms
+  // other — 30-60ms
+  function getPingForServer(group) {
+    if (group === 'vip' || group === 'fast') {
+      return Math.floor(Math.random() * 6) + 10; // 10-15 ms
+    } else if (group === 'alotaxi') {
+      return Math.floor(Math.random() * 16) + 15; // 15-30 ms
+    } else {
+      return Math.floor(Math.random() * 31) + 30; // 30-60 ms
+    }
+  }
+  
+  let currentPings = {};
   
   function refreshPings() {
-    currentPings = {
-      netherlands: getRandomPing(28, 24),
-      germany: getRandomPing(55, 30),
-      france: getRandomPing(40, 28),
-      italy: getRandomPing(38, 26),
-      usa: getRandomPing(90, 48),
-      czech: getRandomPing(45, 28),
-      poland: getRandomPing(50, 32)
-    };
+    Object.keys(SERVERS).forEach(key => {
+      currentPings[key] = getPingForServer(SERVERS[key].group);
+    });
     updateAllPingUI();
     if (feastAIEnabled) autoSelectFastestServer();
   }
   
   function updateAllPingUI() {
     for (let [key, ping] of Object.entries(currentPings)) {
-      const pingClass = ping < 60 ? 'good' : (ping < 100 ? 'medium' : 'bad');
       const pct = Math.min((ping / 150) * 100, 100);
       document.querySelectorAll(`[data-ping-number="${key}"]`).forEach(el => {
-        if(el) { el.textContent = ping; el.className = `ping-number ${pingClass}`; }
+        if(el) { el.textContent = ping; }
       });
       document.querySelectorAll(`[data-ping-fill="${key}"]`).forEach(el => { 
-        if(el) { el.style.width = pct + '%'; el.className = `ping-fill-mini ${pingClass}`; }
+        if(el) { el.style.width = pct + '%'; }
       });
+      document.querySelectorAll(`[data-ping-server="${key}"]`).forEach(el => { if(el) el.textContent = ping; });
+      document.querySelectorAll(`[data-ping-fill-bar="${key}"]`).forEach(el => { if(el) { el.style.width = pct + '%'; } });
     }
     const optimal = Object.entries(currentPings).reduce((a,b) => a[1] < b[1] ? a : b);
     document.getElementById('optimalServerName').innerText = SERVERS[optimal[0]].name;
@@ -393,24 +372,93 @@
     const container = document.getElementById('serverList');
     if (!container) return;
     container.innerHTML = '';
-    Object.keys(SERVERS).forEach(key => {
-      const s = SERVERS[key];
-      const ping = currentPings[key];
-      const pingClass = ping < 60 ? 'good' : (ping < 100 ? 'medium' : 'bad');
-      const pct = Math.min((ping / 150) * 100, 100);
-      const card = document.createElement('div');
-      card.className = `server-card ${currentServer === key ? 'selected' : ''}`;
-      if (feastAIEnabled) card.classList.add('ai-locked');
-      card.dataset.server = key;
-      card.innerHTML = `<span class="flag">${s.flag}</span><div class="server-details"><div class="server-country">${s.name}</div><div class="server-stats-row"><div class="ping-indicator"><i class="fas fa-signal"></i><span class="ping-value ${pingClass}" data-ping-server="${key}">${ping}</span><span>ms</span></div><div class="ping-bar"><div class="ping-fill ${pingClass}" data-ping-fill="${key}" style="width:${pct}%"></div></div></div></div><button class="connect-server-btn" data-server="${key}"><i class="fas fa-play"></i></button>`;
-      const btn = card.querySelector('.connect-server-btn');
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (!feastAIEnabled) { currentServer = key; updateUISelectedServer(); connectTo(currentServer); }
-      });
-      if (!feastAIEnabled) { card.addEventListener('click', () => { currentServer = key; updateUISelectedServer(); }); }
-      container.appendChild(card);
+    
+    // Разделяем серверы на группы: alotaxi (все с group: vip, fast, alotaxi) и other
+    const alotaxiServers = [];
+    const otherServers = [];
+    
+    Object.entries(SERVERS).forEach(([key, s]) => {
+      if (s.group === 'vip' || s.group === 'fast' || s.group === 'alotaxi') {
+        alotaxiServers.push([key, s]);
+      } else {
+        otherServers.push([key, s]);
+      }
     });
+    
+    // Блок "Рекомендовано" (все alotaxi серверы)
+    if (alotaxiServers.length > 0) {
+      const recDivider = document.createElement('div');
+      recDivider.className = 'section-divider';
+      recDivider.innerHTML = `<div class="line"></div><span><i class="fas fa-star recommended-icon"></i>Рекомендовано</span><div class="line"></div>`;
+      container.appendChild(recDivider);
+      
+      alotaxiServers.forEach(([key, s]) => {
+        const ping = currentPings[key];
+        const pct = Math.min((ping / 150) * 100, 100);
+        const card = document.createElement('div');
+        card.className = `server-card ${currentServer === key ? 'selected' : ''}`;
+        if (feastAIEnabled) card.classList.add('ai-locked');
+        card.dataset.server = key;
+        card.innerHTML = `
+          <span class="flag">${s.flag}</span>
+          <div class="server-details">
+            <div class="server-country-wrapper">
+              <span class="server-country">${s.name}</span>
+            </div>
+            <div class="server-stats-row">
+              <div class="ping-indicator"><i class="fas fa-signal"></i><span class="ping-value" data-ping-server="${key}">${ping}</span><span>ms</span></div>
+              <div class="ping-bar"><div class="ping-fill" data-ping-fill-bar="${key}" style="width:${pct}%"></div></div>
+            </div>
+          </div>
+          <button class="connect-server-btn" data-server="${key}"><i class="fas fa-play"></i></button>
+        `;
+        const btn = card.querySelector('.connect-server-btn');
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (!feastAIEnabled) { currentServer = key; updateUISelectedServer(); connectTo(currentServer); }
+        });
+        if (!feastAIEnabled) { card.addEventListener('click', () => { currentServer = key; updateUISelectedServer(); }); }
+        container.appendChild(card);
+      });
+    }
+    
+    // Блок "Прочие серверы"
+    if (otherServers.length > 0) {
+      const otherDivider = document.createElement('div');
+      otherDivider.className = 'section-divider';
+      otherDivider.innerHTML = `<div class="line"></div><span><i class="fas fa-globe" style="margin-right: 6px;"></i>Прочие серверы</span><div class="line"></div>`;
+      container.appendChild(otherDivider);
+      
+      otherServers.forEach(([key, s]) => {
+        const ping = currentPings[key];
+        const pct = Math.min((ping / 150) * 100, 100);
+        const card = document.createElement('div');
+        card.className = `server-card ${currentServer === key ? 'selected' : ''}`;
+        if (feastAIEnabled) card.classList.add('ai-locked');
+        card.dataset.server = key;
+        card.innerHTML = `
+          <span class="flag">${s.flag}</span>
+          <div class="server-details">
+            <div class="server-country-wrapper">
+              <span class="server-country">${s.name}</span>
+            </div>
+            <div class="server-stats-row">
+              <div class="ping-indicator"><i class="fas fa-signal"></i><span class="ping-value" data-ping-server="${key}">${ping}</span><span>ms</span></div>
+              <div class="ping-bar"><div class="ping-fill" data-ping-fill-bar="${key}" style="width:${pct}%"></div></div>
+            </div>
+          </div>
+          <button class="connect-server-btn" data-server="${key}"><i class="fas fa-play"></i></button>
+        `;
+        const btn = card.querySelector('.connect-server-btn');
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (!feastAIEnabled) { currentServer = key; updateUISelectedServer(); connectTo(currentServer); }
+        });
+        if (!feastAIEnabled) { card.addEventListener('click', () => { currentServer = key; updateUISelectedServer(); }); }
+        container.appendChild(card);
+      });
+    }
+    
     if (feastAIEnabled) document.querySelectorAll('.server-card').forEach(c => c.classList.add('ai-locked'));
   }
   
@@ -422,7 +470,6 @@
     Object.keys(SERVERS).forEach(key => {
       const s = SERVERS[key];
       const ping = currentPings[key];
-      const pingClass = ping < 60 ? 'good' : (ping < 100 ? 'medium' : 'bad');
       const pct = Math.min((ping / 150) * 100, 100);
       const row = document.createElement('div');
       row.className = 'ping-item';
@@ -430,9 +477,9 @@
         <span class="flag">${s.flag}</span>
         <span class="country-name">${s.name}</span>
         <div class="ping-stats">
-          <span class="ping-number ${pingClass}" data-ping-number="${key}">${ping}</span>
+          <span class="ping-number" data-ping-number="${key}">${ping}</span>
           <span class="ping-unit">ms</span>
-          <div class="ping-bar-mini"><div class="ping-fill-mini ${pingClass}" data-ping-fill="${key}" style="width:${pct}%"></div></div>
+          <div class="ping-bar-mini"><div class="ping-fill-mini" data-ping-fill="${key}" style="width:${pct}%"></div></div>
         </div>
       `;
       statsList.appendChild(row);
