@@ -305,6 +305,132 @@
     .protocol-message.error { color: #e74c3c; }
     .protocol-message.waiting { color: #f39c12; }
 
+    /* Окно подключения в стиле FKey */
+    .fkey-connecting {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(8,12,24,0.98);
+      backdrop-filter: blur(20px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1002;
+      flex-direction: column;
+    }
+    .fkey-card {
+      background: linear-gradient(145deg, rgba(20,28,45,0.95), rgba(15,20,35,0.98));
+      border-radius: 56px;
+      padding: 36px 32px;
+      width: 340px;
+      text-align: center;
+      border: 1px solid rgba(0,150,255,0.25);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,150,255,0.1) inset;
+    }
+    .fkey-game-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #0066ff, #7b2ff7);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 10px 25px -5px rgba(0,102,255,0.4);
+    }
+    .fkey-game-icon i {
+      font-size: 36px;
+      color: white;
+    }
+    .fkey-game-name {
+      font-size: 22px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .fkey-server-info {
+      font-size: 14px;
+      color: #88aaff;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .fkey-server-info .flag {
+      font-size: 18px;
+    }
+    .fkey-progress-circle {
+      width: 120px;
+      height: 120px;
+      margin: 20px auto;
+      position: relative;
+    }
+    .fkey-progress-ring {
+      transform: rotate(-90deg);
+    }
+    .fkey-progress-ring-bg {
+      stroke: rgba(255,255,255,0.1);
+    }
+    .fkey-progress-ring-fill {
+      stroke: url(#gradient);
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.1s linear;
+    }
+    .fkey-progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      font-weight: 800;
+      color: white;
+    }
+    .fkey-progress-text small {
+      font-size: 12px;
+      font-weight: 500;
+      color: #8899cc;
+    }
+    .fkey-features {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 28px 0 24px;
+      padding-top: 10px;
+      border-top: 0.5px solid rgba(255,255,255,0.08);
+    }
+    .fkey-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #bbddff;
+    }
+    .fkey-feature i {
+      width: 24px;
+      font-size: 14px;
+      color: #2ecc71;
+    }
+    .fkey-stop-btn {
+      background: rgba(231,76,60,0.15);
+      border: 1px solid rgba(231,76,60,0.3);
+      border-radius: 40px;
+      padding: 12px 24px;
+      width: 100%;
+      color: #e74c3c;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .fkey-stop-btn:hover {
+      background: rgba(231,76,60,0.25);
+      border-color: rgba(231,76,60,0.5);
+    }
+    .fkey-stop-btn:active {
+      transform: scale(0.97);
+    }
+
     .bottom-nav { display: flex; align-items: center; justify-content: space-around; margin-top: 20px; padding-top: 15px; border-top: 0.5px solid rgba(255,255,255,0.05); }
     .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #556688; font-size: 12px; font-weight: 500; cursor: pointer; transition: 0.2s; }
     .nav-item.active { color: #0066ff; }
@@ -329,7 +455,40 @@
       <div class="protocol-progress"><div class="protocol-progress-fill" id="protocolProgressFill"></div></div>
       <div class="protocol-message waiting" id="protocolMessage">Проверка...</div>
     </div>
-    <div class="protocol-retry" id="protocolRetry"></div>
+  </div>
+</div>
+
+<!-- Окно подключения в стиле FKey -->
+<div class="fkey-connecting" id="fkeyConnecting">
+  <div class="fkey-card">
+    <div class="fkey-game-icon">
+      <i class="fas fa-shield-alt"></i>
+    </div>
+    <div class="fkey-game-name" id="fkeyGameName">FeastTurboVPN</div>
+    <div class="fkey-server-info" id="fkeyServerInfo">
+      <span class="flag" id="fkeyFlag">🇳🇱</span>
+      <span id="fkeyServerName">Netherlands</span>
+      <span id="fkeyPing">12ms</span>
+    </div>
+    <div class="fkey-progress-circle">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0066ff"/>
+            <stop offset="100%" stop-color="#7b2ff7"/>
+          </linearGradient>
+        </defs>
+        <circle class="fkey-progress-ring-bg" cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="6"/>
+        <circle class="fkey-progress-ring-fill" cx="60" cy="60" r="52" fill="none" stroke="url(#gradient)" stroke-width="6" stroke-dasharray="326.9" stroke-dashoffset="326.9"/>
+      </svg>
+      <div class="fkey-progress-text" id="fkeyProgressText">0<small>%</small></div>
+    </div>
+    <div class="fkey-features">
+      <div class="fkey-feature"><i class="fas fa-tachometer-alt"></i> Выделенный Игровой Маршрут</div>
+      <div class="fkey-feature"><i class="fas fa-microchip"></i> ИИ Снижение Задержки</div>
+      <div class="fkey-feature"><i class="fas fa-route"></i> Динамический Мульти-Маршрут</div>
+    </div>
+    <button class="fkey-stop-btn" id="fkeyStopBtn">Остановить</button>
   </div>
 </div>
 
@@ -369,7 +528,7 @@
 
 <script>
 (function(){
-  // ========= ВСЕ СЕРВЕРЫ (добавлена Испания в "Прочие") =========
+  // Серверы (добавлена Испания)
   const SERVERS = {
     netherlands: { name: 'Netherlands', flag: '🇳🇱', group: 'vip', tgUrl: 'tg://proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
     germany: { name: 'Germany', flag: '🇩🇪', group: 'fast', tgUrl: 'tg://proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d', proxyUrl: 'https://t.me/proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d' },
@@ -388,6 +547,7 @@
   let currentServer = 'netherlands';
   let feastAIEnabled = true;
   let currentPings = {};
+  let fkeyAnimationInterval = null;
   
   function getPingForServer(group) {
     if (group === 'vip' || group === 'fast') return Math.floor(Math.random() * 6) + 10;
@@ -406,20 +566,11 @@
   function updateAllPingUI() {
     for (let [key, ping] of Object.entries(currentPings)) {
       const pct = Math.min((ping / 150) * 100, 100);
-      document.querySelectorAll(`[data-ping-number="${key}"]`).forEach(el => {
-        if(el) { el.textContent = ping; }
-      });
-      document.querySelectorAll(`[data-ping-fill="${key}"]`).forEach(el => { 
-        if(el) { el.style.width = pct + '%'; }
-      });
-      document.querySelectorAll(`[data-ping-server="${key}"]`).forEach(el => { 
-        if(el) { el.textContent = ping; }
-      });
-      document.querySelectorAll(`[data-ping-fill-bar="${key}"]`).forEach(el => { 
-        if(el) { el.style.width = pct + '%'; }
-      });
+      document.querySelectorAll(`[data-ping-number="${key}"]`).forEach(el => { if(el) el.textContent = ping; });
+      document.querySelectorAll(`[data-ping-fill="${key}"]`).forEach(el => { if(el) el.style.width = pct + '%'; });
+      document.querySelectorAll(`[data-ping-server="${key}"]`).forEach(el => { if(el) el.textContent = ping; });
+      document.querySelectorAll(`[data-ping-fill-bar="${key}"]`).forEach(el => { if(el) el.style.width = pct + '%'; });
     }
-    
     const optimal = Object.entries(currentPings).reduce((a,b) => a[1] < b[1] ? a : b);
     document.getElementById('optimalServerName').innerText = SERVERS[optimal[0]].name;
     document.getElementById('optimalPingBadge').innerHTML = `${optimal[1]}ms`;
@@ -447,7 +598,7 @@
     });
   }
   
-  // Тестирование протоколов с шансом недоступности первого до 45%
+  // Тестирование протоколов с шансом 45%
   async function testProtocols() {
     return new Promise((resolve) => {
       const protocolDiv = document.getElementById('protocolTesting');
@@ -457,13 +608,12 @@
       
       const firstProtocol = 'FeastGameAntiSpy';
       const secondProtocol = 'FeastAntiSpy';
-      const failChance = 0.45; // 45% шанс ошибки первого протокола
+      const failChance = 0.45;
       const firstFails = Math.random() < failChance;
       
       protocolDiv.style.display = 'flex';
       protocolMessageEl.className = 'protocol-message waiting';
       
-      // Тестируем первый протокол
       protocolNameEl.textContent = firstProtocol;
       protocolMessageEl.textContent = 'Проверка...';
       progressFill.style.width = '0%';
@@ -478,7 +628,6 @@
             protocolMessageEl.textContent = '❌ Протокол временно недоступен';
             protocolMessageEl.className = 'protocol-message error';
             setTimeout(() => {
-              // Тестируем второй протокол (всегда работает)
               protocolNameEl.textContent = secondProtocol;
               protocolMessageEl.textContent = 'Проверка...';
               protocolMessageEl.className = 'protocol-message waiting';
@@ -494,7 +643,7 @@
                   setTimeout(() => {
                     protocolDiv.style.display = 'none';
                     resolve(true);
-                  }, 800);
+                  }, 600);
                 }
               }, 50);
             }, 1000);
@@ -504,47 +653,73 @@
             setTimeout(() => {
               protocolDiv.style.display = 'none';
               resolve(true);
-            }, 800);
+            }, 600);
           }
         }
       }, 50);
     });
   }
   
+  // Анимация FKey окна
+  async function showFKeyConnecting(serverKey) {
+    const server = SERVERS[serverKey];
+    const ping = currentPings[serverKey];
+    
+    document.getElementById('fkeyFlag').innerHTML = server.flag;
+    document.getElementById('fkeyServerName').innerHTML = server.name;
+    document.getElementById('fkeyPing').innerHTML = `${ping}ms`;
+    
+    const fkeyDiv = document.getElementById('fkeyConnecting');
+    const progressText = document.getElementById('fkeyProgressText');
+    const ringFill = document.querySelector('.fkey-progress-ring-fill');
+    const circumference = 326.9;
+    
+    fkeyDiv.style.display = 'flex';
+    
+    let percent = 0;
+    if (fkeyAnimationInterval) clearInterval(fkeyAnimationInterval);
+    
+    fkeyAnimationInterval = setInterval(() => {
+      percent += 2;
+      if (percent >= 100) {
+        clearInterval(fkeyAnimationInterval);
+        fkeyAnimationInterval = null;
+        percent = 100;
+        progressText.innerHTML = `100<small>%</small>`;
+        ringFill.style.strokeDashoffset = 0;
+        
+        setTimeout(() => {
+          fkeyDiv.style.display = 'none';
+          // После FKey окна открываем Telegram
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = server.tgUrl;
+          document.body.appendChild(iframe);
+          setTimeout(() => { window.location.href = server.tgUrl; }, 50);
+          
+          let fallback = setTimeout(() => { 
+            if (!document.hidden) window.open(server.proxyUrl, '_blank'); 
+          }, 2500);
+          
+          window.addEventListener('blur', () => { 
+            clearTimeout(fallback);
+          }, { once: true });
+          
+          setTimeout(() => { 
+            document.querySelectorAll('iframe').forEach(f => f.remove()); 
+          }, 4000);
+        }, 500);
+      }
+      const offset = circumference - (percent / 100) * circumference;
+      ringFill.style.strokeDashoffset = offset;
+      progressText.innerHTML = `${percent}<small>%</small>`;
+    }, 25);
+  }
+  
   async function connectTo(serverKey) {
-    // Тестируем протоколы
     const protocolSuccess = await testProtocols();
     if (!protocolSuccess) return;
-    
-    const server = SERVERS[serverKey];
-    const loadingScreen = document.getElementById('loadingScreen');
-    const loadingMsg = document.getElementById('loadingMessage');
-    loadingScreen.style.display = 'flex';
-    loadingMsg.innerHTML = `<i class="fas fa-shield-alt"></i> Подключение к ${server.name} (${currentPings[serverKey]}ms)`;
-    loadingMsg.style.color = '#8899cc';
-    
-    if (navigator.vibrate) navigator.vibrate(20);
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = server.tgUrl;
-    document.body.appendChild(iframe);
-    setTimeout(() => { window.location.href = server.tgUrl; }, 50);
-    
-    let fallback = setTimeout(() => { 
-      if (!document.hidden) window.open(server.proxyUrl, '_blank'); 
-      setTimeout(() => loadingScreen.style.display = 'none', 1000); 
-    }, 2500);
-    
-    window.addEventListener('blur', () => { 
-      clearTimeout(fallback); 
-      loadingMsg.innerHTML = 'Telegram открыт'; 
-      setTimeout(() => loadingScreen.style.display = 'none', 800); 
-    }, { once: true });
-    
-    setTimeout(() => { 
-      loadingScreen.style.display = 'none'; 
-      document.querySelectorAll('iframe').forEach(f => f.remove()); 
-    }, 4000);
+    await showFKeyConnecting(serverKey);
   }
   
   function renderServerList() {
@@ -661,6 +836,15 @@
       statsList.appendChild(row);
     });
   }
+  
+  // Остановка подключения (закрывает окно)
+  document.getElementById('fkeyStopBtn').addEventListener('click', () => {
+    if (fkeyAnimationInterval) {
+      clearInterval(fkeyAnimationInterval);
+      fkeyAnimationInterval = null;
+    }
+    document.getElementById('fkeyConnecting').style.display = 'none';
+  });
   
   function init() {
     refreshPings();
