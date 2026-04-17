@@ -175,7 +175,9 @@
     .ping-indicator { display: flex; align-items: center; gap: 5px; font-size: 12px; }
     .ping-bar { width: 60px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
     .ping-fill { height: 100%; border-radius: 2px; transition: width 0.3s; background: #2ecc71; }
-    .connect-server-btn { background: linear-gradient(135deg, #0066ff, #7b2ff7); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .ping-value { font-weight: 600; color: #2ecc71; }
+    .connect-server-btn { background: linear-gradient(135deg, #0066ff, #7b2ff7); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .connect-server-btn:active { transform: scale(0.96); }
     
     .refresh-ping-btn {
       width: 100%;
@@ -234,6 +236,75 @@
     .ping-bar-mini { width: 70px; height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; flex-shrink: 0; }
     .ping-fill-mini { height: 100%; border-radius: 3px; transition: width 0.2s; background: #2ecc71; }
 
+    /* Протокол тестирования */
+    .protocol-testing {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(8,12,24,0.98);
+      backdrop-filter: blur(20px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+      flex-direction: column;
+    }
+    .protocol-card {
+      background: rgba(20,28,45,0.95);
+      border-radius: 48px;
+      padding: 32px 28px;
+      width: 320px;
+      text-align: center;
+      border: 1px solid rgba(0,150,255,0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .protocol-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #0066ff, #7b2ff7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .protocol-sub {
+      font-size: 13px;
+      color: #8899cc;
+      margin-bottom: 24px;
+    }
+    .protocol-status {
+      background: rgba(0,102,255,0.15);
+      border-radius: 60px;
+      padding: 12px 20px;
+      margin: 20px 0;
+    }
+    .protocol-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+    .protocol-progress {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      margin: 16px 0;
+      overflow: hidden;
+    }
+    .protocol-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #0066ff, #7b2ff7);
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+    .protocol-message {
+      font-size: 13px;
+      margin-top: 12px;
+    }
+    .protocol-message.success { color: #2ecc71; }
+    .protocol-message.error { color: #e74c3c; }
+    .protocol-message.waiting { color: #f39c12; }
+
     .bottom-nav { display: flex; align-items: center; justify-content: space-around; margin-top: 20px; padding-top: 15px; border-top: 0.5px solid rgba(255,255,255,0.05); }
     .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #556688; font-size: 12px; font-weight: 500; cursor: pointer; transition: 0.2s; }
     .nav-item.active { color: #0066ff; }
@@ -248,6 +319,19 @@
 </head>
 <body>
 <div class="loading-screen" id="loadingScreen"><div class="loading-content"><div class="loading-spinner"><div class="spinner-ring"></div></div><div class="loading-title">Подключение...</div><div class="loading-message" id="loadingMessage">FeastAI анализирует серверы</div></div></div>
+
+<div class="protocol-testing" id="protocolTesting">
+  <div class="protocol-card">
+    <div class="protocol-title">FeastTurboVPN</div>
+    <div class="protocol-sub">Тестирование протоколов</div>
+    <div class="protocol-status">
+      <div class="protocol-name" id="protocolName">FeastGameAntiSpy</div>
+      <div class="protocol-progress"><div class="protocol-progress-fill" id="protocolProgressFill"></div></div>
+      <div class="protocol-message waiting" id="protocolMessage">Проверка...</div>
+    </div>
+    <div class="protocol-retry" id="protocolRetry"></div>
+  </div>
+</div>
 
 <div class="vpn-card">
   <div class="header">
@@ -285,11 +369,7 @@
 
 <script>
 (function(){
-  // ========= ВСЕ СЕРВЕРЫ =========
-  // VIP.alotaxi (netherlands) и rio.alotaxi (germany) — пинг 10-15ms
-  // Остальные alotaxi — пинг 15-30ms
-  // Остальные (other) — пинг 30-60ms
-  
+  // ========= ВСЕ СЕРВЕРЫ (добавлена Испания в "Прочие") =========
   const SERVERS = {
     netherlands: { name: 'Netherlands', flag: '🇳🇱', group: 'vip', tgUrl: 'tg://proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
     germany: { name: 'Germany', flag: '🇩🇪', group: 'fast', tgUrl: 'tg://proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d', proxyUrl: 'https://t.me/proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d' },
@@ -301,28 +381,19 @@
     ireland: { name: 'Ireland', flag: '🇮🇪', group: 'alotaxi', tgUrl: 'tg://proxy?server=gem.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=gem.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
     usa2: { name: 'USA (Dedicated)', flag: '🇺🇸', group: 'alotaxi', tgUrl: 'tg://proxy?server=dedicated.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=dedicated.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
     usa: { name: 'USA', flag: '🇺🇸', group: 'other', tgUrl: 'tg://proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    newcaledonia: { name: 'New Caledonia', flag: '🇨🇵', group: 'other', tgUrl: 'tg://proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275', proxyUrl: 'https://t.me/proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275' }
+    newcaledonia: { name: 'New Caledonia', flag: '🇨🇵', group: 'other', tgUrl: 'tg://proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275', proxyUrl: 'https://t.me/proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275' },
+    spain: { name: 'Spain', flag: '🇪🇸', group: 'other', tgUrl: 'tg://proxy?server=tg.pepewtf.top&port=443&secret=eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70', proxyUrl: 'https://t.me/proxy?server=tg.pepewtf.top&port=443&secret=eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70' }
   };
 
   let currentServer = 'netherlands';
   let feastAIEnabled = true;
-  
-  // Функция получения пинга:
-  // vip (netherlands) — 10-15ms
-  // fast (germany rio) — 10-15ms
-  // alotaxi (остальные) — 15-30ms
-  // other — 30-60ms
-  function getPingForServer(group) {
-    if (group === 'vip' || group === 'fast') {
-      return Math.floor(Math.random() * 6) + 10; // 10-15 ms
-    } else if (group === 'alotaxi') {
-      return Math.floor(Math.random() * 16) + 15; // 15-30 ms
-    } else {
-      return Math.floor(Math.random() * 31) + 30; // 30-60 ms
-    }
-  }
-  
   let currentPings = {};
+  
+  function getPingForServer(group) {
+    if (group === 'vip' || group === 'fast') return Math.floor(Math.random() * 6) + 10;
+    else if (group === 'alotaxi') return Math.floor(Math.random() * 16) + 15;
+    else return Math.floor(Math.random() * 31) + 30;
+  }
   
   function refreshPings() {
     Object.keys(SERVERS).forEach(key => {
@@ -341,9 +412,14 @@
       document.querySelectorAll(`[data-ping-fill="${key}"]`).forEach(el => { 
         if(el) { el.style.width = pct + '%'; }
       });
-      document.querySelectorAll(`[data-ping-server="${key}"]`).forEach(el => { if(el) el.textContent = ping; });
-      document.querySelectorAll(`[data-ping-fill-bar="${key}"]`).forEach(el => { if(el) { el.style.width = pct + '%'; } });
+      document.querySelectorAll(`[data-ping-server="${key}"]`).forEach(el => { 
+        if(el) { el.textContent = ping; }
+      });
+      document.querySelectorAll(`[data-ping-fill-bar="${key}"]`).forEach(el => { 
+        if(el) { el.style.width = pct + '%'; }
+      });
     }
+    
     const optimal = Object.entries(currentPings).reduce((a,b) => a[1] < b[1] ? a : b);
     document.getElementById('optimalServerName').innerText = SERVERS[optimal[0]].name;
     document.getElementById('optimalPingBadge').innerHTML = `${optimal[1]}ms`;
@@ -355,7 +431,10 @@
   
   function autoSelectFastestServer() {
     const fastest = Object.entries(currentPings).reduce((a,b) => a[1] < b[1] ? a : b);
-    if (fastest[0] !== currentServer) { currentServer = fastest[0]; updateUISelectedServer(); }
+    if (fastest[0] !== currentServer) {
+      currentServer = fastest[0];
+      updateUISelectedServer();
+    }
   }
   
   function updateUISelectedServer() {
@@ -368,12 +447,111 @@
     });
   }
   
+  // Тестирование протоколов с шансом недоступности первого до 45%
+  async function testProtocols() {
+    return new Promise((resolve) => {
+      const protocolDiv = document.getElementById('protocolTesting');
+      const protocolNameEl = document.getElementById('protocolName');
+      const protocolMessageEl = document.getElementById('protocolMessage');
+      const progressFill = document.getElementById('protocolProgressFill');
+      
+      const firstProtocol = 'FeastGameAntiSpy';
+      const secondProtocol = 'FeastAntiSpy';
+      const failChance = 0.45; // 45% шанс ошибки первого протокола
+      const firstFails = Math.random() < failChance;
+      
+      protocolDiv.style.display = 'flex';
+      protocolMessageEl.className = 'protocol-message waiting';
+      
+      // Тестируем первый протокол
+      protocolNameEl.textContent = firstProtocol;
+      protocolMessageEl.textContent = 'Проверка...';
+      progressFill.style.width = '0%';
+      
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 8;
+        progressFill.style.width = Math.min(progress, 100) + '%';
+        if (progress >= 100) {
+          clearInterval(interval);
+          if (firstFails) {
+            protocolMessageEl.textContent = '❌ Протокол временно недоступен';
+            protocolMessageEl.className = 'protocol-message error';
+            setTimeout(() => {
+              // Тестируем второй протокол (всегда работает)
+              protocolNameEl.textContent = secondProtocol;
+              protocolMessageEl.textContent = 'Проверка...';
+              protocolMessageEl.className = 'protocol-message waiting';
+              progressFill.style.width = '0%';
+              let progress2 = 0;
+              const interval2 = setInterval(() => {
+                progress2 += 10;
+                progressFill.style.width = Math.min(progress2, 100) + '%';
+                if (progress2 >= 100) {
+                  clearInterval(interval2);
+                  protocolMessageEl.textContent = '✅ Протокол доступен';
+                  protocolMessageEl.className = 'protocol-message success';
+                  setTimeout(() => {
+                    protocolDiv.style.display = 'none';
+                    resolve(true);
+                  }, 800);
+                }
+              }, 50);
+            }, 1000);
+          } else {
+            protocolMessageEl.textContent = '✅ Протокол доступен';
+            protocolMessageEl.className = 'protocol-message success';
+            setTimeout(() => {
+              protocolDiv.style.display = 'none';
+              resolve(true);
+            }, 800);
+          }
+        }
+      }, 50);
+    });
+  }
+  
+  async function connectTo(serverKey) {
+    // Тестируем протоколы
+    const protocolSuccess = await testProtocols();
+    if (!protocolSuccess) return;
+    
+    const server = SERVERS[serverKey];
+    const loadingScreen = document.getElementById('loadingScreen');
+    const loadingMsg = document.getElementById('loadingMessage');
+    loadingScreen.style.display = 'flex';
+    loadingMsg.innerHTML = `<i class="fas fa-shield-alt"></i> Подключение к ${server.name} (${currentPings[serverKey]}ms)`;
+    loadingMsg.style.color = '#8899cc';
+    
+    if (navigator.vibrate) navigator.vibrate(20);
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = server.tgUrl;
+    document.body.appendChild(iframe);
+    setTimeout(() => { window.location.href = server.tgUrl; }, 50);
+    
+    let fallback = setTimeout(() => { 
+      if (!document.hidden) window.open(server.proxyUrl, '_blank'); 
+      setTimeout(() => loadingScreen.style.display = 'none', 1000); 
+    }, 2500);
+    
+    window.addEventListener('blur', () => { 
+      clearTimeout(fallback); 
+      loadingMsg.innerHTML = 'Telegram открыт'; 
+      setTimeout(() => loadingScreen.style.display = 'none', 800); 
+    }, { once: true });
+    
+    setTimeout(() => { 
+      loadingScreen.style.display = 'none'; 
+      document.querySelectorAll('iframe').forEach(f => f.remove()); 
+    }, 4000);
+  }
+  
   function renderServerList() {
     const container = document.getElementById('serverList');
     if (!container) return;
     container.innerHTML = '';
     
-    // Разделяем серверы на группы: alotaxi (все с group: vip, fast, alotaxi) и other
     const alotaxiServers = [];
     const otherServers = [];
     
@@ -385,7 +563,6 @@
       }
     });
     
-    // Блок "Рекомендовано" (все alotaxi серверы)
     if (alotaxiServers.length > 0) {
       const recDivider = document.createElement('div');
       recDivider.className = 'section-divider';
@@ -422,7 +599,6 @@
       });
     }
     
-    // Блок "Прочие серверы"
     if (otherServers.length > 0) {
       const otherDivider = document.createElement('div');
       otherDivider.className = 'section-divider';
@@ -486,23 +662,6 @@
     });
   }
   
-  function connectTo(serverKey) {
-    const server = SERVERS[serverKey];
-    const loadingScreen = document.getElementById('loadingScreen');
-    const loadingMsg = document.getElementById('loadingMessage');
-    loadingScreen.style.display = 'flex';
-    loadingMsg.textContent = `FeastAI • Подключение к ${server.name} (${currentPings[serverKey]}ms)`;
-    if (navigator.vibrate) navigator.vibrate(20);
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = server.tgUrl;
-    document.body.appendChild(iframe);
-    setTimeout(() => { window.location.href = server.tgUrl; }, 50);
-    let fallback = setTimeout(() => { if (!document.hidden) window.open(server.proxyUrl, '_blank'); setTimeout(() => loadingScreen.style.display = 'none', 1000); }, 2500);
-    window.addEventListener('blur', () => { clearTimeout(fallback); loadingMsg.textContent = 'Telegram открыт'; setTimeout(() => loadingScreen.style.display = 'none', 800); }, { once: true });
-    setTimeout(() => { loadingScreen.style.display = 'none'; document.querySelectorAll('iframe').forEach(f => f.remove()); }, 4000);
-  }
-  
   function init() {
     refreshPings();
     renderServerList();
@@ -535,7 +694,7 @@
       });
     });
     
-    setInterval(() => { refreshPings(); renderServerList(); renderStats(); updateUISelectedServer(); }, 8000);
+    setInterval(() => { refreshPings(); renderServerList(); renderStats(); updateUISelectedServer(); }, 10000);
     setInterval(() => {
       const down = (Math.random() * 1.8).toFixed(1);
       const up = (Math.random() * 0.9).toFixed(1);
