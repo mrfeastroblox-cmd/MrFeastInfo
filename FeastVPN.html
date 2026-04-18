@@ -391,10 +391,7 @@
                 <div class="logo-3d">F+</div>
                 <h1>FeastVPN</h1>
             </div>
-            <div class="badge-neon">⚡ Высокая скорость</div>
-        </div>
-        <div style="display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap;">
-            <div class="badge-neon" style="background: #00000040;">🎯 Минимальный Пинг</div>
+            <!-- Бейджи убраны по запросу пользователя -->
         </div>
     </div>
 
@@ -435,24 +432,18 @@
 </div>
 
 <script>
-    // ======================== MTProto сервера (1-16) ========================
+    // ======================== MTProto сервера (1-10) ========================
     const MT_PROTO_SERVERS = [
         {"name": "FeastVPN 1", "server": "quackton.life", "port": 443, "secret": "ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275"},
         {"name": "FeastVPN 2", "server": "tg.pepewtf.top", "port": 443, "secret": "eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70"},
         {"name": "FeastVPN 3", "server": "tg.openworld.bot", "port": 443, "secret": "cb3c473c7bbea00855003ab715668c50"},
         {"name": "FeastVPN 4", "server": "213.219.212.245", "port": 443, "secret": "9f3c7a8d2e4b1c6f5a7d8e9b0c2f4a1d"},
-        {"name": "FeastVPN 5", "server": "VIP.alotaxi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 6", "server": "peyk.acharbashi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 7", "server": "nitro.alotaxi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 8", "server": "alo.acharbashi.info", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 9", "server": "dedicated.love-internet.xyz", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d"},
-        {"name": "FeastVPN 10", "server": "rio.alotaxi.info", "port": 4516, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d"},
-        {"name": "FeastVPN 11", "server": "test.alotaxi.info", "port": 8443, "secret": "ee25773d1e79da8a2f549d1c38da5aae41626f6f6b696e672e636f6d"},
-        {"name": "FeastVPN 12", "server": "baw.alotaxi.info", "port": 679, "secret": "41b712fe12019c64e281bcb6aeccded7"},
-        {"name": "FeastVPN 13", "server": "jtproxy.life", "port": 443, "secret": "eef0050d30441bab41f60acae779df0c40766473696e612e7275"},
-        {"name": "FeastVPN 14", "server": "ru.mt-proxy.org", "port": 443, "secret": "ee8dd152455f38a66cfab5de97f6bb2d596d742d70726f78792e6f7267"},
-        {"name": "FeastVPN 15", "server": "vaslshid.co.uk.", "port": 85, "secret": "FgMBAgABAAH8AxOG4kw63Q=="},
-        {"name": "FeastVPN 16", "server": "185.84.156.90", "port": 4515, "secret": "eee9a4f23b1d768c04a8d7f39120ca5b6e6d61782e7275"}
+        {"name": "FeastVPN 5", "server": "jtproxy.life", "port": 443, "secret": "eef0050d30441bab41f60acae779df0c40766473696e612e7275"},
+        {"name": "FeastVPN 6", "server": "ru.mt-proxy.org", "port": 443, "secret": "ee8dd152455f38a66cfab5de97f6bb2d596d742d70726f78792e6f7267"},
+        {"name": "FeastVPN 7", "server": "vaslshid.co.uk.", "port": 85, "secret": "FgMBAgABAAH8AxOG4kw63Q=="},
+        {"name": "FeastVPN 8", "server": "tg-proxy.greentg.su", "port": 443, "secret": "b5d2545b3120ae5762a3ca34516f7ee3"},
+        {"name": "FeastVPN 9", "server": "green-1.er-news.su", "port": 443, "secret": "7u9oGxrQclTd9VMnMZdKP5Z3Yi5ydQ"},
+        {"name": "FeastVPN 10", "server": "green-2.er-news.su", "port": 443, "secret": "ee823731e54bf72f38fcb3b1e76e7500d0676f6f676c652e636f6d"}
     ];
 
     let pingMap = new Map();
@@ -755,7 +746,7 @@
         if (autoBtn) autoBtn.addEventListener('click', () => autoConnectMinPing());
         const serversToggle = document.getElementById('serversToggleBtn');
         if (serversToggle) serversToggle.addEventListener('click', toggleServers);
-        showToast("🔥 16 MTProto серверов | Точный пинг");
+        showToast("🔥 10 MTProto серверов | Точный пинг");
     });
 </script>
 </body>
