@@ -57,8 +57,236 @@
     .logo-icon i { font-size: 24px; color: white; position: relative; z-index: 1; }
     .logo-text h1 { font-size: 20px; font-weight: 700; }
     .logo-text .premium-tag { font-size: 10px; font-weight: 600; color: #00aaff; background: rgba(0,170,255,0.1); padding: 3px 8px; border-radius: 20px; display: inline-block; }
-    .crown-badge { background: linear-gradient(135deg, #ffd700, #ffaa00); border-radius: 30px; padding: 6px 12px; display: flex; align-items: center; gap: 5px; }
-    .crown-badge i, .crown-badge span { color: #1a1f2e; font-size: 12px; font-weight: 700; }
+    
+    .profile-btn {
+      width: 40px; height: 40px; background: linear-gradient(135deg, rgba(0,102,255,0.2), rgba(123,47,247,0.2));
+      border-radius: 30px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; border: 0.5px solid rgba(0,150,255,0.3);
+    }
+    .profile-btn i { font-size: 20px; color: #88aaff; }
+    .profile-btn:hover { background: linear-gradient(135deg, rgba(0,102,255,0.35), rgba(123,47,247,0.35)); transform: scale(1.05); }
+    .profile-btn:active { transform: scale(0.95); }
+
+    .profile-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(8,12,24,0.98);
+      backdrop-filter: blur(20px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .profile-card {
+      background: linear-gradient(145deg, rgba(20,28,45,0.95), rgba(15,20,35,0.98));
+      border-radius: 48px;
+      padding: 32px 28px;
+      width: 340px;
+      text-align: center;
+      border: 1px solid rgba(0,150,255,0.3);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,150,255,0.1) inset;
+      animation: slideUp 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .profile-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #fff, #88aaff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .profile-avatar-container {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      cursor: pointer;
+    }
+    .profile-avatar {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0066ff, #7b2ff7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px -5px rgba(0,102,255,0.4);
+      transition: all 0.2s;
+      overflow: hidden;
+    }
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .profile-avatar i {
+      font-size: 48px;
+      color: white;
+    }
+    .avatar-edit-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(135deg, #0066ff, #7b2ff7);
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(15,20,35,0.95);
+      cursor: pointer;
+      z-index: 5;
+    }
+    .avatar-edit-icon i { font-size: 12px; color: white; }
+    .profile-avatar-container:hover .profile-avatar { transform: scale(1.02); }
+    
+    .avatar-selector {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(20,28,45,0.98);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 12px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+      border: 1px solid rgba(0,150,255,0.3);
+      z-index: 20;
+      min-width: 160px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    .avatar-selector button {
+      background: rgba(0,102,255,0.15);
+      border: none;
+      border-radius: 30px;
+      padding: 8px 12px;
+      color: white;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      width: 100%;
+    }
+    .avatar-selector button:hover { background: rgba(0,102,255,0.3); }
+    .avatar-selector.show { display: flex; }
+    
+    .profile-nickname {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .profile-nickname span {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+    .edit-nickname-btn {
+      background: rgba(0,102,255,0.2);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      color: #88aaff;
+      transition: all 0.2s;
+    }
+    .edit-nickname-btn:hover { background: rgba(0,102,255,0.4); transform: scale(1.05); }
+    
+    .nickname-input-container {
+      display: none;
+      gap: 8px;
+      margin-bottom: 16px;
+      justify-content: center;
+    }
+    .nickname-input-container input {
+      background: rgba(0,102,255,0.15);
+      border: 1px solid rgba(0,150,255,0.3);
+      border-radius: 30px;
+      padding: 8px 16px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+      width: 180px;
+    }
+    .nickname-input-container button {
+      background: linear-gradient(135deg, #0066ff, #7b2ff7);
+      border: none;
+      border-radius: 30px;
+      padding: 8px 16px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    .profile-info {
+      background: rgba(0,102,255,0.1);
+      border-radius: 28px;
+      padding: 16px;
+      margin: 20px 0;
+      border: 0.5px solid rgba(0,150,255,0.2);
+    }
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    }
+    .profile-row:last-child { border-bottom: none; }
+    .profile-label { font-size: 13px; color: #8899cc; font-weight: 500; }
+    .profile-value { font-size: 14px; color: white; font-weight: 600; font-family: monospace; }
+    .profile-close {
+      background: linear-gradient(135deg, rgba(0,102,255,0.15), rgba(123,47,247,0.15));
+      border: 1px solid rgba(0,150,255,0.35);
+      border-radius: 40px;
+      padding: 12px 24px;
+      width: 100%;
+      color: #bbddff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 10px;
+    }
+    .profile-close:hover { background: linear-gradient(135deg, rgba(0,102,255,0.25), rgba(123,47,247,0.25)); transform: scale(1.02); }
+    .profile-close:active { transform: scale(0.98); }
+
+    #avatarUpload { display: none; }
+
+    .server-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 30px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .premium-badge {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #1a1f2e;
+      box-shadow: 0 2px 6px rgba(245,158,11,0.3);
+    }
+    .highspeed-badge {
+      background: linear-gradient(135deg, #dc2626, #991b1b, #7f1d1d);
+      color: #fff;
+      text-shadow: 0 0 4px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 8px rgba(220,38,38,0.4);
+      border: 0.5px solid rgba(255,100,100,0.3);
+    }
 
     .feastai-panel {
       background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(123,47,247,0.08));
@@ -201,12 +429,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     .refresh-ping-btn i { font-size: 18px; transition: transform 0.3s ease; color: #3b82f6; }
-    .refresh-ping-btn:hover {
-      background: linear-gradient(135deg, rgba(0,102,255,0.25), rgba(123,47,247,0.25));
-      border-color: rgba(0,150,255,0.6);
-      color: white;
-      transform: scale(1.01);
-    }
+    .refresh-ping-btn:hover { background: linear-gradient(135deg, rgba(0,102,255,0.25), rgba(123,47,247,0.25)); border-color: rgba(0,150,255,0.6); color: white; transform: scale(1.01); }
     .refresh-ping-btn:active { transform: scale(0.98); }
     .refresh-ping-btn.rotating i { animation: spinRefresh 0.6s linear; }
     @keyframes spinRefresh { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -236,7 +459,6 @@
     .ping-bar-mini { width: 70px; height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; flex-shrink: 0; }
     .ping-fill-mini { height: 100%; border-radius: 3px; transition: width 0.2s; background: #2ecc71; }
 
-    /* Протокол тестирования */
     .protocol-testing {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -256,56 +478,20 @@
       text-align: center;
       border: 1px solid rgba(0,150,255,0.3);
       box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      animation: fadeInUp 0.4s ease-out;
     }
-    .protocol-title {
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, #0066ff, #7b2ff7);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .protocol-sub {
-      font-size: 13px;
-      color: #8899cc;
-      margin-bottom: 24px;
-    }
-    .protocol-status {
-      background: rgba(0,102,255,0.15);
-      border-radius: 60px;
-      padding: 12px 20px;
-      margin: 20px 0;
-    }
-    .protocol-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: white;
-    }
-    .protocol-progress {
-      width: 100%;
-      height: 6px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 3px;
-      margin: 16px 0;
-      overflow: hidden;
-    }
-    .protocol-progress-fill {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #0066ff, #7b2ff7);
-      border-radius: 3px;
-      transition: width 0.1s linear;
-    }
-    .protocol-message {
-      font-size: 13px;
-      margin-top: 12px;
-    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .protocol-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #0066ff, #7b2ff7); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .protocol-sub { font-size: 13px; color: #8899cc; margin-bottom: 24px; }
+    .protocol-status { background: rgba(0,102,255,0.15); border-radius: 60px; padding: 12px 20px; margin: 20px 0; }
+    .protocol-name { font-size: 18px; font-weight: 700; color: white; }
+    .protocol-progress { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin: 16px 0; overflow: hidden; }
+    .protocol-progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #0066ff, #7b2ff7); border-radius: 3px; transition: width 0.1s linear; }
+    .protocol-message { font-size: 13px; margin-top: 12px; }
     .protocol-message.success { color: #2ecc71; }
     .protocol-message.error { color: #e74c3c; }
     .protocol-message.waiting { color: #f39c12; }
 
-    /* Окно подключения в стиле FKey */
     .fkey-connecting {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -325,111 +511,23 @@
       text-align: center;
       border: 1px solid rgba(0,150,255,0.25);
       box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,150,255,0.1) inset;
+      animation: fadeInScale 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
-    .fkey-game-icon {
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(135deg, #0066ff, #7b2ff7);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      box-shadow: 0 10px 25px -5px rgba(0,102,255,0.4);
-    }
-    .fkey-game-icon i {
-      font-size: 36px;
-      color: white;
-    }
-    .fkey-game-name {
-      font-size: 22px;
-      font-weight: 800;
-      color: white;
-      margin-bottom: 8px;
-    }
-    .fkey-server-info {
-      font-size: 14px;
-      color: #88aaff;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .fkey-server-info .flag {
-      font-size: 18px;
-    }
-    .fkey-progress-circle {
-      width: 120px;
-      height: 120px;
-      margin: 20px auto;
-      position: relative;
-    }
-    .fkey-progress-ring {
-      transform: rotate(-90deg);
-    }
-    .fkey-progress-ring-bg {
-      stroke: rgba(255,255,255,0.1);
-    }
-    .fkey-progress-ring-fill {
-      stroke: url(#gradient);
-      stroke-linecap: round;
-      transition: stroke-dashoffset 0.1s linear;
-    }
-    .fkey-progress-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 28px;
-      font-weight: 800;
-      color: white;
-    }
-    .fkey-progress-text small {
-      font-size: 12px;
-      font-weight: 500;
-      color: #8899cc;
-    }
-    .fkey-features {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin: 28px 0 24px;
-      padding-top: 10px;
-      border-top: 0.5px solid rgba(255,255,255,0.08);
-    }
-    .fkey-feature {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      color: #bbddff;
-    }
-    .fkey-feature i {
-      width: 24px;
-      font-size: 14px;
-      color: #2ecc71;
-    }
-    .fkey-stop-btn {
-      background: rgba(231,76,60,0.15);
-      border: 1px solid rgba(231,76,60,0.3);
-      border-radius: 40px;
-      padding: 12px 24px;
-      width: 100%;
-      color: #e74c3c;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'Inter', sans-serif;
-    }
-    .fkey-stop-btn:hover {
-      background: rgba(231,76,60,0.25);
-      border-color: rgba(231,76,60,0.5);
-    }
-    .fkey-stop-btn:active {
-      transform: scale(0.97);
-    }
+    @keyframes fadeInScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    .fkey-game-icon { width: 70px; height: 70px; background: linear-gradient(135deg, #0066ff, #7b2ff7); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 10px 25px -5px rgba(0,102,255,0.4); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    .fkey-game-icon i { font-size: 36px; color: white; }
+    .fkey-game-name { font-size: 22px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #88aaff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .fkey-server-info { font-size: 14px; color: #88aaff; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .fkey-progress-circle { width: 120px; height: 120px; margin: 20px auto; position: relative; }
+    .fkey-progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 28px; font-weight: 800; color: white; text-align: center; line-height: 1; display: flex; align-items: center; justify-content: center; gap: 2px; }
+    .fkey-progress-text small { font-size: 12px; font-weight: 500; color: #8899cc; }
+    .fkey-features { display: flex; flex-direction: column; gap: 14px; margin: 28px 0 24px; padding-top: 10px; border-top: 0.5px solid rgba(255,255,255,0.08); }
+    .fkey-feature { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #bbddff; }
+    .fkey-feature i { width: 24px; font-size: 14px; color: #2ecc71; }
+    .fkey-stop-btn { background: rgba(231,76,60,0.15); border: 1px solid rgba(231,76,60,0.3); border-radius: 40px; padding: 12px 24px; width: 100%; color: #e74c3c; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .fkey-stop-btn:hover { background: rgba(231,76,60,0.25); transform: scale(1.02); }
+    .fkey-stop-btn:active { transform: scale(0.97); }
 
     .bottom-nav { display: flex; align-items: center; justify-content: space-around; margin-top: 20px; padding-top: 15px; border-top: 0.5px solid rgba(255,255,255,0.05); }
     .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #556688; font-size: 12px; font-weight: 500; cursor: pointer; transition: 0.2s; }
@@ -458,44 +556,58 @@
   </div>
 </div>
 
-<!-- Окно подключения в стиле FKey -->
 <div class="fkey-connecting" id="fkeyConnecting">
   <div class="fkey-card">
-    <div class="fkey-game-icon">
-      <i class="fas fa-shield-alt"></i>
-    </div>
-    <div class="fkey-game-name" id="fkeyGameName">FeastTurboVPN</div>
-    <div class="fkey-server-info" id="fkeyServerInfo">
-      <span class="flag" id="fkeyFlag">🇳🇱</span>
-      <span id="fkeyServerName">Netherlands</span>
-      <span id="fkeyPing">12ms</span>
-    </div>
-    <div class="fkey-progress-circle">
-      <svg width="120" height="120" viewBox="0 0 120 120">
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#0066ff"/>
-            <stop offset="100%" stop-color="#7b2ff7"/>
-          </linearGradient>
-        </defs>
-        <circle class="fkey-progress-ring-bg" cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="6"/>
-        <circle class="fkey-progress-ring-fill" cx="60" cy="60" r="52" fill="none" stroke="url(#gradient)" stroke-width="6" stroke-dasharray="326.9" stroke-dashoffset="326.9"/>
-      </svg>
-      <div class="fkey-progress-text" id="fkeyProgressText">0<small>%</small></div>
-    </div>
-    <div class="fkey-features">
-      <div class="fkey-feature"><i class="fas fa-tachometer-alt"></i> Выделенный Игровой Маршрут</div>
-      <div class="fkey-feature"><i class="fas fa-microchip"></i> ИИ Снижение Задержки</div>
-      <div class="fkey-feature"><i class="fas fa-route"></i> Динамический Мульти-Маршрут</div>
-    </div>
+    <svg width="0" height="0" style="position: absolute;"><defs><linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0066ff"/><stop offset="100%" stop-color="#7b2ff7"/></linearGradient></defs></svg>
+    <div class="fkey-game-icon"><i class="fas fa-shield-alt"></i></div>
+    <div class="fkey-game-name">FeastTurboVPN</div>
+    <div class="fkey-server-info" id="fkeyServerInfo"><span class="flag" id="fkeyFlag">🇳🇱</span><span id="fkeyServerName">Netherlands</span><span id="fkeyPing">12ms</span></div>
+    <div class="fkey-progress-circle"><svg width="120" height="120" viewBox="0 0 120 120"><circle class="fkey-progress-ring-bg" cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="6"/><circle class="fkey-progress-ring-fill" cx="60" cy="60" r="52" fill="none" stroke="url(#gradient)" stroke-width="6" stroke-dasharray="326.9" stroke-dashoffset="326.9"/></svg><div class="fkey-progress-text" id="fkeyProgressText">0<small>%</small></div></div>
+    <div class="fkey-features"><div class="fkey-feature"><i class="fas fa-tachometer-alt"></i> Выделенный Игровой Маршрут</div><div class="fkey-feature"><i class="fas fa-microchip"></i> ИИ Снижение Задержки</div><div class="fkey-feature"><i class="fas fa-route"></i> Динамический Мульти-Маршрут</div></div>
     <button class="fkey-stop-btn" id="fkeyStopBtn">Остановить</button>
+  </div>
+</div>
+
+<div class="profile-modal" id="profileModal">
+  <div class="profile-card">
+    <div class="profile-title" id="profileTitle">FeastTurboVPN User</div>
+    <div class="profile-avatar-container" id="avatarContainer">
+      <div class="profile-avatar" id="profileAvatar">
+        <i class="fas fa-user-astronaut" id="avatarIcon"></i>
+        <img id="avatarImage" style="display: none; width: 100%; height: 100%; object-fit: cover;" alt="avatar">
+      </div>
+      <div class="avatar-edit-icon" id="avatarEditBtn"><i class="fas fa-camera"></i></div>
+      <div class="avatar-selector" id="avatarSelector">
+        <button id="selectIconAvatar"><i class="fas fa-user-astronaut"></i> Космонавт</button>
+        <button id="selectIconShield"><i class="fas fa-shield-alt"></i> Защита</button>
+        <button id="selectIconBolt"><i class="fas fa-bolt"></i> Молния</button>
+        <button id="selectIconCrown"><i class="fas fa-crown"></i> Корона</button>
+        <button id="uploadImageBtn"><i class="fas fa-upload"></i> Загрузить фото</button>
+      </div>
+    </div>
+    <input type="file" id="avatarUpload" accept="image/jpeg,image/png,image/gif,image/webp">
+    
+    <div class="profile-nickname" id="nicknameDisplay">
+      <span id="nicknameText">FeastUser</span>
+      <button class="edit-nickname-btn" id="editNicknameBtn"><i class="fas fa-pen"></i></button>
+    </div>
+    <div class="nickname-input-container" id="nicknameInputContainer">
+      <input type="text" id="nicknameInput" maxlength="20" placeholder="Введите никнейм">
+      <button id="saveNicknameBtn">Сохранить</button>
+    </div>
+    
+    <div class="profile-info">
+      <div class="profile-row"><span class="profile-label">Account:</span><span class="profile-value" id="profileIp">Загрузка...</span></div>
+      <div class="profile-row"><span class="profile-label">Создан:</span><span class="profile-value" id="profileCreated">--</span></div>
+    </div>
+    <button class="profile-close" id="profileCloseBtn">Закрыть</button>
   </div>
 </div>
 
 <div class="vpn-card">
   <div class="header">
     <div class="logo-section"><div class="logo-icon"><i class="fas fa-bolt"></i></div><div class="logo-text"><h1>FeastTurboVPN</h1><div class="premium-tag">TURBO • PREMIUM</div></div></div>
-    <div class="crown-badge"><i class="fas fa-crown"></i><span>PRO</span></div>
+    <div class="profile-btn" id="profileBtn"><i class="fas fa-user"></i></div>
   </div>
 
   <div class="feastai-panel">
@@ -511,37 +623,173 @@
   </div>
 
   <div class="tab-content" id="serversTab"><div class="servers-page"><h2 class="servers-title">Доступные серверы</h2><div class="server-list" id="serverList"></div></div></div>
-  
-  <div class="tab-content" id="statsTab">
-    <div class="stats-page">
-      <h2 class="stats-title">Статистика серверов</h2>
-      <div class="ping-summary" id="pingSummary"></div>
-      <button class="refresh-ping-btn" id="refreshPingBtn">
-        <i class="fas fa-sync-alt"></i>
-        <span>Обновить пинг</span>
-      </button>
-    </div>
-  </div>
+  <div class="tab-content" id="statsTab"><div class="stats-page"><h2 class="stats-title">Статистика серверов</h2><div class="ping-summary" id="pingSummary"></div><button class="refresh-ping-btn" id="refreshPingBtn"><i class="fas fa-sync-alt"></i><span>Обновить пинг</span></button></div></div>
 
   <div class="bottom-nav"><div class="nav-item active" data-tab="home"><i class="fas fa-home"></i><span>Главная</span></div><div class="nav-item" data-tab="servers"><i class="fas fa-server"></i><span>Серверы</span></div><div class="nav-item" data-tab="stats"><i class="fas fa-chart-bar"></i><span>Статистика</span></div></div>
 </div>
 
 <script>
 (function(){
-  // Серверы (добавлена Испания)
+  // === Профиль с сохранением ===
+  let userNickname = localStorage.getItem('feast_nickname') || 'FeastUser';
+  let userAvatarType = localStorage.getItem('feast_avatar_type') || 'icon';
+  let userAvatarValue = localStorage.getItem('feast_avatar_value') || 'fa-user-astronaut';
+  let userAvatarImageData = localStorage.getItem('feast_avatar_image') || null;
+  
+  let accountCreated = localStorage.getItem('feast_account_created');
+  if (!accountCreated) {
+    const now = new Date();
+    accountCreated = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+    localStorage.setItem('feast_account_created', accountCreated);
+  }
+  document.getElementById('profileCreated').textContent = accountCreated;
+  
+  function updateAvatarDisplay() {
+    const avatarIcon = document.getElementById('avatarIcon');
+    const avatarImg = document.getElementById('avatarImage');
+    if (userAvatarType === 'icon') {
+      avatarIcon.style.display = 'flex';
+      avatarImg.style.display = 'none';
+      avatarIcon.className = `fas ${userAvatarValue}`;
+    } else if (userAvatarType === 'image' && userAvatarImageData) {
+      avatarIcon.style.display = 'none';
+      avatarImg.style.display = 'block';
+      avatarImg.src = userAvatarImageData;
+    }
+  }
+  
+  function updateNicknameDisplay() {
+    document.getElementById('nicknameText').textContent = userNickname;
+    document.getElementById('profileTitle').textContent = `${userNickname}`;
+  }
+  
+  function saveNickname(newNickname) {
+    userNickname = newNickname;
+    localStorage.setItem('feast_nickname', userNickname);
+    updateNicknameDisplay();
+  }
+  
+  function saveAvatarIcon(iconClass) {
+    userAvatarType = 'icon';
+    userAvatarValue = iconClass;
+    userAvatarImageData = null;
+    localStorage.setItem('feast_avatar_type', 'icon');
+    localStorage.setItem('feast_avatar_value', iconClass);
+    localStorage.removeItem('feast_avatar_image');
+    updateAvatarDisplay();
+  }
+  
+  function saveAvatarImage(imageData) {
+    userAvatarType = 'image';
+    userAvatarImageData = imageData;
+    localStorage.setItem('feast_avatar_type', 'image');
+    localStorage.setItem('feast_avatar_image', imageData);
+    localStorage.removeItem('feast_avatar_value');
+    updateAvatarDisplay();
+  }
+  
+  updateAvatarDisplay();
+  updateNicknameDisplay();
+  
+  async function fetchUserIP() {
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      document.getElementById('profileIp').textContent = data.ip;
+    } catch (error) {
+      document.getElementById('profileIp').textContent = 'Не удалось определить';
+    }
+  }
+  fetchUserIP();
+  
+  const profileBtn = document.getElementById('profileBtn');
+  const profileModal = document.getElementById('profileModal');
+  const profileCloseBtn = document.getElementById('profileCloseBtn');
+  profileBtn.addEventListener('click', () => { profileModal.style.display = 'flex'; });
+  profileCloseBtn.addEventListener('click', () => { profileModal.style.display = 'none'; });
+  profileModal.addEventListener('click', (e) => { if (e.target === profileModal) profileModal.style.display = 'none'; });
+  
+  const editNicknameBtn = document.getElementById('editNicknameBtn');
+  const nicknameDisplay = document.getElementById('nicknameDisplay');
+  const nicknameInputContainer = document.getElementById('nicknameInputContainer');
+  const nicknameInput = document.getElementById('nicknameInput');
+  const saveNicknameBtn = document.getElementById('saveNicknameBtn');
+  
+  editNicknameBtn.addEventListener('click', () => {
+    nicknameInput.value = userNickname;
+    nicknameDisplay.style.display = 'none';
+    nicknameInputContainer.style.display = 'flex';
+  });
+  
+  saveNicknameBtn.addEventListener('click', () => {
+    const newName = nicknameInput.value.trim();
+    if (newName) saveNickname(newName);
+    nicknameDisplay.style.display = 'flex';
+    nicknameInputContainer.style.display = 'none';
+  });
+  
+  const avatarEditBtn = document.getElementById('avatarEditBtn');
+  const avatarSelector = document.getElementById('avatarSelector');
+  const avatarUpload = document.getElementById('avatarUpload');
+  
+  avatarEditBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    avatarSelector.classList.toggle('show');
+  });
+  
+  document.addEventListener('click', (e) => {
+    if (!avatarEditBtn.contains(e.target) && !avatarSelector.contains(e.target)) {
+      avatarSelector.classList.remove('show');
+    }
+  });
+  
+  document.getElementById('selectIconAvatar').addEventListener('click', () => {
+    saveAvatarIcon('fa-user-astronaut');
+    avatarSelector.classList.remove('show');
+  });
+  document.getElementById('selectIconShield').addEventListener('click', () => {
+    saveAvatarIcon('fa-shield-alt');
+    avatarSelector.classList.remove('show');
+  });
+  document.getElementById('selectIconBolt').addEventListener('click', () => {
+    saveAvatarIcon('fa-bolt');
+    avatarSelector.classList.remove('show');
+  });
+  document.getElementById('selectIconCrown').addEventListener('click', () => {
+    saveAvatarIcon('fa-crown');
+    avatarSelector.classList.remove('show');
+  });
+  document.getElementById('uploadImageBtn').addEventListener('click', () => {
+    avatarUpload.click();
+    avatarSelector.classList.remove('show');
+  });
+  
+  avatarUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        saveAvatarImage(event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+    avatarUpload.value = '';
+  });
+  
+  // === VPN серверы с новыми названиями и бейджами ===
   const SERVERS = {
-    netherlands: { name: 'Netherlands', flag: '🇳🇱', group: 'vip', tgUrl: 'tg://proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    germany: { name: 'Germany', flag: '🇩🇪', group: 'fast', tgUrl: 'tg://proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d', proxyUrl: 'https://t.me/proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d' },
-    france: { name: 'France', flag: '🇫🇷', group: 'alotaxi', tgUrl: 'tg://proxy?server=super.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e6d61782e7275', proxyUrl: 'https://t.me/proxy?server=super.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e6d61782e7275' },
-    italy: { name: 'Italy', flag: '🇮🇹', group: 'alotaxi', tgUrl: 'tg://proxy?server=pro.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=pro.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    brazil: { name: 'Brazil', flag: '🇧🇷', group: 'alotaxi', tgUrl: 'tg://proxy?server=alo.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=alo.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    poland: { name: 'Poland', flag: '🇵🇱', group: 'alotaxi', tgUrl: 'tg://proxy?server=peyk.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=peyk.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    canada: { name: 'Canada', flag: '🇨🇦', group: 'alotaxi', tgUrl: 'tg://proxy?server=test.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=test.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    ireland: { name: 'Ireland', flag: '🇮🇪', group: 'alotaxi', tgUrl: 'tg://proxy?server=gem.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=gem.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    usa2: { name: 'USA (Dedicated)', flag: '🇺🇸', group: 'alotaxi', tgUrl: 'tg://proxy?server=dedicated.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=dedicated.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    usa: { name: 'USA', flag: '🇺🇸', group: 'other', tgUrl: 'tg://proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
-    newcaledonia: { name: 'New Caledonia', flag: '🇨🇵', group: 'other', tgUrl: 'tg://proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275', proxyUrl: 'https://t.me/proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275' },
-    spain: { name: 'Spain', flag: '🇪🇸', group: 'other', tgUrl: 'tg://proxy?server=tg.pepewtf.top&port=443&secret=eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70', proxyUrl: 'https://t.me/proxy?server=tg.pepewtf.top&port=443&secret=eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70' }
+    netherlands: { name: 'Netherlands', flag: '🇳🇱', group: 'alotaxi', isHighSpeed: true, tgUrl: 'tg://proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=VIP.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    germany: { name: 'Germany', flag: '🇩🇪', group: 'alotaxi', isHighSpeed: true, tgUrl: 'tg://proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d', proxyUrl: 'https://t.me/proxy?server=rio.alotaxi.info&port=4516&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e636c6f7564666c6172652e636f6d' },
+    france: { name: 'France', flag: '🇫🇷', group: 'alotaxi', isHighSpeed: false, tgUrl: 'tg://proxy?server=super.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e6d61782e7275', proxyUrl: 'https://t.me/proxy?server=super.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e6d61782e7275' },
+    italy: { name: 'Italy', flag: '🇮🇹', group: 'alotaxi', isHighSpeed: false, tgUrl: 'tg://proxy?server=pro.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=pro.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    brazil: { name: 'Brazil', flag: '🇧🇷', group: 'alotaxi', isHighSpeed: false, tgUrl: 'tg://proxy?server=alo.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=alo.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    poland: { name: 'Poland', flag: '🇵🇱', group: 'alotaxi', isHighSpeed: false, tgUrl: 'tg://proxy?server=peyk.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=peyk.acharbashi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    canada: { name: 'Canada', flag: '🇨🇦', group: 'alotaxi', isHighSpeed: false, tgUrl: 'tg://proxy?server=test.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=test.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    ireland: { name: 'Ireland', flag: '🇮🇪', group: 'alotaxi', isHighSpeed: false, tgUrl: 'tg://proxy?server=gem.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=gem.alotaxi.info&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    usaFast1: { name: 'USA (Fast 1)', flag: '🇺🇸', group: 'alotaxi', isHighSpeed: false, tgUrl: 'tg://proxy?server=dedicated.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=dedicated.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    usaFast2: { name: 'USA (Fast 2)', flag: '🇺🇸', group: 'alotaxi', isHighSpeed: false, tgUrl: 'tg://proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d', proxyUrl: 'https://t.me/proxy?server=Fast.love-internet.xyz&port=4515&secret=eee9a4f23b1d768c04a8d7f39120ca5b6e626973636f7474692e79656b74616e65742e636f6d' },
+    newcaledonia: { name: 'New Caledonia', flag: '🇨🇵', group: 'other', isHighSpeed: false, tgUrl: 'tg://proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275', proxyUrl: 'https://t.me/proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275' },
+    spain: { name: 'Spain', flag: '🇪🇸', group: 'other', isHighSpeed: false, tgUrl: 'tg://proxy?server=tg.pepewtf.top&port=443&secret=eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70', proxyUrl: 'https://t.me/proxy?server=tg.pepewtf.top&port=443&secret=eecb3c473c7bbea00855003ab715668c5074672e706570657774662e746f70' }
   };
 
   let currentServer = 'netherlands';
@@ -549,16 +797,14 @@
   let currentPings = {};
   let fkeyAnimationInterval = null;
   
-  function getPingForServer(group) {
-    if (group === 'vip' || group === 'fast') return Math.floor(Math.random() * 6) + 10;
+  function getPingForServer(group, isHighSpeed) {
+    if (isHighSpeed) return Math.floor(Math.random() * 6) + 10;
     else if (group === 'alotaxi') return Math.floor(Math.random() * 16) + 15;
     else return Math.floor(Math.random() * 31) + 30;
   }
   
   function refreshPings() {
-    Object.keys(SERVERS).forEach(key => {
-      currentPings[key] = getPingForServer(SERVERS[key].group);
-    });
+    Object.keys(SERVERS).forEach(key => { currentPings[key] = getPingForServer(SERVERS[key].group, SERVERS[key].isHighSpeed); });
     updateAllPingUI();
     if (feastAIEnabled) autoSelectFastestServer();
   }
@@ -574,18 +820,12 @@
     const optimal = Object.entries(currentPings).reduce((a,b) => a[1] < b[1] ? a : b);
     document.getElementById('optimalServerName').innerText = SERVERS[optimal[0]].name;
     document.getElementById('optimalPingBadge').innerHTML = `${optimal[1]}ms`;
-    if (feastAIEnabled && optimal[0] !== currentServer) {
-      currentServer = optimal[0];
-      updateUISelectedServer();
-    }
+    if (feastAIEnabled && optimal[0] !== currentServer) { currentServer = optimal[0]; updateUISelectedServer(); }
   }
   
   function autoSelectFastestServer() {
     const fastest = Object.entries(currentPings).reduce((a,b) => a[1] < b[1] ? a : b);
-    if (fastest[0] !== currentServer) {
-      currentServer = fastest[0];
-      updateUISelectedServer();
-    }
+    if (fastest[0] !== currentServer) { currentServer = fastest[0]; updateUISelectedServer(); }
   }
   
   function updateUISelectedServer() {
@@ -598,26 +838,32 @@
     });
   }
   
-  // Тестирование протоколов с шансом 45%
+  function getServerBadge(key, s) {
+    let badges = '';
+    if (s.group === 'alotaxi') {
+      badges += '<span class="server-badge premium-badge"><i class="fas fa-crown" style="margin-right: 3px;"></i>Premium Server</span>';
+    }
+    if (s.isHighSpeed) {
+      badges += '<span class="server-badge highspeed-badge"><i class="fas fa-bolt" style="margin-right: 3px;"></i>High Speed</span>';
+    }
+    return badges;
+  }
+  
   async function testProtocols() {
     return new Promise((resolve) => {
       const protocolDiv = document.getElementById('protocolTesting');
       const protocolNameEl = document.getElementById('protocolName');
       const protocolMessageEl = document.getElementById('protocolMessage');
       const progressFill = document.getElementById('protocolProgressFill');
-      
       const firstProtocol = 'FeastGameAntiSpy';
       const secondProtocol = 'FeastAntiSpy';
       const failChance = 0.45;
       const firstFails = Math.random() < failChance;
-      
       protocolDiv.style.display = 'flex';
       protocolMessageEl.className = 'protocol-message waiting';
-      
       protocolNameEl.textContent = firstProtocol;
       protocolMessageEl.textContent = 'Проверка...';
       progressFill.style.width = '0%';
-      
       let progress = 0;
       const interval = setInterval(() => {
         progress += 8;
@@ -640,45 +886,33 @@
                   clearInterval(interval2);
                   protocolMessageEl.textContent = '✅ Протокол доступен';
                   protocolMessageEl.className = 'protocol-message success';
-                  setTimeout(() => {
-                    protocolDiv.style.display = 'none';
-                    resolve(true);
-                  }, 600);
+                  setTimeout(() => { protocolDiv.style.display = 'none'; resolve(true); }, 600);
                 }
               }, 50);
             }, 1000);
           } else {
             protocolMessageEl.textContent = '✅ Протокол доступен';
             protocolMessageEl.className = 'protocol-message success';
-            setTimeout(() => {
-              protocolDiv.style.display = 'none';
-              resolve(true);
-            }, 600);
+            setTimeout(() => { protocolDiv.style.display = 'none'; resolve(true); }, 600);
           }
         }
       }, 50);
     });
   }
   
-  // Анимация FKey окна
   async function showFKeyConnecting(serverKey) {
     const server = SERVERS[serverKey];
     const ping = currentPings[serverKey];
-    
     document.getElementById('fkeyFlag').innerHTML = server.flag;
     document.getElementById('fkeyServerName').innerHTML = server.name;
     document.getElementById('fkeyPing').innerHTML = `${ping}ms`;
-    
     const fkeyDiv = document.getElementById('fkeyConnecting');
     const progressText = document.getElementById('fkeyProgressText');
     const ringFill = document.querySelector('.fkey-progress-ring-fill');
     const circumference = 326.9;
-    
     fkeyDiv.style.display = 'flex';
-    
     let percent = 0;
     if (fkeyAnimationInterval) clearInterval(fkeyAnimationInterval);
-    
     fkeyAnimationInterval = setInterval(() => {
       percent += 2;
       if (percent >= 100) {
@@ -687,27 +921,16 @@
         percent = 100;
         progressText.innerHTML = `100<small>%</small>`;
         ringFill.style.strokeDashoffset = 0;
-        
         setTimeout(() => {
           fkeyDiv.style.display = 'none';
-          // После FKey окна открываем Telegram
           const iframe = document.createElement('iframe');
           iframe.style.display = 'none';
           iframe.src = server.tgUrl;
           document.body.appendChild(iframe);
           setTimeout(() => { window.location.href = server.tgUrl; }, 50);
-          
-          let fallback = setTimeout(() => { 
-            if (!document.hidden) window.open(server.proxyUrl, '_blank'); 
-          }, 2500);
-          
-          window.addEventListener('blur', () => { 
-            clearTimeout(fallback);
-          }, { once: true });
-          
-          setTimeout(() => { 
-            document.querySelectorAll('iframe').forEach(f => f.remove()); 
-          }, 4000);
+          let fallback = setTimeout(() => { if (!document.hidden) window.open(server.proxyUrl, '_blank'); }, 2500);
+          window.addEventListener('blur', () => { clearTimeout(fallback); }, { once: true });
+          setTimeout(() => { document.querySelectorAll('iframe').forEach(f => f.remove()); }, 4000);
         }, 500);
       }
       const offset = circumference - (percent / 100) * circumference;
@@ -726,60 +949,37 @@
     const container = document.getElementById('serverList');
     if (!container) return;
     container.innerHTML = '';
-    
     const alotaxiServers = [];
     const otherServers = [];
-    
     Object.entries(SERVERS).forEach(([key, s]) => {
-      if (s.group === 'vip' || s.group === 'fast' || s.group === 'alotaxi') {
-        alotaxiServers.push([key, s]);
-      } else {
-        otherServers.push([key, s]);
-      }
+      if (s.group === 'alotaxi') alotaxiServers.push([key, s]);
+      else otherServers.push([key, s]);
     });
-    
     if (alotaxiServers.length > 0) {
       const recDivider = document.createElement('div');
       recDivider.className = 'section-divider';
       recDivider.innerHTML = `<div class="line"></div><span><i class="fas fa-star recommended-icon"></i>Рекомендовано</span><div class="line"></div>`;
       container.appendChild(recDivider);
-      
       alotaxiServers.forEach(([key, s]) => {
         const ping = currentPings[key];
         const pct = Math.min((ping / 150) * 100, 100);
+        const badge = getServerBadge(key, s);
         const card = document.createElement('div');
         card.className = `server-card ${currentServer === key ? 'selected' : ''}`;
         if (feastAIEnabled) card.classList.add('ai-locked');
         card.dataset.server = key;
-        card.innerHTML = `
-          <span class="flag">${s.flag}</span>
-          <div class="server-details">
-            <div class="server-country-wrapper">
-              <span class="server-country">${s.name}</span>
-            </div>
-            <div class="server-stats-row">
-              <div class="ping-indicator"><i class="fas fa-signal"></i><span class="ping-value" data-ping-server="${key}">${ping}</span><span>ms</span></div>
-              <div class="ping-bar"><div class="ping-fill" data-ping-fill-bar="${key}" style="width:${pct}%"></div></div>
-            </div>
-          </div>
-          <button class="connect-server-btn" data-server="${key}"><i class="fas fa-play"></i></button>
-        `;
+        card.innerHTML = `<span class="flag">${s.flag}</span><div class="server-details"><div class="server-country-wrapper"><span class="server-country">${s.name}</span>${badge}</div><div class="server-stats-row"><div class="ping-indicator"><i class="fas fa-signal"></i><span class="ping-value" data-ping-server="${key}">${ping}</span><span>ms</span></div><div class="ping-bar"><div class="ping-fill" data-ping-fill-bar="${key}" style="width:${pct}%"></div></div></div></div><button class="connect-server-btn" data-server="${key}"><i class="fas fa-play"></i></button>`;
         const btn = card.querySelector('.connect-server-btn');
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (!feastAIEnabled) { currentServer = key; updateUISelectedServer(); connectTo(currentServer); }
-        });
+        btn.addEventListener('click', (e) => { e.stopPropagation(); if (!feastAIEnabled) { currentServer = key; updateUISelectedServer(); connectTo(currentServer); } });
         if (!feastAIEnabled) { card.addEventListener('click', () => { currentServer = key; updateUISelectedServer(); }); }
         container.appendChild(card);
       });
     }
-    
     if (otherServers.length > 0) {
       const otherDivider = document.createElement('div');
       otherDivider.className = 'section-divider';
       otherDivider.innerHTML = `<div class="line"></div><span><i class="fas fa-globe" style="margin-right: 6px;"></i>Прочие серверы</span><div class="line"></div>`;
       container.appendChild(otherDivider);
-      
       otherServers.forEach(([key, s]) => {
         const ping = currentPings[key];
         const pct = Math.min((ping / 150) * 100, 100);
@@ -787,29 +987,13 @@
         card.className = `server-card ${currentServer === key ? 'selected' : ''}`;
         if (feastAIEnabled) card.classList.add('ai-locked');
         card.dataset.server = key;
-        card.innerHTML = `
-          <span class="flag">${s.flag}</span>
-          <div class="server-details">
-            <div class="server-country-wrapper">
-              <span class="server-country">${s.name}</span>
-            </div>
-            <div class="server-stats-row">
-              <div class="ping-indicator"><i class="fas fa-signal"></i><span class="ping-value" data-ping-server="${key}">${ping}</span><span>ms</span></div>
-              <div class="ping-bar"><div class="ping-fill" data-ping-fill-bar="${key}" style="width:${pct}%"></div></div>
-            </div>
-          </div>
-          <button class="connect-server-btn" data-server="${key}"><i class="fas fa-play"></i></button>
-        `;
+        card.innerHTML = `<span class="flag">${s.flag}</span><div class="server-details"><div class="server-country-wrapper"><span class="server-country">${s.name}</span></div><div class="server-stats-row"><div class="ping-indicator"><i class="fas fa-signal"></i><span class="ping-value" data-ping-server="${key}">${ping}</span><span>ms</span></div><div class="ping-bar"><div class="ping-fill" data-ping-fill-bar="${key}" style="width:${pct}%"></div></div></div></div><button class="connect-server-btn" data-server="${key}"><i class="fas fa-play"></i></button>`;
         const btn = card.querySelector('.connect-server-btn');
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (!feastAIEnabled) { currentServer = key; updateUISelectedServer(); connectTo(currentServer); }
-        });
+        btn.addEventListener('click', (e) => { e.stopPropagation(); if (!feastAIEnabled) { currentServer = key; updateUISelectedServer(); connectTo(currentServer); } });
         if (!feastAIEnabled) { card.addEventListener('click', () => { currentServer = key; updateUISelectedServer(); }); }
         container.appendChild(card);
       });
     }
-    
     if (feastAIEnabled) document.querySelectorAll('.server-card').forEach(c => c.classList.add('ai-locked'));
   }
   
@@ -824,25 +1008,13 @@
       const pct = Math.min((ping / 150) * 100, 100);
       const row = document.createElement('div');
       row.className = 'ping-item';
-      row.innerHTML = `
-        <span class="flag">${s.flag}</span>
-        <span class="country-name">${s.name}</span>
-        <div class="ping-stats">
-          <span class="ping-number" data-ping-number="${key}">${ping}</span>
-          <span class="ping-unit">ms</span>
-          <div class="ping-bar-mini"><div class="ping-fill-mini" data-ping-fill="${key}" style="width:${pct}%"></div></div>
-        </div>
-      `;
+      row.innerHTML = `<span class="flag">${s.flag}</span><span class="country-name">${s.name}</span><div class="ping-stats"><span class="ping-number" data-ping-number="${key}">${ping}</span><span class="ping-unit">ms</span><div class="ping-bar-mini"><div class="ping-fill-mini" data-ping-fill="${key}" style="width:${pct}%"></div></div></div>`;
       statsList.appendChild(row);
     });
   }
   
-  // Остановка подключения (закрывает окно)
   document.getElementById('fkeyStopBtn').addEventListener('click', () => {
-    if (fkeyAnimationInterval) {
-      clearInterval(fkeyAnimationInterval);
-      fkeyAnimationInterval = null;
-    }
+    if (fkeyAnimationInterval) { clearInterval(fkeyAnimationInterval); fkeyAnimationInterval = null; }
     document.getElementById('fkeyConnecting').style.display = 'none';
   });
   
@@ -851,11 +1023,9 @@
     renderServerList();
     renderStats();
     updateUISelectedServer();
-    
     const toggle = document.getElementById('feastAIToggle');
     toggle.addEventListener('change', (e) => { feastAIEnabled = e.target.checked; if (feastAIEnabled) autoSelectFastestServer(); renderServerList(); renderStats(); });
     document.getElementById('connectBtn').addEventListener('click', () => connectTo(currentServer));
-    
     const refreshBtn = document.getElementById('refreshPingBtn');
     refreshBtn.addEventListener('click', () => {
       refreshBtn.classList.add('rotating');
@@ -865,7 +1035,6 @@
       updateUISelectedServer();
       setTimeout(() => refreshBtn.classList.remove('rotating'), 600);
     });
-    
     document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', () => {
         const tab = item.dataset.tab;
@@ -877,7 +1046,6 @@
         if (tab === 'stats') renderStats();
       });
     });
-    
     setInterval(() => { refreshPings(); renderServerList(); renderStats(); updateUISelectedServer(); }, 10000);
     setInterval(() => {
       const down = (Math.random() * 1.8).toFixed(1);
