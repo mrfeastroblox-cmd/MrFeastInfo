@@ -23,7 +23,7 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* Тёмная тема */
+        /* ТЁМНАЯ ТЕМА */
         body.dark-theme {
             background: #121212;
         }
@@ -76,6 +76,7 @@
 
         body.dark-theme .app-item {
             border-bottom-color: #3d3d3d;
+            background: #1e1e1e;
         }
 
         body.dark-theme .app-item:hover {
@@ -83,11 +84,11 @@
         }
 
         body.dark-theme .app-item-name {
-            color: #ffffff;
+            color: #ffffff !important;
         }
 
         body.dark-theme .app-item-dev {
-            color: #9aa0a6;
+            color: #aaaaaa !important;
         }
 
         body.dark-theme .app-item-badge {
@@ -95,127 +96,176 @@
             color: #00E676;
         }
 
-        body.dark-theme .online-service-card {
+        body.dark-theme .app-detail-page {
+            background: #1e1e1e;
+        }
+
+        body.dark-theme .app-title-section h1 {
+            color: #ffffff !important;
+        }
+
+        body.dark-theme .developer {
+            color: #00E676 !important;
+        }
+
+        body.dark-theme .tag {
+            background: #1a3a2a;
+            color: #00E676 !important;
+        }
+
+        body.dark-theme .tag-highlight {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white !important;
+        }
+
+        body.dark-theme .description-card {
             background: #2d2d2d;
             border-color: #3d3d3d;
         }
 
-        body.dark-theme .online-service-name {
-            color: #ffffff;
+        body.dark-theme .description-card h3 {
+            color: #ffffff !important;
         }
 
-        body.dark-theme .online-service-desc {
-            color: #9aa0a6;
+        body.dark-theme .description-card p {
+            color: #bbbbbb !important;
         }
 
-        body.dark-theme .news-card,
-        body.dark-theme .description-card,
         body.dark-theme .info-card {
             background: #2d2d2d;
             border-color: #3d3d3d;
         }
 
-        body.dark-theme .news-title,
-        body.dark-theme .description-card h3,
-        body.dark-theme .info-label,
+        body.dark-theme .info-label {
+            color: #aaaaaa !important;
+        }
+
         body.dark-theme .info-value {
-            color: #ffffff;
-        }
-
-        body.dark-theme .description-card p,
-        body.dark-theme .news-date {
-            color: #9aa0a6;
-        }
-
-        body.dark-theme .news-version {
-            background: #1a3a2a;
-            color: #00E676;
-        }
-
-        body.dark-theme .news-changes li {
-            color: #ffffff;
-            border-bottom-color: #3d3d3d;
-        }
-
-        body.dark-theme .wishlist-btn {
-            background: #2d2d2d;
-            border-color: #3d3d3d;
-        }
-
-        body.dark-theme .wishlist-btn i {
-            color: #9aa0a6;
-        }
-
-        body.dark-theme .tag {
-            background: #1a3a2a;
-            color: #00E676;
-        }
-
-        body.dark-theme .developer {
-            color: #00E676;
+            color: #ffffff !important;
         }
 
         body.dark-theme .back-button {
             color: #00E676;
         }
 
-        body.dark-theme .news-header h2 {
-            color: #ffffff;
+        body.dark-theme .back-button span {
+            color: #00E676;
         }
 
+        /* Новости в тёмной теме */
+        body.dark-theme .news-card {
+            background: #2d2d2d;
+            border-color: #3d3d3d;
+        }
+        body.dark-theme .news-title {
+            color: #ffffff !important;
+        }
+        body.dark-theme .news-date {
+            color: #aaaaaa !important;
+        }
+        body.dark-theme .news-version {
+            background: #1a3a2a;
+            color: #00E676;
+        }
+        body.dark-theme .news-changes li {
+            color: #ffffff !important;
+            border-bottom-color: #3d3d3d;
+        }
+        body.dark-theme .news-header h2 {
+            color: #ffffff !important;
+        }
         body.dark-theme .news-header p {
-            color: #9aa0a6;
+            color: #aaaaaa !important;
+        }
+        body.dark-theme .coming-soon {
+            background: linear-gradient(135deg, #0f2a2a, #1a1a3a);
+        }
+        body.dark-theme .coming-soon span {
+            color: white;
+        }
+
+        body.dark-theme .online-service-card {
+            background: rgba(30, 30, 35, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        body.dark-theme .online-service-name {
+            color: #ffffff !important;
+        }
+        body.dark-theme .online-service-desc {
+            color: #bbbbbb !important;
+        }
+        body.dark-theme .service-chip {
+            background: rgba(0, 230, 118, 0.2);
+            color: #00E676;
+        }
+        body.dark-theme .online-service-btn {
+            background: rgba(0, 230, 118, 0.12);
+            color: #00E676;
+            border: 1px solid rgba(0, 230, 118, 0.3);
+        }
+        body.dark-theme .online-service-btn:hover {
+            background: #00E676;
+            color: #121212;
+        }
+        body.dark-theme .online-service-icon {
+            background: linear-gradient(145deg, #252530, #1e1e28);
+        }
+        body.dark-theme .online-service-icon i {
+            color: #00E676;
+        }
+        body.dark-theme .online-header h2 {
+            color: #ffffff !important;
+            background: linear-gradient(135deg, #00E676, #00B0FF);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        body.dark-theme .online-header p {
+            color: #bbbbbb !important;
         }
 
         body.dark-theme .modal-content {
             background: #2d2d2d !important;
         }
-
         body.dark-theme .settings-header h3,
         body.dark-theme .profile-info h3 {
-            color: #ffffff;
+            color: #ffffff !important;
         }
-
         body.dark-theme .settings-item {
             border-bottom-color: #3d3d3d;
         }
-
         body.dark-theme .settings-item-left span,
         body.dark-theme .profile-item span {
-            color: #ffffff;
+            color: #ffffff !important;
         }
-
         body.dark-theme .profile-name {
-            color: #ffffff;
+            color: #ffffff !important;
         }
-
         body.dark-theme .profile-email {
-            color: #9aa0a6;
+            color: #aaaaaa !important;
         }
-
+        body.dark-theme .wishlist-btn {
+            background: #2d2d2d;
+            border-color: #3d3d3d;
+        }
+        body.dark-theme .wishlist-btn i {
+            color: #aaaaaa;
+        }
         body.dark-theme .scan-title,
         body.dark-theme .scan-item-left span {
-            color: #ffffff;
+            color: #ffffff !important;
         }
-
         body.dark-theme .scan-subtitle {
-            color: #9aa0a6;
+            color: #aaaaaa !important;
         }
-
         body.dark-theme .scan-item {
             border-bottom-color: #3d3d3d;
         }
-
         body.dark-theme .scan-message {
             background: #1a3a2a;
         }
-
         body.dark-theme .scan-message span {
             color: #00E676;
-        }
-
-        body.dark-theme .os-warning span {
-            color: #202124;
         }
 
         .app-container {
@@ -354,6 +404,7 @@
             display: block;
         }
 
+        /* Приложения */
         .apps-list {
             padding: 8px 0;
         }
@@ -413,20 +464,23 @@
             font-weight: 600;
         }
 
-        /* Онлайн сервисы */
+        /* Онлайн */
         .online-page {
-            padding: 16px;
+            padding: 20px 16px;
         }
 
         .online-header {
-            margin-bottom: 20px;
+            margin-bottom: 28px;
         }
 
         .online-header h2 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #202124;
-            margin-bottom: 4px;
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00C853, #00B0FF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
         }
 
         .online-header p {
@@ -434,23 +488,45 @@
             font-size: 14px;
         }
 
+        .services-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
         .online-service-card {
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border: 1px solid #e8eaed;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
+            padding: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.35s;
         }
 
         .online-service-card:hover {
-            background: #f8f9fa;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12);
+        }
+
+        .online-service-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(145deg, #f0f9ff, #e6f7ef);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            flex-shrink: 0;
+        }
+
+        .online-service-icon i {
+            font-size: 28px;
+            color: #01875f;
         }
 
         .online-service-info {
@@ -459,35 +535,57 @@
 
         .online-service-name {
             font-size: 18px;
-            font-weight: 600;
-            color: #202124;
-            margin-bottom: 4px;
+            font-weight: 800;
+            color: #1f2a3e;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .service-chip {
+            background: rgba(0,230,118,0.15);
+            padding: 3px 10px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #01875f;
         }
 
         .online-service-desc {
             font-size: 13px;
-            color: #5f6368;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .online-service-btn {
-            background: #01875f;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 8px 16px;
+            background: rgba(0, 135, 95, 0.08);
+            border: 1px solid rgba(0, 135, 95, 0.25);
+            border-radius: 40px;
+            padding: 12px 20px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
+            color: #01875f;
             cursor: pointer;
-            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
         }
 
         .online-service-btn:hover {
-            background: #016b4c;
+            background: #01875f;
+            color: white;
         }
 
+        /* Детали приложения */
         .app-detail-page {
             display: none;
             padding: 16px;
+            background: white;
         }
 
         .app-detail-page.active {
@@ -518,11 +616,8 @@
             width: 72px;
             height: 72px;
             border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .app-icon-large img {
@@ -585,14 +680,12 @@
             font-weight: 600;
             flex: 1;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .install-btn:disabled {
             background: #e8eaed;
             color: #9aa0a6;
             cursor: not-allowed;
-            box-shadow: none;
         }
 
         .install-btn.installed {
@@ -702,7 +795,7 @@
             margin-left: 8px;
         }
 
-        /* Новости */
+        /* НОВОСТИ */
         .news-feed {
             padding: 16px;
         }
@@ -725,103 +818,116 @@
 
         .news-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 20px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             border: 1px solid #e8eaed;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
         }
 
         .news-card-header {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
             margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .news-badge {
             background: #01875f;
             color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 4px 14px;
+            border-radius: 30px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .news-date {
             color: #5f6368;
             font-size: 13px;
+            font-weight: 500;
         }
 
         .news-title {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 800;
             color: #202124;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            letter-spacing: -0.2px;
         }
 
         .news-version {
             background: #e8f5e9;
             color: #01875f;
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 6px 14px;
+            border-radius: 40px;
             font-size: 13px;
             font-weight: 600;
-            display: inline-block;
-            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 18px;
         }
 
         .news-changes {
             list-style: none;
+            margin-top: 8px;
         }
 
         .news-changes li {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 0;
+            padding: 12px 0;
             color: #202124;
             font-size: 14px;
-            border-bottom: 1px solid #f1f3f4;
+            font-weight: 500;
+            border-bottom: 1px solid #f0f0f0;
         }
 
         .news-changes li:last-child {
             border-bottom: none;
+            padding-bottom: 0;
         }
 
         .news-changes li i {
             color: #01875f;
-            font-size: 16px;
-            width: 20px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
         }
 
         .coming-soon {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 16px 20px;
-            border-radius: 20px;
+            padding: 18px 24px;
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: 12px;
+            font-weight: 600;
         }
 
         .coming-soon span {
-            font-weight: 600;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .coming-soon i {
-            font-size: 24px;
+            font-size: 22px;
             animation: pulse 1.5s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%, 100% { opacity: 1; transform: translateX(0); }
+            50% { opacity: 0.6; transform: translateX(4px); }
         }
 
-        /* Модальные окна */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -850,7 +956,6 @@
             overflow-y: auto;
         }
 
-        /* Настройки */
         .settings-header {
             display: flex;
             align-items: center;
@@ -861,13 +966,6 @@
         .settings-header h3 {
             font-size: 20px;
             font-weight: 700;
-            color: #202124;
-        }
-
-        .settings-header i {
-            font-size: 24px;
-            color: #5f6368;
-            cursor: pointer;
         }
 
         .settings-item {
@@ -878,28 +976,12 @@
             border-bottom: 1px solid #e8eaed;
         }
 
-        .settings-item:last-child {
-            border-bottom: none;
-        }
-
         .settings-item-left {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .settings-item-left i {
-            font-size: 20px;
-            color: #5f6368;
-            width: 24px;
-        }
-
-        .settings-item-left span {
-            color: #202124;
-            font-weight: 500;
-        }
-
-        /* Переключатель темы */
         .theme-toggle {
             width: 50px;
             height: 26px;
@@ -907,7 +989,6 @@
             border-radius: 13px;
             position: relative;
             cursor: pointer;
-            transition: background 0.3s;
         }
 
         .theme-toggle.active {
@@ -924,14 +1005,12 @@
             top: 2px;
             left: 2px;
             transition: transform 0.3s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .theme-toggle.active::before {
             transform: translateX(24px);
         }
 
-        /* Профиль */
         .profile-header {
             display: flex;
             align-items: center;
@@ -967,6 +1046,7 @@
         .profile-email {
             color: #5f6368;
             font-size: 14px;
+            word-break: break-all;
         }
 
         .profile-item {
@@ -976,17 +1056,6 @@
             padding: 16px 0;
             border-bottom: 1px solid #e8eaed;
             cursor: pointer;
-        }
-
-        .profile-item i {
-            font-size: 20px;
-            color: #5f6368;
-            width: 24px;
-        }
-
-        .profile-item span {
-            color: #202124;
-            font-weight: 500;
         }
 
         .scan-modal .modal-content {
@@ -1017,13 +1086,6 @@
         .scan-title {
             font-size: 22px;
             font-weight: 700;
-            color: #202124;
-            margin-bottom: 8px;
-        }
-
-        .scan-subtitle {
-            color: #5f6368;
-            font-size: 14px;
         }
 
         .scan-items {
@@ -1036,27 +1098,6 @@
             justify-content: space-between;
             padding: 14px 0;
             border-bottom: 1px solid #e8eaed;
-        }
-
-        .scan-item:last-child {
-            border-bottom: none;
-        }
-
-        .scan-item-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .scan-item-left i {
-            color: #5f6368;
-            font-size: 18px;
-            width: 24px;
-        }
-
-        .scan-item-left span {
-            color: #202124;
-            font-weight: 500;
         }
 
         .scan-status {
@@ -1081,7 +1122,6 @@
             background: #01875f;
             width: 0%;
             transition: width 0.3s;
-            border-radius: 2px;
         }
 
         .scan-message {
@@ -1089,17 +1129,7 @@
             padding: 16px;
             background: #e8f5e9;
             border-radius: 16px;
-            margin: 20px 0 0;
-        }
-
-        .scan-message i {
-            color: #01875f;
-            margin-right: 8px;
-        }
-
-        .scan-message span {
-            color: #01875f;
-            font-weight: 600;
+            margin-top: 20px;
         }
 
         .scan-close-btn {
@@ -1126,24 +1156,11 @@
     <div class="app-container">
         <header class="app-header">
             <div class="header-top">
-                <div class="menu-icon" id="menuBtn">
-                    <span></span><span></span><span></span>
-                </div>
-                <div class="logo-area">
-                    <div class="app-logo-icon">
-                        <i class="fas fa-download"></i>
-                    </div>
-                    <span class="logo-text">FeastFilesDownloader</span>
-                </div>
-                <div class="header-actions">
-                    <i class="fas fa-bell"></i>
-                    <i class="fas fa-user-circle" id="profileBtn"></i>
-                </div>
+                <div class="menu-icon" id="menuBtn"><span></span><span></span><span></span></div>
+                <div class="logo-area"><div class="app-logo-icon"><i class="fas fa-download"></i></div><span class="logo-text">FeastFilesDownloader</span></div>
+                <div class="header-actions"><i class="fas fa-bell"></i><i class="fas fa-user-circle" id="profileBtn"></i></div>
             </div>
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <span>Поиск</span>
-            </div>
+            <div class="search-bar"><i class="fas fa-search"></i><span>Поиск</span></div>
         </header>
 
         <nav class="nav-tabs">
@@ -1152,64 +1169,63 @@
             <div class="nav-tab" data-tab="news">Новости</div>
         </nav>
 
-        <!-- Страница Приложения -->
+        <!-- Приложения -->
         <div class="tab-page active" id="pageApps">
             <div class="apps-list">
                 <div class="app-item" data-app="protect">
-                    <div class="app-item-icon">
-                        <img src="https://raw.githubusercontent.com/mrfeastroblox-cmd/MrFeastShop_Dowload/refs/heads/main/IMG_20260421_185944_424.jpg" alt="App Icon">
-                    </div>
-                    <div class="app-item-info">
-                        <div class="app-item-name">FeastCyber_SafetyCore</div>
-                        <div class="app-item-dev">MrFeastProject • Инструменты</div>
-                    </div>
+                    <div class="app-item-icon"><img src="https://raw.githubusercontent.com/mrfeastroblox-cmd/MrFeastShop_Dowload/refs/heads/main/IMG_20260421_185944_424.jpg" alt="icon"></div>
+                    <div class="app-item-info"><div class="app-item-name">FeastCyber_SafetyCore</div><div class="app-item-dev">MrFeastProject • Инструменты</div></div>
                     <span class="app-item-badge">AI Powered</span>
                 </div>
-
                 <div class="app-item" data-app="antivirus">
-                    <div class="app-item-icon">
-                        <img src="https://raw.githubusercontent.com/mrfeastroblox-cmd/MrFeastShop_Dowload/refs/heads/main/IMG_20260421_185944_424.jpg" alt="App Icon">
-                    </div>
-                    <div class="app-item-info">
-                        <div class="app-item-name">FeastCyberSecurity</div>
-                        <div class="app-item-dev">MrFeastProject • Инструменты</div>
-                    </div>
+                    <div class="app-item-icon"><img src="https://raw.githubusercontent.com/mrfeastroblox-cmd/MrFeastShop_Dowload/refs/heads/main/IMG_20260421_185944_424.jpg" alt="icon"></div>
+                    <div class="app-item-info"><div class="app-item-name">FeastCyberSecurity</div><div class="app-item-dev">MrFeastProject • Инструменты</div></div>
                     <span class="app-item-badge">Антивирус</span>
                 </div>
             </div>
         </div>
 
-        <!-- Страница Онлайн -->
+        <!-- Онлайн -->
         <div class="tab-page online-page" id="pageOnline">
-            <div class="online-header">
-                <h2>Онлайн-сервисы</h2>
-                <p>Игры и сервисы в браузере</p>
-            </div>
-
-            <div class="online-service-card" onclick="window.open('https://mrfeastroblox-cmd.github.io/MrFeastInfo/FeastClicker.html', '_blank')">
-                <div class="online-service-info">
-                    <div class="online-service-name">💰 MrFeast Clicker</div>
-                    <div class="online-service-desc">Кликер с прокачкой, магазином и достижениями</div>
+            <div class="online-header"><h2>Онлайн игры и приложения</h2><p>Запускай прямо в браузере</p></div>
+            <div class="services-grid">
+                <div class="online-service-card" onclick="window.open('https://mrfeastroblox-cmd.github.io/MrFeastInfo/FeastClicker.html', '_blank')">
+                    <div class="online-service-icon"><i class="fas fa-gamepad"></i></div>
+                    <div class="online-service-info"><div class="online-service-name">MrFeast Clicker <span class="service-chip">#Кликер</span></div><div class="online-service-desc"><i class="fas fa-chart-line"></i> Прокачка, магазин, достижения</div></div>
+                    <button class="online-service-btn">Играть <i class="fas fa-arrow-right"></i></button>
                 </div>
-                <button class="online-service-btn">Запустить</button>
-            </div>
-
-            <div class="online-service-card" onclick="window.open('https://mrfeastroblox-cmd.github.io/MrFeastInfo/VPNSite.html', '_blank')">
-                <div class="online-service-info">
-                    <div class="online-service-name">🛡️ FeastVPN BoostTG</div>
-                    <div class="online-service-desc">Высокая скорость, 16 MTProto серверов</div>
+                <div class="online-service-card" onclick="window.open('https://mrfeastroblox-cmd.github.io/MrFeastInfo/VPNSite.html', '_blank')">
+                    <div class="online-service-icon"><i class="fas fa-shield-virus"></i></div>
+                    <div class="online-service-info"><div class="online-service-name">FeastVPN BoostTG <span class="service-chip">#VPN</span></div><div class="online-service-desc"><i class="fas fa-bolt"></i> Хороший и стабильный VPN для Telegram</div></div>
+                    <button class="online-service-btn">Подключить <i class="fas fa-arrow-right"></i></button>
                 </div>
-                <button class="online-service-btn">Запустить</button>
             </div>
         </div>
 
-        <!-- Страница Новости -->
+        <!-- НОВОСТИ (СВЕЖАЯ НОВОСТЬ #2 ВВЕРХУ) -->
         <div class="tab-page news-feed" id="pageNews">
             <div class="news-header">
                 <h2>Новости</h2>
                 <p>Самая свежая информация</p>
             </div>
-
+            
+            <!-- НОВОСТЬ #2 (свежая, 23 апреля) — ПЕРВАЯ -->
+            <div class="news-card">
+                <div class="news-card-header">
+                    <span class="news-badge">Новость #2</span>
+                    <span class="news-date">23 апреля 2026</span>
+                </div>
+                <div class="news-title">Исправление ошибок и новое</div>
+                <div class="news-version">
+                    <i class="fas fa-tag"></i> Версия сайта: 1.0.1 (V2)
+                </div>
+                <ul class="news-changes">
+                    <li><i class="fas fa-plus-circle"></i> <span>Добавлено: 1 онлайн игра и 1 онлайн приложение (VPN для Telegram) от MrFeastProject</span></li>
+                    <li><i class="fas fa-bug"></i> <span>Исправлены многие критические ошибки и прочие ошибки/баги тоже</span></li>
+                </ul>
+            </div>
+            
+            <!-- НОВОСТЬ #1 (старая, 22 апреля) — ВТОРАЯ -->
             <div class="news-card">
                 <div class="news-card-header">
                     <span class="news-badge">Новость #1</span>
@@ -1217,173 +1233,45 @@
                 </div>
                 <div class="news-title">Открытие сайта</div>
                 <div class="news-version">
-                    <i class="fas fa-tag" style="margin-right: 6px;"></i>
-                    Версия сайта: 1.0.1 (V1)
+                    <i class="fas fa-tag"></i> Версия сайта: 1.0.1 (V1)
                 </div>
                 <ul class="news-changes">
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Открытие сайта</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Добавлено 2 приложения</span>
-                    </li>
+                    <li><i class="fas fa-check-circle"></i> <span>Открытие сайта</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>Добавлено 2 приложения</span></li>
                 </ul>
             </div>
-
+            
             <div class="coming-soon">
-                <span><i class="fas fa-rocket" style="margin-right: 8px;"></i>Новое обновление скоро!</span>
+                <span><i class="fas fa-rocket"></i> Новое обновление скоро!</span>
                 <i class="fas fa-arrow-right"></i>
             </div>
         </div>
 
-        <!-- Страница деталей FeastCyber_SafetyCore -->
+        <!-- Детали приложений -->
         <div class="app-detail-page" id="appProtect">
-            <div class="back-button" id="backBtn1">
-                <i class="fas fa-arrow-left"></i>
-                <span>Назад</span>
-            </div>
-            
-            <div class="app-detail-header">
-                <div class="app-icon-large">
-                    <img src="https://raw.githubusercontent.com/mrfeastroblox-cmd/MrFeastShop_Dowload/refs/heads/main/IMG_20260421_185944_424.jpg" alt="App Icon">
-                </div>
-                <div class="app-title-section">
-                    <h1>FeastCyber_SafetyCore</h1>
-                    <div class="developer">MrFeastProject</div>
-                </div>
-            </div>
-
-            <div class="os-warning" id="osWarning1" style="display: none;">
-                <i class="fas fa-exclamation-triangle"></i>
-                <span>Это приложение доступно только для Windows 10/11</span>
-            </div>
-
-            <div class="tags">
-                <span class="tag">#1 в Инструменты</span>
-                <span class="tag">AI защита</span>
-                <span class="tag-highlight">Выбор редакции</span>
-            </div>
-
-            <div class="action-buttons">
-                <button class="install-btn" id="downloadBtn1">
-                    <i class="fas fa-download" style="margin-right: 8px;"></i>
-                    Установить
-                </button>
-                <button class="wishlist-btn">
-                    <i class="far fa-bookmark"></i>
-                </button>
-            </div>
-
-            <div class="description-card">
-                <h3>Об этом приложении <span class="ai-badge">AI Powered</span></h3>
-                <p><strong>FeastCyber_SafetyCore</strong> — фоновый процесс на базе AI движка от MrFeastProject для Windows 10/11.<br><br>
-                Обеспечивает многоуровневую защиту в реальном времени с использованием нейросетевых алгоритмов. Интегрируется с FeastCyberSecurity_SiteProtect для комплексной кибербезопасности.</p>
-            </div>
-
-            <div class="info-card">
-                <div class="info-row">
-                    <span class="info-label">Обновлено</span>
-                    <span class="info-value">12 апреля 21:21</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Размер</span>
-                    <span class="info-value">37 МБ</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Версия</span>
-                    <span class="info-value">1.0.1<span class="beta-badge">Beta</span></span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">ОС</span>
-                    <span class="info-value">Windows 10/11</span>
-                </div>
-            </div>
+            <div class="back-button" id="backBtn1"><i class="fas fa-arrow-left"></i><span>Назад</span></div>
+            <div class="app-detail-header"><div class="app-icon-large"><img src="https://raw.githubusercontent.com/mrfeastroblox-cmd/MrFeastShop_Dowload/refs/heads/main/IMG_20260421_185944_424.jpg" alt="icon"></div><div class="app-title-section"><h1>FeastCyber_SafetyCore</h1><div class="developer">MrFeastProject</div></div></div>
+            <div class="os-warning" id="osWarning1" style="display: none;"><i class="fas fa-exclamation-triangle"></i><span>Это приложение доступно только для Windows 10/11</span></div>
+            <div class="tags"><span class="tag">#1 в Инструменты</span><span class="tag">AI защита</span><span class="tag-highlight">Выбор редакции</span></div>
+            <div class="action-buttons"><button class="install-btn" id="downloadBtn1"><i class="fas fa-download"></i> Установить</button><button class="wishlist-btn"><i class="far fa-bookmark"></i></button></div>
+            <div class="description-card"><h3>Об этом приложении <span class="ai-badge">AI Powered</span></h3><p><strong>FeastCyber_SafetyCore</strong> — фоновый процесс на базе AI движка от MrFeastProject для Windows 10/11.<br><br>Обеспечивает многоуровневую защиту в реальном времени.</p></div>
+            <div class="info-card"><div class="info-row"><span class="info-label">Обновлено</span><span class="info-value">12 апреля 21:21</span></div><div class="info-row"><span class="info-label">Размер</span><span class="info-value">37 МБ</span></div><div class="info-row"><span class="info-label">Версия</span><span class="info-value">1.0.1<span class="beta-badge">Beta</span></span></div><div class="info-row"><span class="info-label">ОС</span><span class="info-value">Windows 10/11</span></div></div>
         </div>
 
-        <!-- Страница деталей FeastCyberSecurity -->
         <div class="app-detail-page" id="appAntivirus">
-            <div class="back-button" id="backBtn2">
-                <i class="fas fa-arrow-left"></i>
-                <span>Назад</span>
-            </div>
-            
-            <div class="app-detail-header">
-                <div class="app-icon-large">
-                    <img src="https://raw.githubusercontent.com/mrfeastroblox-cmd/MrFeastShop_Dowload/refs/heads/main/IMG_20260421_185944_424.jpg" alt="App Icon">
-                </div>
-                <div class="app-title-section">
-                    <h1>FeastCyberSecurity</h1>
-                    <div class="developer">MrFeastProject</div>
-                </div>
-            </div>
-
-            <div class="os-warning" id="osWarning2" style="display: none;">
-                <i class="fas fa-exclamation-triangle"></i>
-                <span>Это приложение доступно только для Windows 10/11</span>
-            </div>
-
-            <div class="tags">
-                <span class="tag">Антивирус</span>
-                <span class="tag">Защита</span>
-                <span class="tag-highlight">Premium</span>
-            </div>
-
-            <div class="action-buttons">
-                <button class="install-btn" id="downloadBtn2">
-                    <i class="fas fa-download" style="margin-right: 8px;"></i>
-                    Установить
-                </button>
-                <button class="wishlist-btn">
-                    <i class="far fa-bookmark"></i>
-                </button>
-            </div>
-
-            <div class="description-card">
-                <h3>Об этом приложении</h3>
-                <p><strong>FeastCyberSecurity</strong> — мощный антивирус для защиты вашего компьютера от вирусов, троянов, шпионского ПО и других угроз. Регулярные обновления баз и облачная защита в реальном времени.</p>
-            </div>
-
-            <div class="info-card">
-                <div class="info-row">
-                    <span class="info-label">Обновлено</span>
-                    <span class="info-value">14 февраля 19:12</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Размер</span>
-                    <span class="info-value">47~53 МБ</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Версия</span>
-                    <span class="info-value">1.0.6.9</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">ОС</span>
-                    <span class="info-value">Windows 10/11</span>
-                </div>
-            </div>
+            <div class="back-button" id="backBtn2"><i class="fas fa-arrow-left"></i><span>Назад</span></div>
+            <div class="app-detail-header"><div class="app-icon-large"><img src="https://raw.githubusercontent.com/mrfeastroblox-cmd/MrFeastShop_Dowload/refs/heads/main/IMG_20260421_185944_424.jpg" alt="icon"></div><div class="app-title-section"><h1>FeastCyberSecurity</h1><div class="developer">MrFeastProject</div></div></div>
+            <div class="os-warning" id="osWarning2" style="display: none;"><i class="fas fa-exclamation-triangle"></i><span>Это приложение доступно только для Windows 10/11</span></div>
+            <div class="tags"><span class="tag">Антивирус</span><span class="tag">Защита</span><span class="tag-highlight">Premium</span></div>
+            <div class="action-buttons"><button class="install-btn" id="downloadBtn2"><i class="fas fa-download"></i> Установить</button><button class="wishlist-btn"><i class="far fa-bookmark"></i></button></div>
+            <div class="description-card"><h3>Об этом приложении</h3><p><strong>FeastCyberSecurity</strong> — мощный антивирус для защиты вашего компьютера от вирусов, троянов, шпионского ПО и других угроз.</p></div>
+            <div class="info-card"><div class="info-row"><span class="info-label">Обновлено</span><span class="info-value">14 февраля 19:12</span></div><div class="info-row"><span class="info-label">Размер</span><span class="info-value">47~53 МБ</span></div><div class="info-row"><span class="info-label">Версия</span><span class="info-value">1.0.6.9</span></div><div class="info-row"><span class="info-label">ОС</span><span class="info-value">Windows 10/11</span></div></div>
         </div>
     </div>
 
-    <!-- Модальное окно настроек -->
-    <div class="modal-overlay" id="settingsModal">
-        <div class="modal-content">
-            <div class="settings-header">
-                <h3>Настройки</h3>
-                <i class="fas fa-times" id="closeSettings"></i>
-            </div>
-            <div class="settings-item">
-                <div class="settings-item-left">
-                    <i class="fas fa-moon"></i>
-                    <span>Тёмная тема</span>
-                </div>
-                <div class="theme-toggle" id="themeToggle"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно профиля -->
+    <!-- Модалки -->
+    <div class="modal-overlay" id="settingsModal"><div class="modal-content"><div class="settings-header"><h3>Настройки</h3><i class="fas fa-times" id="closeSettings"></i></div><div class="settings-item"><div class="settings-item-left"><i class="fas fa-moon"></i><span>Тёмная тема</span></div><div class="theme-toggle" id="themeToggle"></div></div></div></div>
+    
     <div class="modal-overlay" id="profileModal">
         <div class="modal-content">
             <div class="settings-header">
@@ -1395,8 +1283,8 @@
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="profile-info">
-                    <h3 class="profile-name">FeastUser</h3>
-                    <div class="profile-email">feast@project.local</div>
+                    <h3 class="profile-name" id="profileName">FeastUser</h3>
+                    <div class="profile-email" id="profileEmail">feast@project.local</div>
                 </div>
             </div>
             <div class="profile-item">
@@ -1414,72 +1302,36 @@
         </div>
     </div>
 
-    <!-- Модальное окно сканирования -->
-    <div class="modal-overlay scan-modal" id="scanModal">
-        <div class="modal-content">
-            <div class="scan-header">
-                <div class="scan-shield">
-                    <i class="fas fa-shield"></i>
-                </div>
-                <div class="scan-title">FeastCyberSecurity</div>
-                <div class="scan-subtitle">SiteProtect · Проверка безопасности</div>
-            </div>
-
-            <div class="scan-items">
-                <div class="scan-item">
-                    <div class="scan-item-left">
-                        <i class="fas fa-certificate"></i>
-                        <span>Цифровая подпись</span>
-                    </div>
-                    <span class="scan-status status-pending" id="status1">Ожидание</span>
-                </div>
-                <div class="scan-item">
-                    <div class="scan-item-left">
-                        <i class="fas fa-virus"></i>
-                        <span>Сканирование вирусов</span>
-                    </div>
-                    <span class="scan-status status-pending" id="status2">Ожидание</span>
-                </div>
-                <div class="scan-item">
-                    <div class="scan-item-left">
-                        <i class="fas fa-globe"></i>
-                        <span>Репутация в сети</span>
-                    </div>
-                    <span class="scan-status status-pending" id="status3">Ожидание</span>
-                </div>
-                <div class="scan-item">
-                    <div class="scan-item-left">
-                        <i class="fas fa-brain"></i>
-                        <span>AI анализ поведения</span>
-                    </div>
-                    <span class="scan-status status-pending" id="status4">Ожидание</span>
-                </div>
-            </div>
-
-            <div class="scan-progress-bar">
-                <div class="scan-progress-fill" id="scanProgressFill"></div>
-            </div>
-
-            <div class="scan-message" id="scanMessage" style="display: none;">
-                <i class="fas fa-check-circle"></i>
-                <span>Все проверки пройдены. Файл чист и безопасен!</span>
-            </div>
-
-            <button class="scan-close-btn" id="scanCloseBtn" disabled>
-                <i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>
-                Проверка...
-            </button>
-        </div>
-    </div>
+    <div class="modal-overlay scan-modal" id="scanModal"><div class="modal-content"><div class="scan-header"><div class="scan-shield"><i class="fas fa-shield"></i></div><div class="scan-title">FeastCyberSecurity</div><div class="scan-subtitle">SiteProtect · Проверка безопасности</div></div><div class="scan-items"><div class="scan-item"><div class="scan-item-left"><i class="fas fa-certificate"></i><span>Цифровая подпись</span></div><span class="scan-status status-pending" id="status1">Ожидание</span></div><div class="scan-item"><div class="scan-item-left"><i class="fas fa-virus"></i><span>Сканирование вирусов</span></div><span class="scan-status status-pending" id="status2">Ожидание</span></div><div class="scan-item"><div class="scan-item-left"><i class="fas fa-globe"></i><span>Репутация в сети</span></div><span class="scan-status status-pending" id="status3">Ожидание</span></div><div class="scan-item"><div class="scan-item-left"><i class="fas fa-brain"></i><span>AI анализ поведения</span></div><span class="scan-status status-pending" id="status4">Ожидание</span></div></div><div class="scan-progress-bar"><div class="scan-progress-fill" id="scanProgressFill"></div></div><div class="scan-message" id="scanMessage" style="display: none;"><i class="fas fa-check-circle"></i><span>Все проверки пройдены. Файл чист и безопасен!</span></div><button class="scan-close-btn" id="scanCloseBtn" disabled><i class="fas fa-spinner fa-spin"></i> Проверка...</button></div></div>
 
     <script>
+        // Генерация уникальной постоянной почты для устройства
+        function getOrCreateUserEmail() {
+            const STORAGE_KEY = 'feast_user_email';
+            let savedEmail = localStorage.getItem(STORAGE_KEY);
+            
+            if (savedEmail) {
+                return savedEmail;
+            }
+            
+            let randomDigits = '';
+            for (let i = 0; i < 10; i++) {
+                randomDigits += Math.floor(Math.random() * 10);
+            }
+            
+            const newEmail = `FeastUser_${randomDigits}.com`;
+            localStorage.setItem(STORAGE_KEY, newEmail);
+            return newEmail;
+        }
+        
+        const userEmail = getOrCreateUserEmail();
+        
         const FILE_URLS = {
             protect: 'https://github.com/mrfeastroblox-cmd/MrFeastShop_Dowload/releases/download/tag-1/CyberSecurity_SafetyCore.exe',
             antivirus: 'https://release-assets.githubusercontent.com/github-production-release-asset/1217086915/60c36268-45b6-4315-b367-86735c8488f9?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-04-22T16%3A51%3A19Z&rscd=attachment%3B+filename%3DFeast_Cyber.Security.exe&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-04-22T15%3A50%3A58Z&ske=2026-04-22T16%3A51%3A19Z&sks=b&skv=2018-11-09&sig=rGERfaiajf130ojUKEkX8KRRd%2B8gOku4ndlY6Pb7Kjc%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc3Njg3NDg1OCwibmJmIjoxNzc2ODczMDU4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.XuThSHspWxQotZIJA2AMpAmS5mWQErb7eY2kMNANj2s&response-content-disposition=attachment%3B%20filename%3DFeast_Cyber.Security.exe&response-content-type=application%2Foctet-stream'
         };
 
         let currentApp = 'protect';
-        
         const pageApps = document.getElementById('pageApps');
         const pageOnline = document.getElementById('pageOnline');
         const pageNews = document.getElementById('pageNews');
@@ -1492,60 +1344,34 @@
         const settingsModal = document.getElementById('settingsModal');
         const profileModal = document.getElementById('profileModal');
         const themeToggle = document.getElementById('themeToggle');
-        
-        const statuses = [
-            document.getElementById('status1'),
-            document.getElementById('status2'),
-            document.getElementById('status3'),
-            document.getElementById('status4')
-        ];
+        const profileEmailSpan = document.getElementById('profileEmail');
+        const profileNameSpan = document.getElementById('profileName');
+        const statuses = [document.getElementById('status1'),document.getElementById('status2'),document.getElementById('status3'),document.getElementById('status4')];
 
-        // Тёмная тема
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-            themeToggle.classList.add('active');
+        if (profileEmailSpan) profileEmailSpan.textContent = userEmail;
+        if (profileNameSpan) {
+            const userName = userEmail.split('_')[0];
+            profileNameSpan.textContent = userName;
         }
 
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
-            themeToggle.classList.toggle('active');
-            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
-        });
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') { document.body.classList.add('dark-theme'); themeToggle.classList.add('active'); }
+        themeToggle.addEventListener('click', () => { document.body.classList.toggle('dark-theme'); themeToggle.classList.toggle('active'); localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light'); });
 
-        // Меню
-        document.getElementById('menuBtn').addEventListener('click', () => {
-            settingsModal.classList.add('active');
-        });
+        document.getElementById('menuBtn').addEventListener('click', () => settingsModal.classList.add('active'));
+        document.getElementById('profileBtn').addEventListener('click', () => profileModal.classList.add('active'));
+        document.getElementById('closeSettings').addEventListener('click', () => settingsModal.classList.remove('active'));
+        document.getElementById('closeProfile').addEventListener('click', () => profileModal.classList.remove('active'));
+        settingsModal.addEventListener('click', (e) => { if (e.target === settingsModal) settingsModal.classList.remove('active'); });
+        profileModal.addEventListener('click', (e) => { if (e.target === profileModal) profileModal.classList.remove('active'); });
 
-        document.getElementById('profileBtn').addEventListener('click', () => {
-            profileModal.classList.add('active');
-        });
-
-        document.getElementById('closeSettings').addEventListener('click', () => {
-            settingsModal.classList.remove('active');
-        });
-
-        document.getElementById('closeProfile').addEventListener('click', () => {
-            profileModal.classList.remove('active');
-        });
-
-        settingsModal.addEventListener('click', (e) => {
-            if (e.target === settingsModal) settingsModal.classList.remove('active');
-        });
-
-        profileModal.addEventListener('click', (e) => {
-            if (e.target === profileModal) profileModal.classList.remove('active');
-        });
-
-        // Переключение вкладок
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
-                
                 document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
-                
+                appProtect.classList.remove('active');
+                appAntivirus.classList.remove('active');
                 const tabName = this.dataset.tab;
                 if (tabName === 'apps') pageApps.classList.add('active');
                 else if (tabName === 'online') pageOnline.classList.add('active');
@@ -1553,82 +1379,46 @@
             });
         });
 
-        function isWindows10Or11() {
-            return navigator.userAgent.indexOf('Windows NT 10.0') !== -1;
-        }
-
-        if (!isWindows10Or11()) {
-            document.getElementById('downloadBtn1').disabled = true;
-            document.getElementById('downloadBtn2').disabled = true;
-            document.getElementById('osWarning1').style.display = 'flex';
-            document.getElementById('osWarning2').style.display = 'flex';
-        }
+        function isWindows10Or11() { return navigator.userAgent.indexOf('Windows NT 10.0') !== -1; }
+        if (!isWindows10Or11()) { document.getElementById('downloadBtn1').disabled = true; document.getElementById('downloadBtn2').disabled = true; document.getElementById('osWarning1').style.display = 'flex'; document.getElementById('osWarning2').style.display = 'flex'; }
 
         document.querySelectorAll('[data-app]').forEach(item => {
             item.addEventListener('click', function() {
                 const app = this.dataset.app;
                 currentApp = app;
                 pageApps.classList.remove('active');
-                
-                if (app === 'protect') {
-                    appProtect.classList.add('active');
-                } else if (app === 'antivirus') {
-                    appAntivirus.classList.add('active');
-                }
+                if (app === 'protect') { appProtect.classList.add('active'); appAntivirus.classList.remove('active'); }
+                else if (app === 'antivirus') { appAntivirus.classList.add('active'); appProtect.classList.remove('active'); }
             });
         });
 
-        document.getElementById('backBtn1').addEventListener('click', () => {
-            pageApps.classList.add('active');
-            appProtect.classList.remove('active');
-        });
+        document.getElementById('backBtn1').addEventListener('click', () => { appProtect.classList.remove('active'); pageApps.classList.add('active'); });
+        document.getElementById('backBtn2').addEventListener('click', () => { appAntivirus.classList.remove('active'); pageApps.classList.add('active'); });
 
-        document.getElementById('backBtn2').addEventListener('click', () => {
-            pageApps.classList.add('active');
-            appAntivirus.classList.remove('active');
-        });
-
-        function startScan(appType, btnElement) {
-            if (!isWindows10Or11()) {
-                alert('Это приложение доступно только для Windows 10/11');
-                return;
-            }
-
+        function startScan(appType) {
+            if (!isWindows10Or11()) { alert('Это приложение доступно только для Windows 10/11'); return; }
             currentApp = appType;
             modal.classList.add('active');
-            
             scanProgressFill.style.width = '0%';
             scanMessage.style.display = 'none';
             scanCloseBtn.disabled = true;
-            scanCloseBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>Проверка...';
-            
-            statuses.forEach(status => {
-                status.textContent = 'Ожидание';
-                status.className = 'scan-status status-pending';
-            });
-
+            scanCloseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
+            statuses.forEach(status => { status.textContent = 'Ожидание'; status.className = 'scan-status status-pending'; });
             const steps = [
                 { index: 0, text: 'Проверка...', class: 'status-checking', time: 400 },
                 { index: 1, text: 'Проверка...', class: 'status-checking', time: 600 },
                 { index: 2, text: 'Проверка...', class: 'status-checking', time: 500 },
                 { index: 3, text: 'Анализ...', class: 'status-checking', time: 700 }
             ];
-
             let progress = 0;
-
             function processStep(stepIndex) {
                 if (stepIndex >= steps.length) {
                     setTimeout(() => {
                         scanProgressFill.style.width = '100%';
                         scanMessage.style.display = 'block';
                         scanCloseBtn.disabled = false;
-                        scanCloseBtn.innerHTML = '<i class="fas fa-download" style="margin-right: 8px;"></i>Скачать сейчас';
-                        
-                        statuses.forEach(status => {
-                            status.textContent = '✓ Чисто';
-                            status.className = 'scan-status status-clean';
-                        });
-
+                        scanCloseBtn.innerHTML = '<i class="fas fa-download"></i> Скачать сейчас';
+                        statuses.forEach(status => { status.textContent = '✓ Чисто'; status.className = 'scan-status status-clean'; });
                         scanCloseBtn.onclick = () => {
                             modal.classList.remove('active');
                             const link = document.createElement('a');
@@ -1637,40 +1427,27 @@
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
-                            
                             const btn = currentApp === 'protect' ? document.getElementById('downloadBtn1') : document.getElementById('downloadBtn2');
-                            btn.innerHTML = '<i class="fas fa-check" style="margin-right: 8px;"></i>Установлено';
+                            btn.innerHTML = '<i class="fas fa-check"></i> Установлено';
                             btn.classList.add('installed');
                         };
                     }, 200);
                     return;
                 }
-
                 const step = steps[stepIndex];
                 const status = statuses[step.index];
-                
                 status.textContent = step.text;
                 status.className = `scan-status ${step.class}`;
-
                 progress += 25;
                 scanProgressFill.style.width = progress + '%';
-
-                setTimeout(() => {
-                    status.textContent = '✓ Чисто';
-                    status.className = 'scan-status status-clean';
-                    processStep(stepIndex + 1);
-                }, step.time);
+                setTimeout(() => { status.textContent = '✓ Чисто'; status.className = 'scan-status status-clean'; processStep(stepIndex + 1); }, step.time);
             }
-
             setTimeout(() => processStep(0), 200);
         }
 
-        document.getElementById('downloadBtn1').addEventListener('click', () => startScan('protect', document.getElementById('downloadBtn1')));
-        document.getElementById('downloadBtn2').addEventListener('click', () => startScan('antivirus', document.getElementById('downloadBtn2')));
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('active');
-        });
+        document.getElementById('downloadBtn1').addEventListener('click', () => startScan('protect'));
+        document.getElementById('downloadBtn2').addEventListener('click', () => startScan('antivirus'));
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
     </script>
 </body>
 </html>
