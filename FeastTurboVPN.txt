@@ -1,10 +1,12 @@
+#profile-title FeastTurboVPN
+#profile-update-interval 24
 # =============================================
 # FeastTurboVPN - Бесплатные VLESS конфигурации
 # =============================================
 # Сохраните эту RAW-ссылку:
 # https://raw.githubusercontent.com/ВАШ_ЛОГИН/ВАШ_РЕПО/main/FeastTurboVPN.txt
 # 
-# Импортируйте эту ссылку в v2rayNG, NekoBox, Streisand и др.
+# Импортируйте в v2rayNG, NekoBox, Streisand и др.
 # =============================================
 
 # 🇵🇱 FeastTurboVPN #1
