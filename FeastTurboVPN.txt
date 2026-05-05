@@ -1,0 +1,23 @@
+# =============================================
+# FeastTurboVPN - Бесплатные VLESS конфигурации
+# =============================================
+# Сохраните эту RAW-ссылку:
+# https://raw.githubusercontent.com/ВАШ_ЛОГИН/ВАШ_РЕПО/main/FeastTurboVPN.txt
+# 
+# Импортируйте эту ссылку в v2rayNG, NekoBox, Streisand и др.
+# =============================================
+
+# 🇵🇱 FeastTurboVPN #1
+vless://f849edb2-a4e3-43b0-9b47-3e899677779a@srv82.towersflowerss.com:65000?path=%2F&security=&encryption=none&type=ws#%F0%9F%87%B5%F0%9F%87%B1%20FeastTurboVPN%20%231
+
+# 🇷🇺 FeastTurboVPN #2 [White List/LTE]
+vless://9aeead67-cdc0-4469-b1cf-f277ae8b1a2b@dv5.towersflowerss.com:443?path=%2F&security=&encryption=none&type=ws#%F0%9F%87%B7%F0%9F%87%BA%20FeastTurboVPN%20%232%20%5BWhite%20List%2FLTE%5D
+
+# 🇷🇺 FeastTurboVPN #3 [White List/LTE]
+vless://9aeead67-cdc0-4469-b1cf-f277ae8b1a2b@srvwl3.towersflowerss.com:443?path=%2F&security=&encryption=none&type=ws#%F0%9F%87%B7%F0%9F%87%BA%20FeastTurboVPN%20%233%20%5BWhite%20List%2FLTE%5D
+
+# 🇷🇺 FeastTurboVPN #4 [YouTube+No Ads]
+vless://9aeead67-cdc0-4469-b1cf-f277ae8b1a2b@srv80.towersflowerss.com:443?security=reality&encryption=none&pbk=Ufkz__Q3m_d8NFR08OVtXx3hLaV4-x7UesrVKduEIn0&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=srv80.towersflowerss.com#%F0%9F%87%B7%F0%9F%87%BA%20FeastTurboVPN%20%234%20%5BYouTube%2BNo%20Ads%5D
+
+# 🇳🇱 FeastTurboVPN #5 [Telegram]
+vless://9aeead67-cdc0-4469-b1cf-f277ae8b1a2b@srv105.towersflowerss.com:443?path=%2F&security=&encryption=none&type=ws#%F0%9F%87%B3%F0%9F%87%B1%20FeastTurboVPN%20%235%20%5BTelegram%5D
