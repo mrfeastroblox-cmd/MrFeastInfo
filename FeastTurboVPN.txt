@@ -1,5 +1,5 @@
 #profile-title FeastTurboVPN
-#profile-update-interval 24
+#profile-update-interval 1
 # =============================================
 # FeastTurboVPN - Бесплатные VLESS конфигурации
 # =============================================
@@ -9,7 +9,7 @@
 # Импортируйте в v2rayNG, NekoBox, Streisand и др.
 # =============================================
 
-# 🇵🇱 FeastTurboVPN #1
+# 🇵🇱 FeastTurboVPN #1 [Game/Website]
 vless://f849edb2-a4e3-43b0-9b47-3e899677779a@srv82.towersflowerss.com:65000?path=%2F&security=&encryption=none&type=ws#%F0%9F%87%B5%F0%9F%87%B1%20FeastTurboVPN%20%231
 
 # 🇷🇺 FeastTurboVPN #2 [White List/LTE]
