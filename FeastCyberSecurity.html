@@ -49,7 +49,6 @@
       opacity: 0;
     }
 
-    /* Круг 1 - большой, медленный */
     .circle:nth-child(1) {
       width: 300px;
       height: 300px;
@@ -61,7 +60,6 @@
       animation-delay: 0s;
     }
 
-    /* Круг 2 - средний */
     .circle:nth-child(2) {
       width: 200px;
       height: 200px;
@@ -73,7 +71,6 @@
       animation-delay: 3s;
     }
 
-    /* Круг 3 - маленький, быстрый */
     .circle:nth-child(3) {
       width: 120px;
       height: 120px;
@@ -85,7 +82,6 @@
       animation-delay: 1s;
     }
 
-    /* Круг 4 - очень большой */
     .circle:nth-child(4) {
       width: 400px;
       height: 400px;
@@ -97,7 +93,6 @@
       animation-delay: 5s;
     }
 
-    /* Круг 5 - средний, быстрый */
     .circle:nth-child(5) {
       width: 150px;
       height: 150px;
@@ -109,7 +104,6 @@
       animation-delay: 7s;
     }
 
-    /* Круг 6 - маленький */
     .circle:nth-child(6) {
       width: 100px;
       height: 100px;
@@ -121,7 +115,6 @@
       animation-delay: 2s;
     }
 
-    /* Круг 7 - дополнительный для динамики */
     .circle:nth-child(7) {
       width: 180px;
       height: 180px;
@@ -370,6 +363,282 @@
       transform: none;
     }
 
+    /* АНИМАЦИЯ СКАНИРОВАНИЯ */
+    .scanning-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(2, 11, 26, 0.95);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .scanning-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 2rem;
+    }
+
+    .scanning-file-icon {
+      position: relative;
+      width: 140px;
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .file-shape {
+      width: 110px;
+      height: 140px;
+      background: rgba(30, 41, 59, 0.9);
+      border: 2px solid rgba(56, 189, 248, 0.4);
+      border-radius: 1.2rem;
+      position: relative;
+      box-shadow: 0 0 40px rgba(56, 189, 248, 0.2), inset 0 0 20px rgba(56, 189, 248, 0.05);
+      overflow: hidden;
+    }
+
+    .file-shape::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-left: 25px solid transparent;
+      border-bottom: 25px solid rgba(56, 189, 248, 0.6);
+      border-radius: 0 0.3rem 0 0;
+      z-index: 2;
+    }
+
+    .file-lines {
+      position: absolute;
+      top: 35px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .file-line {
+      height: 4px;
+      background: rgba(56, 189, 248, 0.3);
+      border-radius: 2px;
+      width: 100%;
+    }
+
+    .file-line:nth-child(2) {
+      width: 65%;
+    }
+
+    .file-line:nth-child(3) {
+      width: 80%;
+    }
+
+    .file-line:nth-child(4) {
+      width: 55%;
+    }
+
+    /* ПЛАВНАЯ сканирующая линия */
+    .scan-line {
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(56, 189, 248, 0.4), 
+        rgba(56, 189, 248, 0.8), 
+        rgba(56, 189, 248, 1), 
+        rgba(56, 189, 248, 0.8), 
+        rgba(56, 189, 248, 0.4), 
+        transparent
+      );
+      box-shadow: 
+        0 0 15px rgba(56, 189, 248, 0.8), 
+        0 0 30px rgba(56, 189, 248, 0.6), 
+        0 0 45px rgba(56, 189, 248, 0.4),
+        0 0 60px rgba(56, 189, 248, 0.2);
+      border-radius: 2px;
+      animation: smoothScan 3s ease-in-out infinite;
+      will-change: top;
+    }
+
+    @keyframes smoothScan {
+      0% {
+        top: 5%;
+        opacity: 0.2;
+      }
+      5% {
+        opacity: 1;
+      }
+      45% {
+        top: 95%;
+        opacity: 1;
+      }
+      50% {
+        top: 95%;
+        opacity: 0.8;
+      }
+      55% {
+        opacity: 1;
+      }
+      95% {
+        top: 5%;
+        opacity: 1;
+      }
+      100% {
+        top: 5%;
+        opacity: 0.2;
+      }
+    }
+
+    /* Свечение от сканера */
+    .scan-glow {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: linear-gradient(180deg, 
+        transparent 0%, 
+        rgba(56, 189, 248, 0.1) 20%, 
+        rgba(56, 189, 248, 0.2) 50%, 
+        rgba(56, 189, 248, 0.1) 80%, 
+        transparent 100%
+      );
+      pointer-events: none;
+      animation: smoothGlow 3s ease-in-out infinite;
+      will-change: top;
+    }
+
+    @keyframes smoothGlow {
+      0% {
+        top: -10%;
+        opacity: 0.2;
+      }
+      5% {
+        opacity: 0.8;
+      }
+      45% {
+        top: 90%;
+        opacity: 0.8;
+      }
+      50% {
+        top: 90%;
+        opacity: 0.6;
+      }
+      55% {
+        opacity: 0.8;
+      }
+      95% {
+        top: -10%;
+        opacity: 0.8;
+      }
+      100% {
+        top: -10%;
+        opacity: 0.2;
+      }
+    }
+
+    .scanning-text {
+      color: #38bdf8;
+      font-size: 1.3rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .scanning-dots {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .scanning-dot {
+      width: 8px;
+      height: 8px;
+      background: #38bdf8;
+      border-radius: 50%;
+      animation: dotPulse 1.4s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+    }
+
+    .scanning-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .scanning-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes dotPulse {
+      0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.3;
+      }
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .scanning-progress {
+      width: 280px;
+      height: 4px;
+      background: rgba(56, 189, 248, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scanning-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #7dd3fc, #38bdf8);
+      border-radius: 2px;
+      animation: progressGrow 2s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+    }
+
+    @keyframes progressGrow {
+      0% {
+        width: 0%;
+      }
+      50% {
+        width: 100%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
+    .scanning-info {
+      display: flex;
+      gap: 2rem;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .scanning-info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .scanning-info-item i {
+      color: #38bdf8;
+      font-size: 0.8rem;
+    }
+
     /* СОВРЕМЕННОЕ ОКНО РЕЗУЛЬТАТА */
     .result-container {
       position: relative;
@@ -602,6 +871,48 @@
     <div class="circle"></div>
   </div>
 
+  <!-- Оверлей сканирования -->
+  <div class="scanning-overlay" id="scanningOverlay" style="display: none;">
+    <div class="scanning-container">
+      <div class="scanning-file-icon">
+        <div class="file-shape">
+          <div class="file-lines">
+            <div class="file-line"></div>
+            <div class="file-line"></div>
+            <div class="file-line"></div>
+            <div class="file-line"></div>
+          </div>
+          <div class="scan-glow"></div>
+        </div>
+        <div class="scan-line"></div>
+      </div>
+      
+      <div class="scanning-text">
+        <span id="scanningStatus">Calculating hash...</span>
+        <div class="scanning-dots">
+          <div class="scanning-dot"></div>
+          <div class="scanning-dot"></div>
+          <div class="scanning-dot"></div>
+        </div>
+      </div>
+      
+      <div class="scanning-progress">
+        <div class="scanning-progress-bar"></div>
+      </div>
+      
+      <div class="scanning-info">
+        <div class="scanning-info-item">
+          <i class="fas fa-file"></i>
+          <span id="scanningFileName">-</span>
+        </div>
+        <div class="scanning-info-item">
+          <i class="fas fa-shield-virus"></i>
+          <span>AI Analysis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="glass-panel">
     <div class="logo-area">
       <i class="fas fa-shield-haltered shield-icon"></i>
@@ -685,8 +996,10 @@
       const aiBadge = document.getElementById('aiBadge');
       const fileSize = document.getElementById('fileSize');
       const fileType = document.getElementById('fileType');
+      const scanningOverlay = document.getElementById('scanningOverlay');
+      const scanningFileName = document.getElementById('scanningFileName');
+      const scanningStatus = document.getElementById('scanningStatus');
 
-      // Функция форматирования размера файла
       function formatFileSize(bytes) {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
@@ -695,7 +1008,6 @@
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
       }
 
-      // Функция получения типа файла
       function getFileType(file) {
         if (!file) return '-';
         const extension = file.name.split('.').pop().toUpperCase();
@@ -748,6 +1060,27 @@
           reader.onerror = reject;
           reader.readAsArrayBuffer(file);
         });
+      }
+
+      // Анимация сканирования с ПЛАВНОЙ движущейся полосой
+      async function showScanningAnimation() {
+        scanningOverlay.style.display = 'flex';
+        scanningFileName.textContent = currentFile ? currentFile.name : 'Unknown file';
+        
+        const stages = [
+          { text: 'Calculating hash...', duration: 1000 },
+          { text: 'Scanning file...', duration: 2000 },
+          { text: 'AI Analysis...', duration: 2000 },
+          { text: 'Checking database...', duration: 1500 }
+        ];
+        
+        for (const stage of stages) {
+          scanningStatus.textContent = stage.text;
+          await new Promise(resolve => setTimeout(resolve, stage.duration));
+        }
+        
+        await new Promise(resolve => setTimeout(resolve, 500));
+        scanningOverlay.style.display = 'none';
       }
 
       async function processFile(file) {
@@ -817,7 +1150,6 @@
         resultContainer.style.display = 'block';
         resultBox.classList.remove('virus-result', 'clean-result');
         
-        // Обновление информации о файле
         if (currentFile) {
           fileSize.textContent = `Size: ${formatFileSize(currentFile.size)}`;
           fileType.textContent = `Type: ${getFileType(currentFile)}`;
@@ -858,9 +1190,8 @@
         }
 
         scanButton.disabled = true;
-        scanButton.innerHTML = '<span class="loading-spinner"></span> Analyzing...';
-
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        await showScanningAnimation();
 
         const normalizedHash = hash.toLowerCase();
         const isMalicious = signatureSet.has(normalizedHash);
